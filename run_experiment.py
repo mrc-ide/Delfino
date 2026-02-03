@@ -1,60 +1,44 @@
-import subprocess
-import pandas as pd
-import sys
-import os
+import subprocess, pandas as pd, sys, os
 
-# --- EXPERIMENT SETTINGS ---
 CONFIG = {
-    "num_patients": 1000,    # Increased to 1000 for better statistical power
-    "time_horizon": 30,      # Increased to 30 years to allow diseases to develop
+    "num_patients": 1000,
+    "time_horizon": 30,
     "start_age": 45.0,
     "seed_offset": 42,
-    "use_real_data": "true"
+    "logit_bias": -3.0 
 }
 
 def run_experiment():
-    print(f"🔔 Starting Delfino Experiment: N={CONFIG['num_patients']}, T={CONFIG['time_horizon']}")
-    
+    print(f"🔔 Starting Experiment: N={CONFIG['num_patients']}, T={CONFIG['time_horizon']}")
     args = ["--num_patients", str(CONFIG['num_patients']), "--time_horizon", str(CONFIG['time_horizon']),
-            "--start_age", str(CONFIG['start_age']), "--use_real_data", CONFIG['use_real_data'],
-            "--seed_offset", str(CONFIG['seed_offset'])]
+            "--start_age", str(CONFIG['start_age']), "--seed_offset", str(CONFIG['seed_offset']),
+            "--logit_bias", str(CONFIG['logit_bias'])]
 
-    # Phase 1 & 2
+    # Phase 1 & 2: Sequential Simulation Runs
     subprocess.run([sys.executable, "delfino.py"] + args, check=True)
     subprocess.run([sys.executable, "delfino.py"] + args + ["--apply_intervention"], check=True)
 
-    # Phase 3: Detailed Comparison
-    print("\n📊 Generating Comparison Summary...")
+    # Phase 3: Robust Comparison
+    print("\n📊 Aggregating Results...")
     base = pd.read_csv("delfino_individual_base.csv")
-    glp1 = pd.read_csv("delfino_individual_glp1.csv")
+    glp = pd.read_csv("delfino_individual_glp1.csv")
 
-    summary_data = []
-    
-    # 1. Economic Totals
-    summary_data.append(["Total Cost", base['Cost'].sum(), glp1['Cost'].sum()])
-    summary_data.append(["Total DALYs", base['DALYs'].sum(), glp1['DALYs'].sum()])
+    summary = [["Total Cost", base['Cost'].sum(), glp['Cost'].sum()],
+               ["Total DALYs", base['DALYs'].sum(), glp['DALYs'].sum()]]
 
-    # 2. Disease Incidence (New Cases)
-    for col in base.columns:
-        if col.startswith("inc_"):
-            # Patients who didn't have it at start (-1.0)
-            at_risk = (base[col] != -99.0).sum()
-            # New cases (recorded an age > 0)
-            b_new = (base[col] > 0).sum()
-            g_new = (glp1[col] > 0).sum()
-            
-            summary_data.append([f"At-Risk: {col[4:]}", at_risk, at_risk])
-            summary_data.append([f"New Cases: {col[4:]}", b_new, g_new])
+    # Union of all incidence columns found in either run
+    all_inc_cols = sorted(list(set([c for c in base.columns if c.startswith('inc_')]) | 
+                               set([c for c in glp.columns if c.startswith('inc_')])))
 
-    df_summary = pd.DataFrame(summary_data, columns=["Metric", "Baseline", "Intervention"])
-    df_summary["Delta"] = df_summary["Baseline"] - df_summary["Intervention"]
-    
-    # Save to File
-    df_summary.to_csv("delfino_comparison_summary.csv", index=False)
-    print("="*60)
-    print(df_summary.to_string(index=False))
-    print("="*60)
-    print(f"📁 Comparison saved to delfino_comparison_summary.csv")
+    for col in all_inc_cols:
+        b_cnt = (base[col] > 0).sum() if col in base.columns else 0
+        g_cnt = (glp[col] > 0).sum() if col in glp.columns else 0
+        summary.append([f"Cases: {col[4:]}", b_cnt, g_cnt])
+
+    df_sum = pd.DataFrame(summary, columns=["Metric", "Baseline", "Intervention"])
+    df_sum["Delta"] = df_sum["Baseline"] - df_sum["Intervention"]
+    df_sum.to_csv("delfino_comparison_summary.csv", index=False)
+    print("\n", df_sum.to_string(index=False))
 
 if __name__ == "__main__":
     run_experiment()

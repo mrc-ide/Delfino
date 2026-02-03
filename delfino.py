@@ -7,7 +7,8 @@ from model import Delphi, DelphiConfig
 
 # --- 1. CONFIGURATION & SEEDING ---
 SEED_OFFSET = 42 
-NUM_PATIENTS = 1000         # 22,661 max available in your synthetic data
+NUM_PATIENTS = 100         # 22,661 max available in your synthetic data
+NUM_PATIENTS_TO_PRINT_TO_CONSOLE = NUM_PATIENTS         # 22,661 max available in your synthetic data
 TIME_HORIZON = 20         # Years to simulate
 APPLY_INTERVENTION = True 
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -114,7 +115,7 @@ def simulate_patient(patient_id, apply_glp1):
     narrative = " -> ".join(history_log)
     
     # Console Output
-    if PRINT_TRAJECTORIES and patient_id < NUM_PATIENTS:
+    if PRINT_TRAJECTORIES and patient_id < NUM_PATIENTS_TO_PRINT_TO_CONSOLE:
         print(f"\n--- Patient {patient_id} Path ---")
         print(narrative)
 

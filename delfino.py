@@ -3,28 +3,27 @@ import pickle
 import torch
 import numpy as np
 import pandas as pd
-import argparse # Added for professional CLI handling
+import argparse
 from model import Delphi, DelphiConfig
 from tqdm import tqdm
 
 # --- 1. CLI ARGUMENT PARSING ---
 parser = argparse.ArgumentParser(description='Delfino Simulation Engine')
-# Configuration & Seeding
 parser.add_argument('--seed_offset', type=int, default=42)
 parser.add_argument('--num_patients', type=int, default=100)
 parser.add_argument('--time_horizon', type=int, default=20)
 parser.add_argument('--start_age', type=float, default=45.0)
-parser.add_argument('--apply_intervention', action='store_true', help='Toggle GLP-1')
+parser.add_argument('--apply_intervention', action='store_true')
 
-# Data & Output Options
-parser.add_argument('--use_real_data', type=bool, default=True)
+# Booleans are tricky in CLI; we use strings and convert
+parser.add_argument('--use_real_data', type=str, default='true')
 parser.add_argument('--print_trajectories', action='store_true')
 parser.add_argument('--num_to_print', type=int, default=10)
-parser.add_argument('--save_trajectories', action='store_true', default=True)
+parser.add_argument('--save_trajectories', type=str, default='true')
 
 args = parser.parse_args()
 
-# Map arguments to variables used in the script
+# Configuration mapping
 SEED_OFFSET = args.seed_offset
 NUM_PATIENTS = args.num_patients
 TIME_HORIZON = args.time_horizon
@@ -32,12 +31,13 @@ START_AGE = args.start_age
 APPLY_INTERVENTION = args.apply_intervention
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-USE_REAL_DATA = args.use_real_data
+# Convert string args to actual booleans
+USE_REAL_DATA = args.use_real_data.lower() == 'true'
 PRINT_TRAJECTORIES = args.print_trajectories
 NUM_PATIENTS_TO_PRINT_TO_CONSOLE = args.num_to_print
-SAVE_TRAJECTORY_FILES = args.save_trajectories
+SAVE_TRAJECTORY_FILES = args.save_trajectories.lower() == 'true'
 
-# --- 2. DYNAMIC LABEL & DISEASE MAPPING (Same as v7.1) ---
+# --- 2. DYNAMIC LABEL & DISEASE MAPPING ---
 data_dir = os.path.join('data', 'ukb_simulated_data')
 labels_path = os.path.join(data_dir, 'labels.csv')
 with open(labels_path, 'r') as f:
@@ -71,7 +71,7 @@ model = Delphi(DelphiConfig(**checkpoint['model_args']))
 model.load_state_dict(checkpoint['model'])
 model.to(DEVICE).eval()
 
-# --- 4. SIMULATOR CORE ---
+# --- 4. SIMULATOR CORE (logic remains the same as v7.2) ---
 def get_safe_label(token_id):
     if token_id < len(labels_list): return labels_list[token_id]
     return f"UnknownToken_{token_id}"
@@ -145,10 +145,14 @@ for year in range(int(START_AGE), int(START_AGE + TIME_HORIZON)):
     pop_incidence.append(year_stats)
 
 suffix = 'glp1' if APPLY_INTERVENTION else 'base'
-df_indiv.drop(columns=['Full_History']).to_csv(f"delfino_individual_{suffix}.csv", index=False)
-pd.DataFrame(pop_incidence).to_csv(f"delfino_population_{suffix}.csv", index=False)
 
-if SAVE_TRAJECTORY_FILES:
-    with open(f"delfino_trajectories_{suffix}.txt", "w") as f:
-        for idx, row in df_indiv.iterrows():
-            f.write(f"Patient {row['ID']}:\n{row['Full_History']}\n{'-'*50}\n")
+# Output with error handling for Permission Denied
+try:
+    df_indiv.drop(columns=['Full_History']).to_csv(f"delfino_individual_{suffix}.csv", index=False)
+    pd.DataFrame(pop_incidence).to_csv(f"delfino_population_{suffix}.csv", index=False)
+    if SAVE_TRAJECTORY_FILES:
+        with open(f"delfino_trajectories_{suffix}.txt", "w") as f:
+            for idx, row in df_indiv.iterrows():
+                f.write(f"Patient {row['ID']}:\n{row['Full_History']}\n{'-'*50}\n")
+except PermissionError:
+    print(f"❌ Error: Could not save CSVs. Please close 'delfino_individual_{suffix}.csv' if it is open in Excel.")

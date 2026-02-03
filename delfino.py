@@ -14,24 +14,19 @@ parser.add_argument('--num_patients', type=int, default=100)
 parser.add_argument('--time_horizon', type=int, default=20)
 parser.add_argument('--start_age', type=float, default=45.0)
 parser.add_argument('--apply_intervention', action='store_true')
-
-# Booleans are tricky in CLI; we use strings and convert
 parser.add_argument('--use_real_data', type=str, default='true')
 parser.add_argument('--print_trajectories', action='store_true')
 parser.add_argument('--num_to_print', type=int, default=10)
 parser.add_argument('--save_trajectories', type=str, default='true')
-
 args = parser.parse_args()
 
-# Configuration mapping
+# Map arguments
 SEED_OFFSET = args.seed_offset
 NUM_PATIENTS = args.num_patients
 TIME_HORIZON = args.time_horizon
 START_AGE = args.start_age
 APPLY_INTERVENTION = args.apply_intervention
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
-
-# Convert string args to actual booleans
 USE_REAL_DATA = args.use_real_data.lower() == 'true'
 PRINT_TRAJECTORIES = args.print_trajectories
 NUM_PATIENTS_TO_PRINT_TO_CONSOLE = args.num_to_print
@@ -47,17 +42,17 @@ def get_id(label_name):
     try: return str(labels_list.index(label_name))
     except ValueError: return None
 
+# Tracking Dictionary
 TRACKED_DISEASES = {
     get_id('E11 (non-insulin-dependent diabetes mellitus)'): 'diabetes',
     get_id('I50 (heart failure)'): 'heart_failure',
     get_id('I63 (cerebral infarction)'): 'stroke',
     get_id('J44 (other chronic obstructive pulmonary disease)'): 'copd',
-    get_id('J45 (asthma)'): 'asthma',
     get_id('Death'): 'death'
 }
 
-DISABILITY_WEIGHTS = {k: v for k, v in zip(TRACKED_DISEASES.keys(), [0.05, 0.18, 0.23, 1.0, 0.22, 0.05]) if k}
-DISEASE_COSTS = {k: v for k, v in zip(list(TRACKED_DISEASES.keys())[:-1], [2500, 8000, 15000, 4500, 1200]) if k}
+DISABILITY_WEIGHTS = {k: v for k, v in zip(TRACKED_DISEASES.keys(), [0.05, 0.18, 0.23, 1.0, 0.22]) if k}
+DISEASE_COSTS = {k: v for k, v in zip(list(TRACKED_DISEASES.keys())[:-1], [2500, 8000, 15000, 4500]) if k}
 GLP_YEARLY_COST = 1200
 
 # --- 3. LOAD MODEL & DATA ---
@@ -71,16 +66,18 @@ model = Delphi(DelphiConfig(**checkpoint['model_args']))
 model.load_state_dict(checkpoint['model'])
 model.to(DEVICE).eval()
 
-# --- 4. SIMULATOR CORE (logic remains the same as v7.2) ---
+# --- 4. SIMULATOR CORE ---
 def get_safe_label(token_id):
     if token_id < len(labels_list): return labels_list[token_id]
-    return f"UnknownToken_{token_id}"
+    return f"UNK_{token_id}"
 
 def simulate_patient(patient_id, apply_glp1):
     np.random.seed(patient_id * SEED_OFFSET) 
     torch.manual_seed(patient_id * SEED_OFFSET)
     current_age = START_AGE
-    incidence_record = {f"inc_{name}": None for name in TRACKED_DISEASES.values()}
+    
+    # Track AGE of incidence. We use -1.0 for "Never" to keep it numeric for CSVs
+    incidence_record = {f"inc_{name}": -1.0 for name in TRACKED_DISEASES.values()}
     total_costs, total_dalys = 0, 0
     
     start_idx = patient_id * 48
@@ -88,11 +85,10 @@ def simulate_patient(patient_id, apply_glp1):
     sanitized = [t for t in raw_tokens if t < VOCAB_SIZE]
     context_tokens = [t for t in sanitized if get_safe_label(t) not in ["Padding", "No event"]]
     
-    if patient_id == 99: # Dummy health check override
-        context_tokens = [t if str(t) != get_id('BMI_high') else int(get_id('BMI_mid')) for t in context_tokens]
-        
+    # Mark Pre-existing conditions as -99 (Historical)
     for t in context_tokens:
-        if str(t) in TRACKED_DISEASES: incidence_record[f"inc_{TRACKED_DISEASES[str(t)]}"] = "Pre-existing"
+        if str(t) in TRACKED_DISEASES:
+            incidence_record[f"inc_{TRACKED_DISEASES[str(t)]}"] = -99.0
     
     history_log = [f"START: Age {int(current_age)}"]
 
@@ -100,6 +96,8 @@ def simulate_patient(patient_id, apply_glp1):
         context_tokens = context_tokens[-48:] 
         str_context = [str(t) for t in context_tokens]
         T_BMI_HIGH = get_id('BMI_high')
+        
+        # INTERVENTION: Apply to current state only (most recent BMI_high)
         if str(T_BMI_HIGH) in str_context:
             if apply_glp1:
                 total_costs += GLP_YEARLY_COST 
@@ -117,42 +115,32 @@ def simulate_patient(patient_id, apply_glp1):
         
         context_tokens.append(next_token)
         t_str = str(next_token)
+        
+        # LOGGING INCIDENCE & ECONOMICS
         if t_str in TRACKED_DISEASES:
             key = f"inc_{TRACKED_DISEASES[t_str]}"
-            if incidence_record[key] is None: incidence_record[key] = int(current_age)
+            # Record first diagnosis ONLY if it hasn't happened yet
+            if incidence_record[key] == -1.0:
+                incidence_record[key] = current_age
+            
             total_dalys += DISABILITY_WEIGHTS.get(t_str, 0)
             total_costs += DISEASE_COSTS.get(t_str, 0)
             history_log.append(f"Age {int(current_age)}: {get_safe_label(next_token)}")
+            
         if t_str == get_id('Death'): break
         current_age += 1.0
 
-    narrative = " -> ".join(history_log)
-    if PRINT_TRAJECTORIES and patient_id < NUM_PATIENTS_TO_PRINT_TO_CONSOLE:
-        print(f"\n--- Patient {patient_id} ---\n{narrative}")
-    return {"ID": patient_id, "Cost": total_costs, "DALYs": total_dalys, **incidence_record, "Full_History": narrative}
+    return {"ID": patient_id, "Cost": total_costs, "DALYs": total_dalys, **incidence_record, "History": " -> ".join(history_log)}
 
 # --- 5. EXECUTION ---
-mode_str = "INTERVENTION" if APPLY_INTERVENTION else "BASELINE"
-print(f"🚀 Running {mode_str} (N={NUM_PATIENTS}, T={TIME_HORIZON})...")
-results = [simulate_patient(i, APPLY_INTERVENTION) for i in tqdm(range(NUM_PATIENTS))]
-df_indiv = pd.DataFrame(results)
-
-pop_incidence = []
-for year in range(int(START_AGE), int(START_AGE + TIME_HORIZON)):
-    year_stats = {"Year_Age": year}
-    for disease in TRACKED_DISEASES.values():
-        year_stats[disease] = (df_indiv[f"inc_{disease}"] == year).sum()
-    pop_incidence.append(year_stats)
-
 suffix = 'glp1' if APPLY_INTERVENTION else 'base'
+print(f"🚀 Running {'INTERVENTION' if APPLY_INTERVENTION else 'BASELINE'}...")
+results = [simulate_patient(i, APPLY_INTERVENTION) for i in tqdm(range(NUM_PATIENTS))]
+df = pd.DataFrame(results)
 
-# Output with error handling for Permission Denied
-try:
-    df_indiv.drop(columns=['Full_History']).to_csv(f"delfino_individual_{suffix}.csv", index=False)
-    pd.DataFrame(pop_incidence).to_csv(f"delfino_population_{suffix}.csv", index=False)
-    if SAVE_TRAJECTORY_FILES:
-        with open(f"delfino_trajectories_{suffix}.txt", "w") as f:
-            for idx, row in df_indiv.iterrows():
-                f.write(f"Patient {row['ID']}:\n{row['Full_History']}\n{'-'*50}\n")
-except PermissionError:
-    print(f"❌ Error: Could not save CSVs. Please close 'delfino_individual_{suffix}.csv' if it is open in Excel.")
+# Save Files
+df.drop(columns=['History']).to_csv(f"delfino_individual_{suffix}.csv", index=False)
+if SAVE_TRAJECTORY_FILES:
+    with open(f"delfino_trajectories_{suffix}.txt", "w") as f:
+        for _, row in df.iterrows():
+            f.write(f"Patient {row['ID']}:\n{row['History']}\n{'-'*50}\n")

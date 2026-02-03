@@ -4,6 +4,7 @@ import torch
 import numpy as np
 import pandas as pd
 import argparse
+import sys
 from model import Delphi, DelphiConfig
 from tqdm import tqdm
 
@@ -20,7 +21,7 @@ parser.add_argument('--num_to_print', type=int, default=10)
 parser.add_argument('--save_trajectories', type=str, default='true')
 args = parser.parse_args()
 
-# Map arguments
+# Configuration mapping
 SEED_OFFSET = args.seed_offset
 NUM_PATIENTS = args.num_patients
 TIME_HORIZON = args.time_horizon
@@ -42,7 +43,6 @@ def get_id(label_name):
     try: return str(labels_list.index(label_name))
     except ValueError: return None
 
-# Tracking Dictionary
 TRACKED_DISEASES = {
     get_id('E11 (non-insulin-dependent diabetes mellitus)'): 'diabetes',
     get_id('I50 (heart failure)'): 'heart_failure',
@@ -72,11 +72,11 @@ def get_safe_label(token_id):
     return f"UNK_{token_id}"
 
 def simulate_patient(patient_id, apply_glp1):
+    # Set seeds for both numpy and torch
     np.random.seed(patient_id * SEED_OFFSET) 
     torch.manual_seed(patient_id * SEED_OFFSET)
     current_age = START_AGE
     
-    # Track AGE of incidence. We use -1.0 for "Never" to keep it numeric for CSVs
     incidence_record = {f"inc_{name}": -1.0 for name in TRACKED_DISEASES.values()}
     total_costs, total_dalys = 0, 0
     
@@ -85,7 +85,7 @@ def simulate_patient(patient_id, apply_glp1):
     sanitized = [t for t in raw_tokens if t < VOCAB_SIZE]
     context_tokens = [t for t in sanitized if get_safe_label(t) not in ["Padding", "No event"]]
     
-    # Mark Pre-existing conditions as -99 (Historical)
+    # Pre-existing check
     for t in context_tokens:
         if str(t) in TRACKED_DISEASES:
             incidence_record[f"inc_{TRACKED_DISEASES[str(t)]}"] = -99.0
@@ -97,32 +97,34 @@ def simulate_patient(patient_id, apply_glp1):
         str_context = [str(t) for t in context_tokens]
         T_BMI_HIGH = get_id('BMI_high')
         
-        # INTERVENTION: Apply to current state only (most recent BMI_high)
+        # RNG SYNC FIX: Consume the same random number in both runs
+        intervention_roll = np.random.rand() 
+        
         if str(T_BMI_HIGH) in str_context:
             if apply_glp1:
                 total_costs += GLP_YEARLY_COST 
-                if np.random.rand() < 0.8:
+                if intervention_roll < 0.8: # Use the pre-rolled variable
                     last_idx = len(str_context) - 1 - str_context[::-1].index(str(T_BMI_HIGH))
                     context_tokens[last_idx] = int(get_id('BMI_mid'))
                     history_log.append(f"Age {int(current_age)}: GLP-1 Active")
 
+        # Inference
         x = torch.tensor(context_tokens, dtype=torch.long, device=DEVICE)[None, ...]
         age_t = torch.tensor([current_age], dtype=torch.float32, device=DEVICE)
         with torch.no_grad():
             out = model(x, age=age_t)
             logits = out[0] if isinstance(out, (list, tuple)) else out
-            next_token = torch.multinomial(torch.softmax(logits[:, -1, :], dim=-1), 1).item()
+            probs = torch.softmax(logits[:, -1, :], dim=-1)
+            # Sampling uses a different RNG (Torch) which is also seeded
+            next_token = torch.multinomial(probs, 1).item()
         
         context_tokens.append(next_token)
         t_str = str(next_token)
         
-        # LOGGING INCIDENCE & ECONOMICS
         if t_str in TRACKED_DISEASES:
             key = f"inc_{TRACKED_DISEASES[t_str]}"
-            # Record first diagnosis ONLY if it hasn't happened yet
             if incidence_record[key] == -1.0:
                 incidence_record[key] = current_age
-            
             total_dalys += DISABILITY_WEIGHTS.get(t_str, 0)
             total_costs += DISEASE_COSTS.get(t_str, 0)
             history_log.append(f"Age {int(current_age)}: {get_safe_label(next_token)}")
@@ -134,12 +136,14 @@ def simulate_patient(patient_id, apply_glp1):
 
 # --- 5. EXECUTION ---
 suffix = 'glp1' if APPLY_INTERVENTION else 'base'
-print(f"🚀 Running {'INTERVENTION' if APPLY_INTERVENTION else 'BASELINE'}...")
-results = [simulate_patient(i, APPLY_INTERVENTION) for i in tqdm(range(NUM_PATIENTS))]
+results = [simulate_patient(i, APPLY_INTERVENTION) for i in tqdm(range(NUM_PATIENTS), desc=f"Running {suffix.upper()}")]
 df = pd.DataFrame(results)
 
-# Save Files
-df.drop(columns=['History']).to_csv(f"delfino_individual_{suffix}.csv", index=False)
+try:
+    df.drop(columns=['History']).to_csv(f"delfino_individual_{suffix}.csv", index=False)
+except PermissionError:
+    print(f"⚠️ Close Excel! Could not save delfino_individual_{suffix}.csv")
+
 if SAVE_TRAJECTORY_FILES:
     with open(f"delfino_trajectories_{suffix}.txt", "w") as f:
         for _, row in df.iterrows():

@@ -3,24 +3,21 @@ import pandas as pd
 import sys
 import os
 
+# --- EXPERIMENT SETTINGS ---
 CONFIG = {
-    "num_patients": 500,
-    "time_horizon": 20,
+    "num_patients": 1000,    # Increased to 1000 for better statistical power
+    "time_horizon": 30,      # Increased to 30 years to allow diseases to develop
     "start_age": 45.0,
     "seed_offset": 42,
     "use_real_data": "true"
 }
 
 def run_experiment():
-    print(f"🔔 Starting Experiment: N={CONFIG['num_patients']}, T={CONFIG['time_horizon']}")
+    print(f"🔔 Starting Delfino Experiment: N={CONFIG['num_patients']}, T={CONFIG['time_horizon']}")
     
-    args = [
-        "--num_patients", str(CONFIG['num_patients']),
-        "--time_horizon", str(CONFIG['time_horizon']),
-        "--start_age", str(CONFIG['start_age']),
-        "--use_real_data", CONFIG['use_real_data'],
-        "--seed_offset", str(CONFIG['seed_offset'])
-    ]
+    args = ["--num_patients", str(CONFIG['num_patients']), "--time_horizon", str(CONFIG['time_horizon']),
+            "--start_age", str(CONFIG['start_age']), "--use_real_data", CONFIG['use_real_data'],
+            "--seed_offset", str(CONFIG['seed_offset'])]
 
     # Phase 1 & 2
     subprocess.run([sys.executable, "delfino.py"] + args, check=True)
@@ -31,31 +28,33 @@ def run_experiment():
     base = pd.read_csv("delfino_individual_base.csv")
     glp1 = pd.read_csv("delfino_individual_glp1.csv")
 
-    summary = {
-        "Metric": ["Total Cost", "Total DALYs"],
-        "Baseline": [base['Cost'].sum(), base['DALYs'].sum()],
-        "Intervention": [glp1['Cost'].sum(), glp1['DALYs'].sum()]
-    }
+    summary_data = []
+    
+    # 1. Economic Totals
+    summary_data.append(["Total Cost", base['Cost'].sum(), glp1['Cost'].sum()])
+    summary_data.append(["Total DALYs", base['DALYs'].sum(), glp1['DALYs'].sum()])
 
-    # Compare incidence for all diseases
+    # 2. Disease Incidence (New Cases)
     for col in base.columns:
         if col.startswith("inc_"):
-            # Count how many patients got the disease (Age > 0, excludes -99 Pre-existing)
-            b_count = (base[col] > 0).sum()
-            g_count = (glp1[col] > 0).sum()
-            summary["Metric"].append(f"Cases: {col[4:]}")
-            summary["Baseline"].append(b_count)
-            summary["Intervention"].append(g_count)
+            # Patients who didn't have it at start (-1.0)
+            at_risk = (base[col] != -99.0).sum()
+            # New cases (recorded an age > 0)
+            b_new = (base[col] > 0).sum()
+            g_new = (glp1[col] > 0).sum()
+            
+            summary_data.append([f"At-Risk: {col[4:]}", at_risk, at_risk])
+            summary_data.append([f"New Cases: {col[4:]}", b_new, g_new])
 
-    df_summary = pd.DataFrame(summary)
+    df_summary = pd.DataFrame(summary_data, columns=["Metric", "Baseline", "Intervention"])
     df_summary["Delta"] = df_summary["Baseline"] - df_summary["Intervention"]
     
-    # Output to File
+    # Save to File
     df_summary.to_csv("delfino_comparison_summary.csv", index=False)
-    print("="*40)
+    print("="*60)
     print(df_summary.to_string(index=False))
-    print("="*40)
-    print(f"📁 Summary saved to delfino_comparison_summary.csv")
+    print("="*60)
+    print(f"📁 Comparison saved to delfino_comparison_summary.csv")
 
 if __name__ == "__main__":
     run_experiment()

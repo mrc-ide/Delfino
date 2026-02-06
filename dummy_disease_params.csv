@@ -1,1132 +1,1256 @@
 TokenID,Code,Name,Cost,Weight
-13,A00,Cholera,1000.0,0.1
-14,A01,Typhoid and paratyphoid fevers,1000.0,0.1
-15,A02,Other salmonella infections,1000.0,0.1
-16,A03,Shigellosis,1000.0,0.1
-17,A04,Other bacterial intestinal infections,1000.0,0.1
-18,A05,Other bacterial foodborne intoxications,1000.0,0.1
-19,A06,Amoebiasis,1000.0,0.1
-20,A07,Other protozoal intestinal diseases,1000.0,0.1
-21,A08,Viral and other specified intestinal infections,1000.0,0.1
-22,A09,Diarrhoea and gastro-enteritis of presumed infectious origin,1000.0,0.1
-23,A15,"Respiratory tuberculosis, bacteriologically and histologically confirmed",1000.0,0.1
-24,A16,"Respiratory tuberculosis, not confirmed bacteriologically or histologically",1000.0,0.1
-25,A17,Tuberculosis of nervous system,1000.0,0.1
-26,A18,Tuberculosis of other organs,1000.0,0.1
-27,A19,Miliary tuberculosis,1000.0,0.1
-28,A20,Plague,1000.0,0.1
-29,A22,Anthrax,1000.0,0.1
-30,A23,Brucellosis,1000.0,0.1
-31,A24,Glanders and melioidosis,1000.0,0.1
-32,A25,Rat-bite fevers,1000.0,0.1
-33,A26,Erysipeloid,1000.0,0.1
-34,A27,Leptospirosis,1000.0,0.1
-35,A28,"Other zoonotic bacterial diseases, not elsewhere classified",1000.0,0.1
-36,A30,Leprosy [hansen's disease],1000.0,0.1
-37,A31,Infection due to other mycobacteria,1000.0,0.1
-38,A32,Listeriosis,1000.0,0.1
-39,A33,Tetanus neonatorum,1000.0,0.1
-40,A35,Other tetanus,1000.0,0.1
-41,A36,Diphtheria,1000.0,0.1
-42,A37,Whooping cough,1000.0,0.1
-43,A38,Scarlet fever,1000.0,0.1
-44,A39,Meningococcal infection,1000.0,0.1
-45,A40,Streptococcal septicaemia,1000.0,0.1
-46,A41,Other septicaemia,1000.0,0.1
-47,A42,Actinomycosis,1000.0,0.1
-48,A43,Nocardiosis,1000.0,0.1
-49,A44,Bartonellosis,1000.0,0.1
-50,A46,Erysipelas,1000.0,0.1
-51,A48,"Other bacterial diseases, not elsewhere classified",1000.0,0.1
-52,A49,Bacterial infection of unspecified site,1000.0,0.1
-53,A50,Congenital syphilis,1000.0,0.1
-54,A51,Early syphilis,1000.0,0.1
-55,A52,Late syphilis,1000.0,0.1
-56,A53,Other and unspecified syphilis,1000.0,0.1
-57,A54,Gonococcal infection,1000.0,0.1
-58,A55,Chlamydial lymphogranuloma (venereum,1000.0,0.1
-59,A56,Other sexually transmitted chlamydial diseases,1000.0,0.1
-60,A58,Granuloma inguinale,1000.0,0.1
-61,A59,Trichomoniasis,1000.0,0.1
-62,A60,Anogenital herpesviral [herpes simplex] infections,1000.0,0.1
-63,A63,"Other predominantly sexually transmitted diseases, not elsewhere classified",1000.0,0.1
-64,A64,Unspecified sexually transmitted disease,1000.0,0.1
-65,A66,Yaws,1000.0,0.1
-66,A67,Pinta [carate],1000.0,0.1
-67,A68,Relapsing fevers,1000.0,0.1
-68,A69,Other spirochaetal infections,1000.0,0.1
-69,A70,Chlamydia psittaci infection,1000.0,0.1
-70,A71,Trachoma,1000.0,0.1
-71,A74,Other diseases caused by chlamydiae,1000.0,0.1
-72,A75,Typhus fever,1000.0,0.1
-73,A77,Spotted fever [tick-borne rickettsioses],1000.0,0.1
-74,A78,Q fever,1000.0,0.1
-75,A79,Other rickettsioses,1000.0,0.1
-76,A80,Acute poliomyelitis,1000.0,0.1
-77,A81,Atypical virus infections of central nervous system,1000.0,0.1
-78,A82,Rabies,1000.0,0.1
-79,A83,Mosquito-borne viral encephalitis,1000.0,0.1
-80,A84,Tick-borne viral encephalitis,1000.0,0.1
-81,A85,"Other viral encephalitis, not elsewhere classified",1000.0,0.1
-82,A86,Unspecified viral encephalitis,1000.0,0.1
-83,A87,Viral meningitis,1000.0,0.1
-84,A88,"Other viral infections of central nervous system, not elsewhere classified",1000.0,0.1
-85,A89,Unspecified viral infection of central nervous system,1000.0,0.1
-86,A90,Dengue fever [classical dengue],1000.0,0.1
-87,A91,Dengue haemorrhagic fever,1000.0,0.1
-88,A92,Other mosquito-borne viral fevers,1000.0,0.1
-89,A93,"Other arthropod-borne viral fevers, not elsewhere classified",1000.0,0.1
-90,A94,Unspecified arthropod-borne viral fever,1000.0,0.1
-91,A95,Yellow fever,1000.0,0.1
-92,A97,Dengue,1000.0,0.1
-93,A98,"Other viral haemorrhagic fevers, not elsewhere classified",1000.0,0.1
-94,B00,Herpesviral [herpes simplex] infections,1000.0,0.1
-95,B01,Varicella [chickenpox],1000.0,0.1
-96,B02,Zoster [herpes zoster],1000.0,0.1
-97,B03,Smallpox,1000.0,0.1
-98,B05,Measles,1000.0,0.1
-99,B06,Rubella [german measles],1000.0,0.1
-100,B07,Viral warts,1000.0,0.1
-101,B08,"Other viral infections characterised by skin and mucous membrane lesions, not elsewhere classified",1000.0,0.1
-102,B09,Unspecified viral infection characterised by skin and mucous membrane lesions,1000.0,0.1
-103,B15,Acute hepatitis a,1000.0,0.1
-104,B16,Acute hepatitis b,1000.0,0.1
-105,B17,Other acute viral hepatitis,1000.0,0.1
-106,B18,Chronic viral hepatitis,1000.0,0.1
-107,B19,Unspecified viral hepatitis,1000.0,0.1
-108,B20,Human immunodeficiency virus [hiv] disease resulting in infectious and parasitic diseases,1000.0,0.1
-109,B21,Human immunodeficiency virus [hiv] disease resulting in malignant neoplasms,1000.0,0.1
-110,B22,Human immunodeficiency virus [hiv] disease resulting in other specified diseases,1000.0,0.1
-111,B23,Human immunodeficiency virus [hiv] disease resulting in other conditions,1000.0,0.1
-112,B24,Unspecified human immunodeficiency virus [hiv] disease,1000.0,0.1
-113,B25,Cytomegaloviral disease,1000.0,0.1
-114,B26,Mumps,1000.0,0.1
-115,B27,Infectious mononucleosis,1000.0,0.1
-116,B30,Viral conjunctivitis,1000.0,0.1
-117,B33,"Other viral diseases, not elsewhere classified",1000.0,0.1
-118,B34,Viral infection of unspecified site,1000.0,0.1
-119,B35,Dermatophytosis,1000.0,0.1
-120,B36,Other superficial mycoses,1000.0,0.1
-121,B37,Candidiasis,1000.0,0.1
-122,B38,Coccidioidomycosis,1000.0,0.1
-123,B39,Histoplasmosis,1000.0,0.1
-124,B40,Blastomycosis,1000.0,0.1
-125,B42,Sporotrichosis,1000.0,0.1
-126,B43,Chromomycosis and phaeomycotic abscess,1000.0,0.1
-127,B44,Aspergillosis,1000.0,0.1
-128,B45,Cryptococcosis,1000.0,0.1
-129,B46,Zygomycosis,1000.0,0.1
-130,B47,Mycetoma,1000.0,0.1
-131,B48,"Other mycoses, not elsewhere classified",1000.0,0.1
-132,B49,Unspecified mycosis,1000.0,0.1
-133,B50,Plasmodium falciparum malaria,1000.0,0.1
-134,B51,Plasmodium vivax malaria,1000.0,0.1
-135,B52,Plasmodium malariae malaria,1000.0,0.1
-136,B53,Other parasitologically confirmed malaria,1000.0,0.1
-137,B54,Unspecified malaria,1000.0,0.1
-138,B55,Leishmaniasis,1000.0,0.1
-139,B57,Chagas' disease,1000.0,0.1
-140,B58,Toxoplasmosis,1000.0,0.1
-141,B59,Pneumocystosis,1000.0,0.1
-142,B60,"Other protozoal diseases, not elsewhere classified",1000.0,0.1
-143,B65,Schistosomiasis [bilharziasis],1000.0,0.1
-144,B66,Other fluke infections,1000.0,0.1
-145,B67,Echinococcosis,1000.0,0.1
-146,B68,Taeniasis,1000.0,0.1
-147,B69,Cysticercosis,1000.0,0.1
-148,B71,Other cestode infections,1000.0,0.1
-149,B73,Onchocerciasis,1000.0,0.1
-150,B74,Filariasis,1000.0,0.1
-151,B75,Trichinellosis,1000.0,0.1
-152,B76,Hookworm diseases,1000.0,0.1
-153,B77,Ascariasis,1000.0,0.1
-154,B78,Strongyloidiasis,1000.0,0.1
-155,B79,Trichuriasis,1000.0,0.1
-156,B80,Enterobiasis,1000.0,0.1
-157,B81,"Other intestinal helminthiases, not elsewhere classified",1000.0,0.1
-158,B82,Unspecified intestinal parasitism,1000.0,0.1
-159,B83,Other helminthiases,1000.0,0.1
-160,B85,Pediculosis and phthiriasis,1000.0,0.1
-161,B86,Scabies,1000.0,0.1
-162,B87,Myiasis,1000.0,0.1
-163,B88,Other infestations,1000.0,0.1
-164,B89,Unspecified parasitic disease,1000.0,0.1
-165,B90,Sequelae of tuberculosis,1000.0,0.1
-166,B91,Sequelae of poliomyelitis,1000.0,0.1
-167,B94,Sequelae of other and unspecified infectious and parasitic diseases,1000.0,0.1
-168,B95,Streptococcus and staphylococcus as the cause of diseases classified to other chapters,1000.0,0.1
-169,B96,Other bacterial agents as the cause of diseases classified to other chapters,1000.0,0.1
-170,B97,Viral agents as the cause of diseases classified to other chapters,1000.0,0.1
-171,B98,Other specified infectious agents as the cause of diseases classified to other chapters,1000.0,0.1
-172,B99,Other and unspecified infectious diseases,1000.0,0.1
-173,D50,Iron deficiency anaemia,1000.0,0.1
-174,D51,Vitamin b12 deficiency anaemia,1000.0,0.1
-175,D52,Folate deficiency anaemia,1000.0,0.1
-176,D53,Other nutritional anaemias,1000.0,0.1
-177,D55,Anaemia due to enzyme disorders,1000.0,0.1
-178,D56,Thalassaemia,1000.0,0.1
-179,D57,Sickle-cell disorders,1000.0,0.1
-180,D58,Other hereditary haemolytic anaemias,1000.0,0.1
-181,D59,Acquired haemolytic anaemia,1000.0,0.1
-182,D60,Acquired pure red cell aplasia [erythroblastopenia],1000.0,0.1
-183,D61,Other aplastic anaemias,1000.0,0.1
-184,D62,Acute posthaemorrhagic anaemia,1000.0,0.1
-185,D63,Anaemia in chronic diseases classified elsewhere,1000.0,0.1
-186,D64,Other anaemias,1000.0,0.1
-187,D65,Disseminated intravascular coagulation [defibrination syndrome],1000.0,0.1
-188,D66,Hereditary factor viii deficiency,1000.0,0.1
-189,D67,Hereditary factor ix deficiency,1000.0,0.1
-190,D68,Other coagulation defects,1000.0,0.1
-191,D69,Purpura and other haemorrhagic conditions,1000.0,0.1
-192,D70,Agranulocytosis,1000.0,0.1
-193,D71,Functional disorders of polymorphonuclear neutrophils,1000.0,0.1
-194,D72,Other disorders of white blood cells,1000.0,0.1
-195,D73,Diseases of spleen,1000.0,0.1
-196,D74,Methaemoglobinaemia,1000.0,0.1
-197,D75,Other diseases of blood and blood-forming organs,1000.0,0.1
-198,D76,Certain diseases involving lymphoreticular tissue and reticulohistiocytic system,1000.0,0.1
-199,D77,Other disorders of blood and blood-forming organs in diseases classified elsewhere,1000.0,0.1
-200,D80,Immunodeficiency with predominantly antibody defects,1000.0,0.1
-201,D81,Combined immunodeficiencies,1000.0,0.1
-202,D82,Immunodeficiency associated with other major defects,1000.0,0.1
-203,D83,Common variable immunodeficiency,1000.0,0.1
-204,D84,Other immunodeficiencies,1000.0,0.1
-205,D86,Sarcoidosis,1000.0,0.1
-206,D89,"Other disorders involving the immune mechanism, not elsewhere classified",1000.0,0.1
-207,E01,Iodine-deficiency-related thyroid disorders and allied conditions,1000.0,0.1
-208,E02,Subclinical iodine-deficiency hypothyroidism,1000.0,0.1
-209,E03,Other hypothyroidism,1000.0,0.1
-210,E04,Other non-toxic goitre,1000.0,0.1
-211,E05,Thyrotoxicosis [hyperthyroidism],1000.0,0.1
-212,E06,Thyroiditis,1000.0,0.1
-213,E07,Other disorders of thyroid,1000.0,0.1
-214,E10,Insulin-dependent diabetes mellitus,1000.0,0.1
-215,E11,Non-insulin-dependent diabetes mellitus,1000.0,0.1
-216,E12,Malnutrition-related diabetes mellitus,1000.0,0.1
-217,E13,Other specified diabetes mellitus,1000.0,0.1
-218,E14,Unspecified diabetes mellitus,1000.0,0.1
-219,E15,Nondiabetic hypoglycaemic coma,1000.0,0.1
-220,E16,Other disorders of pancreatic internal secretion,1000.0,0.1
-221,E20,Hypoparathyroidism,1000.0,0.1
-222,E21,Hyperparathyroidism and other disorders of parathyroid gland,1000.0,0.1
-223,E22,Hyperfunction of pituitary gland,1000.0,0.1
-224,E23,Hypofunction and other disorders of pituitary gland,1000.0,0.1
-225,E24,Cushing's syndrome,1000.0,0.1
-226,E25,Adrenogenital disorders,1000.0,0.1
-227,E26,Hyperaldosteronism,1000.0,0.1
-228,E27,Other disorders of adrenal gland,1000.0,0.1
-229,E28,Ovarian dysfunction,1000.0,0.1
-230,E29,Testicular dysfunction,1000.0,0.1
-231,E30,"Disorders of puberty, not elsewhere classified",1000.0,0.1
-232,E31,Polyglandular dysfunction,1000.0,0.1
-233,E32,Diseases of thymus,1000.0,0.1
-234,E34,Other endocrine disorders,1000.0,0.1
-235,E35,Disorders of endocrine glands in diseases classified elsewhere,1000.0,0.1
-236,E41,Nutritional marasmus,1000.0,0.1
-237,E43,Unspecified severe protein-energy malnutrition,1000.0,0.1
-238,E44,Protein-energy malnutrition of moderate and mild degree,1000.0,0.1
-239,E45,Retarded development following protein-energy malnutrition,1000.0,0.1
-240,E46,Unspecified protein-energy malnutrition,1000.0,0.1
-241,E50,Vitamin a deficiency,1000.0,0.1
-242,E51,Thiamine deficiency,1000.0,0.1
-243,E52,Niacin deficiency [pellagra],1000.0,0.1
-244,E53,Deficiency of other b group vitamins,1000.0,0.1
-245,E54,Ascorbic acid deficiency,1000.0,0.1
-246,E55,Vitamin d deficiency,1000.0,0.1
-247,E56,Other vitamin deficiencies,1000.0,0.1
-248,E58,Dietary calcium deficiency,1000.0,0.1
-249,E59,Dietary selenium deficiency,1000.0,0.1
-250,E60,Dietary zinc deficiency,1000.0,0.1
-251,E61,Deficiency of other nutrient elements,1000.0,0.1
-252,E63,Other nutritional deficiencies,1000.0,0.1
-253,E64,Sequelae of malnutrition and other nutritional deficiencies,1000.0,0.1
-254,E65,Localised adiposity,1000.0,0.1
-255,E66,Obesity,1000.0,0.1
-256,E67,Other hyperalimentation,1000.0,0.1
-257,E68,Sequelae of hyperalimentation,1000.0,0.1
-258,E70,Disorders of aromatic amino-acid metabolism,1000.0,0.1
-259,E71,Disorders of branched-chain amino-acid metabolism and fatty-acid metabolism,1000.0,0.1
-260,E72,Other disorders of amino-acid metabolism,1000.0,0.1
-261,E73,Lactose intolerance,1000.0,0.1
-262,E74,Other disorders of carbohydrate metabolism,1000.0,0.1
-263,E75,Disorders of sphingolipid metabolism and other lipid storage disorders,1000.0,0.1
-264,E76,Disorders of glycosaminoglycan metabolism,1000.0,0.1
-265,E77,Disorders of glycoprotein metabolism,1000.0,0.1
-266,E78,Disorders of lipoprotein metabolism and other lipidaemias,1000.0,0.1
-267,E79,Disorders of purine and pyrimidine metabolism,1000.0,0.1
-268,E80,Disorders of porphyrin and bilirubin metabolism,1000.0,0.1
-269,E83,Disorders of mineral metabolism,1000.0,0.1
-270,E84,Cystic fibrosis,1000.0,0.1
-271,E85,Amyloidosis,1000.0,0.1
-272,E86,Volume depletion,1000.0,0.1
-273,E87,"Other disorders of fluid, electrolyte and acid-base balance",1000.0,0.1
-274,E88,Other metabolic disorders,1000.0,0.1
-275,E89,"Postprocedural endocrine and metabolic disorders, not elsewhere classified",1000.0,0.1
-276,F00,Dementia in alzheimer's disease,1000.0,0.1
-277,F01,Vascular dementia,1000.0,0.1
-278,F02,Dementia in other diseases classified elsewhere,1000.0,0.1
-279,F03,Unspecified dementia,1000.0,0.1
-280,F04,"Organic amnesic syndrome, not induced by alcohol and other psychoactive substances",1000.0,0.1
-281,F05,"Delirium, not induced by alcohol and other psychoactive substances",1000.0,0.1
-282,F06,Other mental disorders due to brain damage and dysfunction and to physical disease,1000.0,0.1
-283,F07,"Personality and behavioural disorders due to brain disease, damage and dysfunction",1000.0,0.1
-284,F09,Unspecified organic or symptomatic mental disorder,1000.0,0.1
-285,F10,Mental and behavioural disorders due to use of alcohol,1000.0,0.1
-286,F11,Mental and behavioural disorders due to use of opioids,1000.0,0.1
-287,F12,Mental and behavioural disorders due to use of cannabinoids,1000.0,0.1
-288,F13,Mental and behavioural disorders due to use of sedatives or hypnotics,1000.0,0.1
-289,F14,Mental and behavioural disorders due to use of cocaine,1000.0,0.1
-290,F15,"Mental and behavioural disorders due to use of other stimulants, including caffeine",1000.0,0.1
-291,F16,Mental and behavioural disorders due to use of hallucinogens,1000.0,0.1
-292,F17,Mental and behavioural disorders due to use of tobacco,1000.0,0.1
-293,F18,Mental and behavioural disorders due to use of volatile solvents,1000.0,0.1
-294,F19,Mental and behavioural disorders due to multiple drug use and use of other psychoactive substances,1000.0,0.1
-295,F20,Schizophrenia,1000.0,0.1
-296,F21,Schizotypal disorder,1000.0,0.1
-297,F22,Persistent delusional disorders,1000.0,0.1
-298,F23,Acute and transient psychotic disorders,1000.0,0.1
-299,F24,Induced delusional disorder,1000.0,0.1
-300,F25,Schizoaffective disorders,1000.0,0.1
-301,F28,Other nonorganic psychotic disorders,1000.0,0.1
-302,F29,Unspecified nonorganic psychosis,1000.0,0.1
-303,F30,Manic episode,1000.0,0.1
-304,F31,Bipolar affective disorder,1000.0,0.1
-305,F32,Depressive episode,1000.0,0.1
-306,F33,Recurrent depressive disorder,1000.0,0.1
-307,F34,Persistent mood [affective] disorders,1000.0,0.1
-308,F38,Other mood [affective] disorders,1000.0,0.1
-309,F39,Unspecified mood [affective] disorder,1000.0,0.1
-310,F40,Phobic anxiety disorders,1000.0,0.1
-311,F41,Other anxiety disorders,1000.0,0.1
-312,F42,Obsessive-compulsive disorder,1000.0,0.1
-313,F43,"Reaction to severe stress, and adjustment disorders",1000.0,0.1
-314,F44,Dissociative [conversion] disorders,1000.0,0.1
-315,F45,Somatoform disorders,1000.0,0.1
-316,F48,Other neurotic disorders,1000.0,0.1
-317,F50,Eating disorders,1000.0,0.1
-318,F51,Nonorganic sleep disorders,1000.0,0.1
-319,F52,"Sexual dysfunction, not caused by organic disorder or disease",1000.0,0.1
-320,F53,"Mental and behavioural disorders associated with the puerperium, not elsewhere classified",1000.0,0.1
-321,F54,Psychological and behavioural factors associated with disorders or diseases classified elsewhere,1000.0,0.1
-322,F55,Abuse of non-dependence-producing substances,1000.0,0.1
-323,F59,Unspecified behavioural syndromes associated with physiological disturbances and physical factors,1000.0,0.1
-324,F60,Specific personality disorders,1000.0,0.1
-325,F61,Mixed and other personality disorders,1000.0,0.1
-326,F62,"Enduring personality changes, not attributable to brain damage and disease",1000.0,0.1
-327,F63,Habit and impulse disorders,1000.0,0.1
-328,F64,Gender identity disorders,1000.0,0.1
-329,F65,Disorders of sexual preference,1000.0,0.1
-330,F66,Psychological and behavioural disorders associated with sexual development and orientation,1000.0,0.1
-331,F68,Other disorders of adult personality and behaviour,1000.0,0.1
-332,F69,Unspecified disorder of adult personality and behaviour,1000.0,0.1
-333,F70,Mild mental retardation,1000.0,0.1
-334,F71,Moderate mental retardation,1000.0,0.1
-335,F72,Severe mental retardation,1000.0,0.1
-336,F78,Other mental retardation,1000.0,0.1
-337,F79,Unspecified mental retardation,1000.0,0.1
-338,F80,Specific developmental disorders of speech and language,1000.0,0.1
-339,F81,Specific developmental disorders of scholastic skills,1000.0,0.1
-340,F82,Specific developmental disorder of motor function,1000.0,0.1
-341,F83,Mixed specific developmental disorders,1000.0,0.1
-342,F84,Pervasive developmental disorders,1000.0,0.1
-343,F88,Other disorders of psychological development,1000.0,0.1
-344,F89,Unspecified disorder of psychological development,1000.0,0.1
-345,F90,Hyperkinetic disorders,1000.0,0.1
-346,F91,Conduct disorders,1000.0,0.1
-347,F92,Mixed disorders of conduct and emotions,1000.0,0.1
-348,F93,Emotional disorders with onset specific to childhood,1000.0,0.1
-349,F94,Disorders of social functioning with onset specific to childhood and adolescence,1000.0,0.1
-350,F95,Tic disorders,1000.0,0.1
-351,F98,Other behavioural and emotional disorders with onset usually occurring in childhood and adolescence,1000.0,0.1
-352,F99,"Mental disorder, not otherwise specified",1000.0,0.1
-353,G00,"Bacterial meningitis, not elsewhere classified",1000.0,0.1
-354,G01,Meningitis in bacterial diseases classified elsewhere,1000.0,0.1
-355,G02,Meningitis in other infectious and parasitic diseases classified elsewhere,1000.0,0.1
-356,G03,Meningitis due to other and unspecified causes,1000.0,0.1
-357,G04,"Encephalitis, myelitis and encephalomyelitis",1000.0,0.1
-358,G05,"Encephalitis, myelitis and encephalomyelitis in diseases classified elsewhere",1000.0,0.1
-359,G06,Intracranial and intraspinal abscess and granuloma,1000.0,0.1
-360,G07,Intracranial and intraspinal abscess and granuloma in diseases classified elsewhere,1000.0,0.1
-361,G08,Intracranial and intraspinal phlebitis and thrombophlebitis,1000.0,0.1
-362,G09,Sequelae of inflammatory diseases of central nervous system,1000.0,0.1
-363,G10,Huntington's disease,1000.0,0.1
-364,G11,Hereditary ataxia,1000.0,0.1
-365,G12,Spinal muscular atrophy and related syndromes,1000.0,0.1
-366,G13,Systemic atrophies primarily affecting central nervous system in diseases classified elsewhere,1000.0,0.1
-367,G14,Postpolio syndrome,1000.0,0.1
-368,G20,Parkinson's disease,1000.0,0.1
-369,G21,Secondary parkinsonism,1000.0,0.1
-370,G22,Parkinsonism in diseases classified elsewhere,1000.0,0.1
-371,G23,Other degenerative diseases of basal ganglia,1000.0,0.1
-372,G24,Dystonia,1000.0,0.1
-373,G25,Other extrapyramidal and movement disorders,1000.0,0.1
-374,G30,Alzheimer's disease,1000.0,0.1
-375,G31,"Other degenerative diseases of nervous system, not elsewhere classified",1000.0,0.1
-376,G32,Other degenerative disorders of nervous system in diseases classified elsewhere,1000.0,0.1
-377,G35,Multiple sclerosis,1000.0,0.1
-378,G36,Other acute disseminated demyelination,1000.0,0.1
-379,G37,Other demyelinating diseases of central nervous system,1000.0,0.1
-380,G40,Epilepsy,1000.0,0.1
-381,G41,Status epilepticus,1000.0,0.1
-382,G43,Migraine,1000.0,0.1
-383,G44,Other headache syndromes,1000.0,0.1
-384,G45,Transient cerebral ischaemic attacks and related syndromes,1000.0,0.1
-385,G46,Vascular syndromes of brain in cerebrovascular diseases,1000.0,0.1
-386,G47,Sleep disorders,1000.0,0.1
-387,G50,Disorders of trigeminal nerve,1000.0,0.1
-388,G51,Facial nerve disorders,1000.0,0.1
-389,G52,Disorders of other cranial nerves,1000.0,0.1
-390,G53,Cranial nerve disorders in diseases classified elsewhere,1000.0,0.1
-391,G54,Nerve root and plexus disorders,1000.0,0.1
-392,G55,Nerve root and plexus compressions in diseases classified elsewhere,1000.0,0.1
-393,G56,Mononeuropathies of upper limb,1000.0,0.1
-394,G57,Mononeuropathies of lower limb,1000.0,0.1
-395,G58,Other mononeuropathies,1000.0,0.1
-396,G59,Mononeuropathy in diseases classified elsewhere,1000.0,0.1
-397,G60,Hereditary and idiopathic neuropathy,1000.0,0.1
-398,G61,Inflammatory polyneuropathy,1000.0,0.1
-399,G62,Other polyneuropathies,1000.0,0.1
-400,G63,Polyneuropathy in diseases classified elsewhere,1000.0,0.1
-401,G64,Other disorders of peripheral nervous system,1000.0,0.1
-402,G70,Myasthenia gravis and other myoneural disorders,1000.0,0.1
-403,G71,Primary disorders of muscles,1000.0,0.1
-404,G72,Other myopathies,1000.0,0.1
-405,G73,Disorders of myoneural junction and muscle in diseases classified elsewhere,1000.0,0.1
-406,G80,Infantile cerebral palsy,1000.0,0.1
-407,G81,Hemiplegia,1000.0,0.1
-408,G82,Paraplegia and tetraplegia,1000.0,0.1
-409,G83,Other paralytic syndromes,1000.0,0.1
-410,G90,Disorders of autonomic nervous system,1000.0,0.1
-411,G91,Hydrocephalus,1000.0,0.1
-412,G92,Toxic encephalopathy,1000.0,0.1
-413,G93,Other disorders of brain,1000.0,0.1
-414,G94,Other disorders of brain in diseases classified elsewhere,1000.0,0.1
-415,G95,Other diseases of spinal cord,1000.0,0.1
-416,G96,Other disorders of central nervous system,1000.0,0.1
-417,G97,"Postprocedural disorders of nervous system, not elsewhere classified",1000.0,0.1
-418,G98,"Other disorders of nervous system, not elsewhere classified",1000.0,0.1
-419,G99,Other disorders of nervous system in diseases classified elsewhere,1000.0,0.1
-420,H00,Hordeolum and chalazion,1000.0,0.1
-421,H01,Other inflammation of eyelid,1000.0,0.1
-422,H02,Other disorders of eyelid,1000.0,0.1
-423,H03,Disorders of eyelid in diseases classified elsewhere,1000.0,0.1
-424,H04,Disorders of lachrymal system,1000.0,0.1
-425,H05,Disorders of orbit,1000.0,0.1
-426,H06,Disorders of lachrymal system and orbit in diseases classified elsewhere,1000.0,0.1
-427,H10,Conjunctivitis,1000.0,0.1
-428,H11,Other disorders of conjunctiva,1000.0,0.1
-429,H13,Disorders of conjunctiva in diseases classified elsewhere,1000.0,0.1
-430,H15,Disorders of sclera,1000.0,0.1
-431,H16,Keratitis,1000.0,0.1
-432,H17,Corneal scars and opacities,1000.0,0.1
-433,H18,Other disorders of cornea,1000.0,0.1
-434,H19,Disorders of sclera and cornea in diseases classified elsewhere,1000.0,0.1
-435,H20,Iridocyclitis,1000.0,0.1
-436,H21,Other disorders of iris and ciliary body,1000.0,0.1
-437,H22,Disorders of iris and ciliary body in diseases classified elsewhere,1000.0,0.1
-438,H25,Senile cataract,1000.0,0.1
-439,H26,Other cataract,1000.0,0.1
-440,H27,Other disorders of lens,1000.0,0.1
-441,H28,Cataract and other disorders of lens in diseases classified elsewhere,1000.0,0.1
-442,H30,Chorioretinal inflammation,1000.0,0.1
-443,H31,Other disorders of choroid,1000.0,0.1
-444,H32,Chorioretinal disorders in diseases classified elsewhere,1000.0,0.1
-445,H33,Retinal detachments and breaks,1000.0,0.1
-446,H34,Retinal vascular occlusions,1000.0,0.1
-447,H35,Other retinal disorders,1000.0,0.1
-448,H36,Retinal disorders in diseases classified elsewhere,1000.0,0.1
-449,H40,Glaucoma,1000.0,0.1
-450,H42,Glaucoma in diseases classified elsewhere,1000.0,0.1
-451,H43,Disorders of vitreous body,1000.0,0.1
-452,H44,Disorders of globe,1000.0,0.1
-453,H45,Disorders of vitreous body and globe in diseases classified elsewhere,1000.0,0.1
-454,H46,Optic neuritis,1000.0,0.1
-455,H47,Other disorders of optic [2nd] nerve and visual pathways,1000.0,0.1
-456,H48,Disorders of optic [2nd] nerve and visual pathways in diseases classified elsewhere,1000.0,0.1
-457,H49,Paralytic strabismus,1000.0,0.1
-458,H50,Other strabismus,1000.0,0.1
-459,H51,Other disorders of binocular movement,1000.0,0.1
-460,H52,Disorders of refraction and accommodation,1000.0,0.1
-461,H53,Visual disturbances,1000.0,0.1
-462,H54,Blindness and low vision,1000.0,0.1
-463,H55,Nystagmus and other irregular eye movements,1000.0,0.1
-464,H57,Other disorders of eye and adnexa,1000.0,0.1
-465,H58,Other disorders of eye and adnexa in diseases classified elsewhere,1000.0,0.1
-466,H59,"Postprocedural disorders of eye and adnexa, not elsewhere classified",1000.0,0.1
-467,H60,Otitis externa,1000.0,0.1
-468,H61,Other disorders of external ear,1000.0,0.1
-469,H62,Disorders of external ear in diseases classified elsewhere,1000.0,0.1
-470,H65,Nonsuppurative otitis media,1000.0,0.1
-471,H66,Suppurative and unspecified otitis media,1000.0,0.1
-472,H67,Otitis media in diseases classified elsewhere,1000.0,0.1
-473,H68,Eustachian salpingitis and obstruction,1000.0,0.1
-474,H69,Other disorders of eustachian tube,1000.0,0.1
-475,H70,Mastoiditis and related conditions,1000.0,0.1
-476,H71,Cholesteatoma of middle ear,1000.0,0.1
-477,H72,Perforation of tympanic membrane,1000.0,0.1
-478,H73,Other disorders of tympanic membrane,1000.0,0.1
-479,H74,Other disorders of middle ear and mastoid,1000.0,0.1
-480,H75,Other disorders of middle ear and mastoid in diseases classified elsewhere,1000.0,0.1
-481,H80,Otosclerosis,1000.0,0.1
-482,H81,Disorders of vestibular function,1000.0,0.1
-483,H82,Vertiginous syndromes in diseases classified elsewhere,1000.0,0.1
-484,H83,Other diseases of inner ear,1000.0,0.1
-485,H90,Conductive and sensorineural hearing loss,1000.0,0.1
-486,H91,Other hearing loss,1000.0,0.1
-487,H92,Otalgia and effusion of ear,1000.0,0.1
-488,H93,"Other disorders of ear, not elsewhere classified",1000.0,0.1
-489,H94,Other disorders of ear in diseases classified elsewhere,1000.0,0.1
-490,H95,"Postprocedural disorders of ear and mastoid process, not elsewhere classified",1000.0,0.1
-491,I00,Rheumatic fever without mention of heart involvement,1000.0,0.1
-492,I01,Rheumatic fever with heart involvement,1000.0,0.1
-493,I02,Rheumatic chorea,1000.0,0.1
-494,I05,Rheumatic mitral valve diseases,1000.0,0.1
-495,I06,Rheumatic aortic valve diseases,1000.0,0.1
-496,I07,Rheumatic tricuspid valve diseases,1000.0,0.1
-497,I08,Multiple valve diseases,1000.0,0.1
-498,I09,Other rheumatic heart diseases,1000.0,0.1
-499,I10,Essential (primary) hypertension,1000.0,0.1
-500,I11,Hypertensive heart disease,1000.0,0.1
-501,I12,Hypertensive renal disease,1000.0,0.1
-502,I13,Hypertensive heart and renal disease,1000.0,0.1
-503,I15,Secondary hypertension,1000.0,0.1
-504,I20,Angina pectoris,1000.0,0.1
-505,I21,Acute myocardial infarction,1000.0,0.1
-506,I22,Subsequent myocardial infarction,1000.0,0.1
-507,I23,Certain current complications following acute myocardial infarction,1000.0,0.1
-508,I24,Other acute ischaemic heart diseases,1000.0,0.1
-509,I25,Chronic ischaemic heart disease,1000.0,0.1
-510,I26,Pulmonary embolism,1000.0,0.1
-511,I27,Other pulmonary heart diseases,1000.0,0.1
-512,I28,Other diseases of pulmonary vessels,1000.0,0.1
-513,I30,Acute pericarditis,1000.0,0.1
-514,I31,Other diseases of pericardium,1000.0,0.1
-515,I32,Pericarditis in diseases classified elsewhere,1000.0,0.1
-516,I33,Acute and subacute endocarditis,1000.0,0.1
-517,I34,Nonrheumatic mitral valve disorders,1000.0,0.1
-518,I35,Nonrheumatic aortic valve disorders,1000.0,0.1
-519,I36,Nonrheumatic tricuspid valve disorders,1000.0,0.1
-520,I37,Pulmonary valve disorders,1000.0,0.1
-521,I38,"Endocarditis, valve unspecified",1000.0,0.1
-522,I39,Endocarditis and heart valve disorders in diseases classified elsewhere,1000.0,0.1
-523,I40,Acute myocarditis,1000.0,0.1
-524,I41,Myocarditis in diseases classified elsewhere,1000.0,0.1
-525,I42,Cardiomyopathy,1000.0,0.1
-526,I43,Cardiomyopathy in diseases classified elsewhere,1000.0,0.1
-527,I44,Atrioventricular and left bundle-branch block,1000.0,0.1
-528,I45,Other conduction disorders,1000.0,0.1
-529,I46,Cardiac arrest,1000.0,0.1
-530,I47,Paroxysmal tachycardia,1000.0,0.1
-531,I48,Atrial fibrillation and flutter,1000.0,0.1
-532,I49,Other cardiac arrhythmias,1000.0,0.1
-533,I50,Heart failure,1000.0,0.1
-534,I51,Complications and ill-defined descriptions of heart disease,1000.0,0.1
-535,I52,Other heart disorders in diseases classified elsewhere,1000.0,0.1
-536,I60,Subarachnoid haemorrhage,1000.0,0.1
-537,I61,Intracerebral haemorrhage,1000.0,0.1
-538,I62,Other nontraumatic intracranial haemorrhage,1000.0,0.1
-539,I63,Cerebral infarction,1000.0,0.1
-540,I64,"Stroke, not specified as haemorrhage or infarction",1000.0,0.1
-541,I65,"Occlusion and stenosis of precerebral arteries, not resulting in cerebral infarction",1000.0,0.1
-542,I66,"Occlusion and stenosis of cerebral arteries, not resulting in cerebral infarction",1000.0,0.1
-543,I67,Other cerebrovascular diseases,1000.0,0.1
-544,I68,Cerebrovascular disorders in diseases classified elsewhere,1000.0,0.1
-545,I69,Sequelae of cerebrovascular disease,1000.0,0.1
-546,I70,Atherosclerosis,1000.0,0.1
-547,I71,Aortic aneurysm and dissection,1000.0,0.1
-548,I72,Other aneurysm,1000.0,0.1
-549,I73,Other peripheral vascular diseases,1000.0,0.1
-550,I74,Arterial embolism and thrombosis,1000.0,0.1
-551,I77,Other disorders of arteries and arterioles,1000.0,0.1
-552,I78,Diseases of capillaries,1000.0,0.1
-553,I79,"Disorders of arteries, arterioles and capillaries in diseases classified elsewhere",1000.0,0.1
-554,I80,Phlebitis and thrombophlebitis,1000.0,0.1
-555,I81,Portal vein thrombosis,1000.0,0.1
-556,I82,Other venous embolism and thrombosis,1000.0,0.1
-557,I83,Varicose veins of lower extremities,1000.0,0.1
-558,I84,Haemorrhoids,1000.0,0.1
-559,I85,Oesophageal varices,1000.0,0.1
-560,I86,Varicose veins of other sites,1000.0,0.1
-561,I87,Other disorders of veins,1000.0,0.1
-562,I88,Nonspecific lymphadenitis,1000.0,0.1
-563,I89,Other non-infective disorders of lymphatic vessels and lymph nodes,1000.0,0.1
-564,I95,Hypotension,1000.0,0.1
-565,I97,"Postprocedural disorders of circulatory system, not elsewhere classified",1000.0,0.1
-566,I98,Other disorders of circulatory system in diseases classified elsewhere,1000.0,0.1
-567,I99,Other and unspecified disorders of circulatory system,1000.0,0.1
-568,J00,Acute nasopharyngitis [common cold],1000.0,0.1
-569,J01,Acute sinusitis,1000.0,0.1
-570,J02,Acute pharyngitis,1000.0,0.1
-571,J03,Acute tonsillitis,1000.0,0.1
-572,J04,Acute laryngitis and tracheitis,1000.0,0.1
-573,J05,Acute obstructive laryngitis [croup] and epiglottitis,1000.0,0.1
-574,J06,Acute upper respiratory infections of multiple and unspecified sites,1000.0,0.1
-575,J09,Influenza due to certain identified influenza virus,1000.0,0.1
-576,J10,Influenza due to identified influenza virus,1000.0,0.1
-577,J11,"Influenza, virus not identified",1000.0,0.1
-578,J12,"Viral pneumonia, not elsewhere classified",1000.0,0.1
-579,J13,Pneumonia due to streptococcus pneumoniae,1000.0,0.1
-580,J14,Pneumonia due to haemophilus influenzae,1000.0,0.1
-581,J15,"Bacterial pneumonia, not elsewhere classified",1000.0,0.1
-582,J16,"Pneumonia due to other infectious organisms, not elsewhere classified",1000.0,0.1
-583,J17,Pneumonia in diseases classified elsewhere,1000.0,0.1
-584,J18,"Pneumonia, organism unspecified",1000.0,0.1
-585,J20,Acute bronchitis,1000.0,0.1
-586,J21,Acute bronchiolitis,1000.0,0.1
-587,J22,Unspecified acute lower respiratory infection,1000.0,0.1
-588,J30,Vasomotor and allergic rhinitis,1000.0,0.1
-589,J31,"Chronic rhinitis, nasopharyngitis and pharyngitis",1000.0,0.1
-590,J32,Chronic sinusitis,1000.0,0.1
-591,J33,Nasal polyp,1000.0,0.1
-592,J34,Other disorders of nose and nasal sinuses,1000.0,0.1
-593,J35,Chronic diseases of tonsils and adenoids,1000.0,0.1
-594,J36,Peritonsillar abscess,1000.0,0.1
-595,J37,Chronic laryngitis and laryngotracheitis,1000.0,0.1
-596,J38,"Diseases of vocal cords and larynx, not elsewhere classified",1000.0,0.1
-597,J39,Other diseases of upper respiratory tract,1000.0,0.1
-598,J40,"Bronchitis, not specified as acute or chronic",1000.0,0.1
-599,J41,Simple and mucopurulent chronic bronchitis,1000.0,0.1
-600,J42,Unspecified chronic bronchitis,1000.0,0.1
-601,J43,Emphysema,1000.0,0.1
-602,J44,Other chronic obstructive pulmonary disease,1000.0,0.1
-603,J45,Asthma,1000.0,0.1
-604,J46,Status asthmaticus,1000.0,0.1
-605,J47,Bronchiectasis,1000.0,0.1
-606,J60,Coalworker's pneumoconiosis,1000.0,0.1
-607,J61,Pneumoconiosis due to asbestos and other mineral fibres,1000.0,0.1
-608,J62,Pneumoconiosis due to dust containing silica,1000.0,0.1
-609,J63,Pneumoconiosis due to other inorganic dusts,1000.0,0.1
-610,J64,Unspecified pneumoconiosis,1000.0,0.1
-611,J66,Airway disease due to specific organic dust,1000.0,0.1
-612,J67,Hypersensitivity pneumonitis due to organic dust,1000.0,0.1
-613,J68,"Respiratory conditions due to inhalation of chemicals, gases, fumes and vapours",1000.0,0.1
-614,J69,Pneumonitis due to solids and liquids,1000.0,0.1
-615,J70,Respiratory conditions due to other external agents,1000.0,0.1
-616,J80,Adult respiratory distress syndrome,1000.0,0.1
-617,J81,Pulmonary oedema,1000.0,0.1
-618,J82,"Pulmonary eosinophilia, not elsewhere classified",1000.0,0.1
-619,J84,Other interstitial pulmonary diseases,1000.0,0.1
-620,J85,Abscess of lung and mediastinum,1000.0,0.1
-621,J86,Pyothorax,1000.0,0.1
-622,J90,"Pleural effusion, not elsewhere classified",1000.0,0.1
-623,J91,Pleural effusion in conditions classified elsewhere,1000.0,0.1
-624,J92,Pleural plaque,1000.0,0.1
-625,J93,Pneumothorax,1000.0,0.1
-626,J94,Other pleural conditions,1000.0,0.1
-627,J95,"Postprocedural respiratory disorders, not elsewhere classified",1000.0,0.1
-628,J96,"Respiratory failure, not elsewhere classified",1000.0,0.1
-629,J98,Other respiratory disorders,1000.0,0.1
-630,J99,Respiratory disorders in diseases classified elsewhere,1000.0,0.1
-631,K00,Disorders of tooth development and eruption,1000.0,0.1
-632,K01,Embedded and impacted teeth,1000.0,0.1
-633,K02,Dental caries,1000.0,0.1
-634,K03,Other diseases of hard tissues of teeth,1000.0,0.1
-635,K04,Diseases of pulp and periapical tissues,1000.0,0.1
-636,K05,Gingivitis and periodontal diseases,1000.0,0.1
-637,K06,Other disorders of gingiva and edentulous alveolar ridge,1000.0,0.1
-638,K07,Dentofacial anomalies [including malocclusion],1000.0,0.1
-639,K08,Other disorders of teeth and supporting structures,1000.0,0.1
-640,K09,"Cysts of oral region, not elsewhere classified",1000.0,0.1
-641,K10,Other diseases of jaws,1000.0,0.1
-642,K11,Diseases of salivary glands,1000.0,0.1
-643,K12,Stomatitis and related lesions,1000.0,0.1
-644,K13,Other diseases of lip and oral mucosa,1000.0,0.1
-645,K14,Diseases of tongue,1000.0,0.1
-646,K20,Oesophagitis,1000.0,0.1
-647,K21,Gastro-oesophageal reflux disease,1000.0,0.1
-648,K22,Other diseases of oesophagus,1000.0,0.1
-649,K23,Disorders of oesophagus in diseases classified elsewhere,1000.0,0.1
-650,K25,Gastric ulcer,1000.0,0.1
-651,K26,Duodenal ulcer,1000.0,0.1
-652,K27,"Peptic ulcer, site unspecified",1000.0,0.1
-653,K28,Gastrojejunal ulcer,1000.0,0.1
-654,K29,Gastritis and duodenitis,1000.0,0.1
-655,K30,Dyspepsia,1000.0,0.1
-656,K31,Other diseases of stomach and duodenum,1000.0,0.1
-657,K35,Acute appendicitis,1000.0,0.1
-658,K36,Other appendicitis,1000.0,0.1
-659,K37,Unspecified appendicitis,1000.0,0.1
-660,K38,Other diseases of appendix,1000.0,0.1
-661,K40,Inguinal hernia,1000.0,0.1
-662,K41,Femoral hernia,1000.0,0.1
-663,K42,Umbilical hernia,1000.0,0.1
-664,K43,Ventral hernia,1000.0,0.1
-665,K44,Diaphragmatic hernia,1000.0,0.1
-666,K45,Other abdominal hernia,1000.0,0.1
-667,K46,Unspecified abdominal hernia,1000.0,0.1
-668,K50,Crohn's disease [regional enteritis],1000.0,0.1
-669,K51,Ulcerative colitis,1000.0,0.1
-670,K52,Other non-infective gastro-enteritis and colitis,1000.0,0.1
-671,K55,Vascular disorders of intestine,1000.0,0.1
-672,K56,Paralytic ileus and intestinal obstruction without hernia,1000.0,0.1
-673,K57,Diverticular disease of intestine,1000.0,0.1
-674,K58,Irritable bowel syndrome,1000.0,0.1
-675,K59,Other functional intestinal disorders,1000.0,0.1
-676,K60,Fissure and fistula of anal and rectal regions,1000.0,0.1
-677,K61,Abscess of anal and rectal regions,1000.0,0.1
-678,K62,Other diseases of anus and rectum,1000.0,0.1
-679,K63,Other diseases of intestine,1000.0,0.1
-680,K64,Haemorrhoids and perianal venous thrombosis,1000.0,0.1
-681,K65,Peritonitis,1000.0,0.1
-682,K66,Other disorders of peritoneum,1000.0,0.1
-683,K67,Disorders of peritoneum in infectious diseases classified elsewhere,1000.0,0.1
-684,K70,Alcoholic liver disease,1000.0,0.1
-685,K71,Toxic liver disease,1000.0,0.1
-686,K72,"Hepatic failure, not elsewhere classified",1000.0,0.1
-687,K73,"Chronic hepatitis, not elsewhere classified",1000.0,0.1
-688,K74,Fibrosis and cirrhosis of liver,1000.0,0.1
-689,K75,Other inflammatory liver diseases,1000.0,0.1
-690,K76,Other diseases of liver,1000.0,0.1
-691,K77,Liver disorders in diseases classified elsewhere,1000.0,0.1
-692,K80,Cholelithiasis,1000.0,0.1
-693,K81,Cholecystitis,1000.0,0.1
-694,K82,Other diseases of gallbladder,1000.0,0.1
-695,K83,Other diseases of biliary tract,1000.0,0.1
-696,K85,Acute pancreatitis,1000.0,0.1
-697,K86,Other diseases of pancreas,1000.0,0.1
-698,K87,"Disorders of gallbladder, biliary tract and pancreas in diseases classified elsewhere",1000.0,0.1
-699,K90,Intestinal malabsorption,1000.0,0.1
-700,K91,"Postprocedural disorders of digestive system, not elsewhere classified",1000.0,0.1
-701,K92,Other diseases of digestive system,1000.0,0.1
-702,K93,Disorders of other digestive organs in diseases classified elsewhere,1000.0,0.1
-703,L00,Staphylococcal scalded skin syndrome,1000.0,0.1
-704,L01,Impetigo,1000.0,0.1
-705,L02,"Cutaneous abscess, furuncle and carbuncle",1000.0,0.1
-706,L03,Cellulitis,1000.0,0.1
-707,L04,Acute lymphadenitis,1000.0,0.1
-708,L05,Pilonidal cyst,1000.0,0.1
-709,L08,Other local infections of skin and subcutaneous tissue,1000.0,0.1
-710,L10,Pemphigus,1000.0,0.1
-711,L11,Other acantholytic disorders,1000.0,0.1
-712,L12,Pemphigoid,1000.0,0.1
-713,L13,Other bullous disorders,1000.0,0.1
-714,L14,Bullous disorders in diseases classified elsewhere,1000.0,0.1
-715,L20,Atopic dermatitis,1000.0,0.1
-716,L21,Seborrhoeic dermatitis,1000.0,0.1
-717,L22,Diaper [napkin] dermatitis,1000.0,0.1
-718,L23,Allergic contact dermatitis,1000.0,0.1
-719,L24,Irritant contact dermatitis,1000.0,0.1
-720,L25,Unspecified contact dermatitis,1000.0,0.1
-721,L26,Exfoliative dermatitis,1000.0,0.1
-722,L27,Dermatitis due to substances taken internally,1000.0,0.1
-723,L28,Lichen simplex chronicus and prurigo,1000.0,0.1
-724,L29,Pruritus,1000.0,0.1
-725,L30,Other dermatitis,1000.0,0.1
-726,L40,Psoriasis,1000.0,0.1
-727,L41,Parapsoriasis,1000.0,0.1
-728,L42,Pityriasis rosea,1000.0,0.1
-729,L43,Lichen planus,1000.0,0.1
-730,L44,Other papulosquamous disorders,1000.0,0.1
-731,L50,Urticaria,1000.0,0.1
-732,L51,Erythema multiforme,1000.0,0.1
-733,L52,Erythema nodosum,1000.0,0.1
-734,L53,Other erythematous conditions,1000.0,0.1
-735,L54,Erythema in diseases classified elsewhere,1000.0,0.1
-736,L55,Sunburn,1000.0,0.1
-737,L56,Other acute skin changes due to ultraviolet radiation,1000.0,0.1
-738,L57,Skin changes due to chronic exposure to nonionising radiation,1000.0,0.1
-739,L58,Radiodermatitis,1000.0,0.1
-740,L59,Other disorders of skin and subcutaneous tissue related to radiation,1000.0,0.1
-741,L60,Nail disorders,1000.0,0.1
-742,L62,Nail disorders in diseases classified elsewhere,1000.0,0.1
-743,L63,Alopecia areata,1000.0,0.1
-744,L64,Androgenic alopecia,1000.0,0.1
-745,L65,Other nonscarring hair loss,1000.0,0.1
-746,L66,Cicatricial alopecia [scarring hair loss],1000.0,0.1
-747,L67,Hair colour and hair shaft abnormalities,1000.0,0.1
-748,L68,Hypertrichosis,1000.0,0.1
-749,L70,Acne,1000.0,0.1
-750,L71,Rosacea,1000.0,0.1
-751,L72,Follicular cysts of skin and subcutaneous tissue,1000.0,0.1
-752,L73,Other follicular disorders,1000.0,0.1
-753,L74,Eccrine sweat disorders,1000.0,0.1
-754,L75,Apocrine sweat disorders,1000.0,0.1
-755,L80,Vitiligo,1000.0,0.1
-756,L81,Other disorders of pigmentation,1000.0,0.1
-757,L82,Seborrhoeic keratosis,1000.0,0.1
-758,L83,Acanthosis nigricans,1000.0,0.1
-759,L84,Corns and callosities,1000.0,0.1
-760,L85,Other epidermal thickening,1000.0,0.1
-761,L86,Keratoderma in diseases classified elsewhere,1000.0,0.1
-762,L87,Transepidermal elimination disorders,1000.0,0.1
-763,L88,Pyoderma gangrenosum,1000.0,0.1
-764,L89,Decubitus ulcer,1000.0,0.1
-765,L90,Atrophic disorders of skin,1000.0,0.1
-766,L91,Hypertrophic disorders of skin,1000.0,0.1
-767,L92,Granulomatous disorders of skin and subcutaneous tissue,1000.0,0.1
-768,L93,Lupus erythematosus,1000.0,0.1
-769,L94,Other localised connective tissue disorders,1000.0,0.1
-770,L95,"Vasculitis limited to skin, not elsewhere classified",1000.0,0.1
-771,L97,"Ulcer of lower limb, not elsewhere classified",1000.0,0.1
-772,L98,"Other disorders of skin and subcutaneous tissue, not elsewhere classified",1000.0,0.1
-773,L99,Other disorders of skin and subcutaneous tissue in diseases classified elsewhere,1000.0,0.1
-774,M00,Pyogenic arthritis,1000.0,0.1
-775,M01,Direct infections of joint in infectious and parasitic diseases classified elsewhere,1000.0,0.1
-776,M02,Reactive arthropathies,1000.0,0.1
-777,M03,Postinfective and reactive arthropathies in diseases classified elsewhere,1000.0,0.1
-778,M05,Seropositive rheumatoid arthritis,1000.0,0.1
-779,M06,Other rheumatoid arthritis,1000.0,0.1
-780,M07,Psoriatic and enteropathic arthropathies,1000.0,0.1
-781,M08,Juvenile arthritis,1000.0,0.1
-782,M09,Juvenile arthritis in diseases classified elsewhere,1000.0,0.1
-783,M10,Gout,1000.0,0.1
-784,M11,Other crystal arthropathies,1000.0,0.1
-785,M12,Other specific arthropathies,1000.0,0.1
-786,M13,Other arthritis,1000.0,0.1
-787,M14,Arthropathies in other diseases classified elsewhere,1000.0,0.1
-788,M15,Polyarthrosis,1000.0,0.1
-789,M16,Coxarthrosis [arthrosis of hip],1000.0,0.1
-790,M17,Gonarthrosis [arthrosis of knee],1000.0,0.1
-791,M18,Arthrosis of first carpometacarpal joint,1000.0,0.1
-792,M19,Other arthrosis,1000.0,0.1
-793,M20,Acquired deformities of fingers and toes,1000.0,0.1
-794,M21,Other acquired deformities of limbs,1000.0,0.1
-795,M22,Disorders of patella,1000.0,0.1
-796,M23,Internal derangement of knee,1000.0,0.1
-797,M24,Other specific joint derangements,1000.0,0.1
-798,M25,"Other joint disorders, not elsewhere classified",1000.0,0.1
-799,M30,Polyarteritis nodosa and related conditions,1000.0,0.1
-800,M31,Other necrotising vasculopathies,1000.0,0.1
-801,M32,Systemic lupus erythematosus,1000.0,0.1
-802,M33,Dermatopolymyositis,1000.0,0.1
-803,M34,Systemic sclerosis,1000.0,0.1
-804,M35,Other systemic involvement of connective tissue,1000.0,0.1
-805,M36,Systemic disorders of connective tissue in diseases classified elsewhere,1000.0,0.1
-806,M40,Kyphosis and lordosis,1000.0,0.1
-807,M41,Scoliosis,1000.0,0.1
-808,M42,Spinal osteochondrosis,1000.0,0.1
-809,M43,Other deforming dorsopathies,1000.0,0.1
-810,M45,Ankylosing spondylitis,1000.0,0.1
-811,M46,Other inflammatory spondylopathies,1000.0,0.1
-812,M47,Spondylosis,1000.0,0.1
-813,M48,Other spondylopathies,1000.0,0.1
-814,M49,Spondylopathies in diseases classified elsewhere,1000.0,0.1
-815,M50,Cervical disk disorders,1000.0,0.1
-816,M51,Other intervertebral disk disorders,1000.0,0.1
-817,M53,"Other dorsopathies, not elsewhere classified",1000.0,0.1
-818,M54,Dorsalgia,1000.0,0.1
-819,M60,Myositis,1000.0,0.1
-820,M61,Calcification and ossification of muscle,1000.0,0.1
-821,M62,Other disorders of muscle,1000.0,0.1
-822,M63,Disorders of muscle in diseases classified elsewhere,1000.0,0.1
-823,M65,Synovitis and tenosynovitis,1000.0,0.1
-824,M66,Spontaneous rupture of synovium and tendon,1000.0,0.1
-825,M67,Other disorders of synovium and tendon,1000.0,0.1
-826,M68,Disorders of synovium and tendon in diseases classified elsewhere,1000.0,0.1
-827,M70,"Soft tissue disorders related to use, overuse and pressure",1000.0,0.1
-828,M71,Other bursopathies,1000.0,0.1
-829,M72,Fibroblastic disorders,1000.0,0.1
-830,M73,Soft tissue disorders in diseases classified elsewhere,1000.0,0.1
-831,M75,Shoulder lesions,1000.0,0.1
-832,M76,"Enthesopathies of lower limb, excluding foot",1000.0,0.1
-833,M77,Other enthesopathies,1000.0,0.1
-834,M79,"Other soft tissue disorders, not elsewhere classified",1000.0,0.1
-835,M80,Osteoporosis with pathological fracture,1000.0,0.1
-836,M81,Osteoporosis without pathological fracture,1000.0,0.1
-837,M82,Osteoporosis in diseases classified elsewhere,1000.0,0.1
-838,M83,Adult osteomalacia,1000.0,0.1
-839,M84,Disorders of continuity of bone,1000.0,0.1
-840,M85,Other disorders of bone density and structure,1000.0,0.1
-841,M86,Osteomyelitis,1000.0,0.1
-842,M87,Osteonecrosis,1000.0,0.1
-843,M88,Paget's disease of bone [osteitis deformans],1000.0,0.1
-844,M89,Other disorders of bone,1000.0,0.1
-845,M90,Osteopathies in diseases classified elsewhere,1000.0,0.1
-846,M91,Juvenile osteochondrosis of hip and pelvis,1000.0,0.1
-847,M92,Other juvenile osteochondrosis,1000.0,0.1
-848,M93,Other osteochondropathies,1000.0,0.1
-849,M94,Other disorders of cartilage,1000.0,0.1
-850,M95,Other acquired deformities of musculoskeletal system and connective tissue,1000.0,0.1
-851,M96,"Postprocedural musculoskeletal disorders, not elsewhere classified",1000.0,0.1
-852,M99,"Biomechanical lesions, not elsewhere classified",1000.0,0.1
-853,N00,Acute nephritic syndrome,1000.0,0.1
-854,N01,Rapidly progressive nephritic syndrome,1000.0,0.1
-855,N02,Recurrent and persistent haematuria,1000.0,0.1
-856,N03,Chronic nephritic syndrome,1000.0,0.1
-857,N04,Nephrotic syndrome,1000.0,0.1
-858,N05,Unspecified nephritic syndrome,1000.0,0.1
-859,N06,Isolated proteinuria with specified morphological lesion,1000.0,0.1
-860,N07,"Hereditary nephropathy, not elsewhere classified",1000.0,0.1
-861,N08,Glomerular disorders in diseases classified elsewhere,1000.0,0.1
-862,N10,Acute tubulo-interstitial nephritis,1000.0,0.1
-863,N11,Chronic tubulo-interstitial nephritis,1000.0,0.1
-864,N12,"Tubulo-interstitial nephritis, not specified as acute or chronic",1000.0,0.1
-865,N13,Obstructive and reflux uropathy,1000.0,0.1
-866,N14,Drug- and heavy-metal-induced tubulo-interstitial and tubular conditions,1000.0,0.1
-867,N15,Other renal tubulo-interstitial diseases,1000.0,0.1
-868,N16,Renal tubulo-interstitial disorders in diseases classified elsewhere,1000.0,0.1
-869,N17,Acute renal failure,1000.0,0.1
-870,N18,Chronic renal failure,1000.0,0.1
-871,N19,Unspecified renal failure,1000.0,0.1
-872,N20,Calculus of kidney and ureter,1000.0,0.1
-873,N21,Calculus of lower urinary tract,1000.0,0.1
-874,N22,Calculus of urinary tract in diseases classified elsewhere,1000.0,0.1
-875,N23,Unspecified renal colic,1000.0,0.1
-876,N25,Disorders resulting from impaired renal tubular function,1000.0,0.1
-877,N26,Unspecified contracted kidney,1000.0,0.1
-878,N27,Small kidney of unknown cause,1000.0,0.1
-879,N28,"Other disorders of kidney and ureter, not elsewhere classified",1000.0,0.1
-880,N29,Other disorders of kidney and ureter in diseases classified elsewhere,1000.0,0.1
-881,N30,Cystitis,1000.0,0.1
-882,N31,"Neuromuscular dysfunction of bladder, not elsewhere classified",1000.0,0.1
-883,N32,Other disorders of bladder,1000.0,0.1
-884,N33,Bladder disorders in diseases classified elsewhere,1000.0,0.1
-885,N34,Urethritis and urethral syndrome,1000.0,0.1
-886,N35,Urethral stricture,1000.0,0.1
-887,N36,Other disorders of urethra,1000.0,0.1
-888,N37,Urethral disorders in diseases classified elsewhere,1000.0,0.1
-889,N39,Other disorders of urinary system,1000.0,0.1
-890,N40,Hyperplasia of prostate,1000.0,0.1
-891,N41,Inflammatory diseases of prostate,1000.0,0.1
-892,N42,Other disorders of prostate,1000.0,0.1
-893,N43,Hydrocele and spermatocele,1000.0,0.1
-894,N44,Torsion of testis,1000.0,0.1
-895,N45,Orchitis and epididymitis,1000.0,0.1
-896,N46,Male infertility,1000.0,0.1
-897,N47,"Redundant prepuce, phimosis and paraphimosis",1000.0,0.1
-898,N48,Other disorders of penis,1000.0,0.1
-899,N49,"Inflammatory disorders of male genital organs, not elsewhere classified",1000.0,0.1
-900,N50,Other disorders of male genital organs,1000.0,0.1
-901,N51,Disorders of male genital organs in diseases classified elsewhere,1000.0,0.1
-902,N60,Benign mammary dysplasia,1000.0,0.1
-903,N61,Inflammatory disorders of breast,1000.0,0.1
-904,N62,Hypertrophy of breast,1000.0,0.1
-905,N63,Unspecified lump in breast,1000.0,0.1
-906,N64,Other disorders of breast,1000.0,0.1
-907,N70,Salpingitis and oophoritis,1000.0,0.1
-908,N71,"Inflammatory disease of uterus, except cervix",1000.0,0.1
-909,N72,Inflammatory disease of cervix uteri,1000.0,0.1
-910,N73,Other female pelvic inflammatory diseases,1000.0,0.1
-911,N74,Female pelvic inflammatory disorders in diseases classified elsewhere,1000.0,0.1
-912,N75,Diseases of bartholin's gland,1000.0,0.1
-913,N76,Other inflammation of vagina and vulva,1000.0,0.1
-914,N77,Vulvovaginal ulceration and inflammation in diseases classified elsewhere,1000.0,0.1
-915,N80,Endometriosis,1000.0,0.1
-916,N81,Female genital prolapse,1000.0,0.1
-917,N82,Fistulae involving female genital tract,1000.0,0.1
-918,N83,"Noninflammatory disorders of ovary, fallopian tube and broad ligament",1000.0,0.1
-919,N84,Polyp of female genital tract,1000.0,0.1
-920,N85,"Other noninflammatory disorders of uterus, except cervix",1000.0,0.1
-921,N86,Erosion and ectropion of cervix uteri,1000.0,0.1
-922,N87,Dysplasia of cervix uteri,1000.0,0.1
-923,N88,Other noninflammatory disorders of cervix uteri,1000.0,0.1
-924,N89,Other noninflammatory disorders of vagina,1000.0,0.1
-925,N90,Other noninflammatory disorders of vulva and perineum,1000.0,0.1
-926,N91,"Absent, scanty and rare menstruation",1000.0,0.1
-927,N92,"Excessive, frequent and irregular menstruation",1000.0,0.1
-928,N93,Other abnormal uterine and vaginal bleeding,1000.0,0.1
-929,N94,Pain and other conditions associated with female genital organs and menstrual cycle,1000.0,0.1
-930,N95,Menopausal and other perimenopausal disorders,1000.0,0.1
-931,N96,Habitual aborter,1000.0,0.1
-932,N97,Female infertility,1000.0,0.1
-933,N98,Complications associated with artificial fertilisation,1000.0,0.1
-934,N99,"Postprocedural disorders of genito-urinary system, not elsewhere classified",1000.0,0.1
-935,O00,Ectopic pregnancy,1000.0,0.1
-936,O01,Hydatidiform mole,1000.0,0.1
-937,O02,Other abnormal products of conception,1000.0,0.1
-938,O03,Spontaneous abortion,1000.0,0.1
-939,O04,Medical abortion,1000.0,0.1
-940,O05,Other abortion,1000.0,0.1
-941,O06,Unspecified abortion,1000.0,0.1
-942,O07,Failed attempted abortion,1000.0,0.1
-943,O08,Complications following abortion and ectopic and molar pregnancy,1000.0,0.1
-944,O10,"Pre-existing hypertension complicating pregnancy, childbirth and the puerperium",1000.0,0.1
-945,O11,Pre-existing hypertensive disorder with superimposed proteinuria,1000.0,0.1
-946,O12,Gestational [pregnancy-induced] oedema and proteinuria without hypertension,1000.0,0.1
-947,O13,Gestational [pregnancy-induced] hypertension without significant proteinuria,1000.0,0.1
-948,O14,Gestational [pregnancy-induced] hypertension with significant proteinuria,1000.0,0.1
-949,O15,Eclampsia,1000.0,0.1
-950,O16,Unspecified maternal hypertension,1000.0,0.1
-951,O20,Haemorrhage in early pregnancy,1000.0,0.1
-952,O21,Excessive vomiting in pregnancy,1000.0,0.1
-953,O22,Venous complications in pregnancy,1000.0,0.1
-954,O23,Infections of genito-urinary tract in pregnancy,1000.0,0.1
-955,O24,Diabetes mellitus in pregnancy,1000.0,0.1
-956,O25,Malnutrition in pregnancy,1000.0,0.1
-957,O26,Maternal care for other conditions predominantly related to pregnancy,1000.0,0.1
-958,O28,Abnormal findings on antenatal screening of mother,1000.0,0.1
-959,O29,Complications of anaesthesia during pregnancy,1000.0,0.1
-960,O30,Multiple gestation,1000.0,0.1
-961,O31,Complications specific to multiple gestation,1000.0,0.1
-962,O32,Maternal care for known or suspected malpresentation of foetus,1000.0,0.1
-963,O33,Maternal care for known or suspected disproportion,1000.0,0.1
-964,O34,Maternal care for known or suspected abnormality of pelvic organs,1000.0,0.1
-965,O35,Maternal care for known or suspected foetal abnormality and damage,1000.0,0.1
-966,O36,Maternal care for other known or suspected foetal problems,1000.0,0.1
-967,O40,Polyhydramnios,1000.0,0.1
-968,O41,Other disorders of amniotic fluid and membranes,1000.0,0.1
-969,O42,Premature rupture of membranes,1000.0,0.1
-970,O43,Placental disorders,1000.0,0.1
-971,O44,Placenta praevia,1000.0,0.1
-972,O45,Premature separation of placenta [abruptio placentae],1000.0,0.1
-973,O46,"Antepartum haemorrhage, not elsewhere classified",1000.0,0.1
-974,O47,False labour,1000.0,0.1
-975,O48,Prolonged pregnancy,1000.0,0.1
-976,O60,Preterm delivery,1000.0,0.1
-977,O61,Failed induction of labour,1000.0,0.1
-978,O62,Abnormalities of forces of labour,1000.0,0.1
-979,O63,Long labour,1000.0,0.1
-980,O64,Obstructed labour due to malposition and malpresentation of foetus,1000.0,0.1
-981,O65,Obstructed labour due to maternal pelvic abnormality,1000.0,0.1
-982,O66,Other obstructed labour,1000.0,0.1
-983,O67,"Labour and delivery complicated by intrapartum haemorrhage, not elsewhere classified",1000.0,0.1
-984,O68,Labour and delivery complicated by foetal stress [distress],1000.0,0.1
-985,O69,Labour and delivery complicated by umbilical cord complications,1000.0,0.1
-986,O70,Perineal laceration during delivery,1000.0,0.1
-987,O71,Other obstetric trauma,1000.0,0.1
-988,O72,Postpartum haemorrhage,1000.0,0.1
-989,O73,"Retained placenta and membranes, without haemorrhage",1000.0,0.1
-990,O74,Complications of anaesthesia during labour and delivery,1000.0,0.1
-991,O75,"Other complications of labour and delivery, not elsewhere classified",1000.0,0.1
-992,O80,Single spontaneous delivery,1000.0,0.1
-993,O81,Single delivery by forceps and vacuum extractor,1000.0,0.1
-994,O82,Single delivery by caesarean section,1000.0,0.1
-995,O83,Other assisted single delivery,1000.0,0.1
-996,O84,Multiple delivery,1000.0,0.1
-997,O85,Puerperal sepsis,1000.0,0.1
-998,O86,Other puerperal infections,1000.0,0.1
-999,O87,Venous complications in the puerperium,1000.0,0.1
-1000,O88,Obstetric embolism,1000.0,0.1
-1001,O89,Complications of anaesthesia during the puerperium,1000.0,0.1
-1002,O90,"Complications of the puerperium, not elsewhere classified",1000.0,0.1
-1003,O91,Infections of breast associated with childbirth,1000.0,0.1
-1004,O92,Other disorders of breast and lactation associated with childbirth,1000.0,0.1
-1005,O94,"Sequelae of complication of pregnancy, childbirth and the puerperium",1000.0,0.1
-1006,O96,Death from any obstetric cause occurring more than 42 days but less than one year after delivery,1000.0,0.1
-1007,O98,"Maternal infectious and parasitic diseases classifiable elsewhere but complicating pregnancy, childbirth and the puerperium",1000.0,0.1
-1008,O99,"Other maternal diseases classifiable elsewhere but complicating pregnancy, childbirth and the puerperium",1000.0,0.1
-1009,P00,Foetus and newborn affected by maternal conditions that may be unrelated to present pregnancy,1000.0,0.1
-1010,P02,"Foetus and newborn affected by complications of placenta, cord and membranes",1000.0,0.1
-1011,P03,Foetus and newborn affected by other complications of labour and delivery,1000.0,0.1
-1012,P04,Foetus and newborn affected by noxious influences transmitted via placenta or breast milk,1000.0,0.1
-1013,P05,Slow foetal growth and foetal malnutrition,1000.0,0.1
-1014,P07,"Disorders related to short gestation and low birth weight, not elsewhere classified",1000.0,0.1
-1015,P08,Disorders related to long gestation and high birth weight,1000.0,0.1
-1016,P10,Intracranial laceration and haemorrhage due to birth injury,1000.0,0.1
-1017,P11,Other birth injuries to central nervous system,1000.0,0.1
-1018,P12,Birth injury to scalp,1000.0,0.1
-1019,P13,Birth injury to skeleton,1000.0,0.1
-1020,P14,Birth injury to peripheral nervous system,1000.0,0.1
-1021,P15,Other birth injuries,1000.0,0.1
-1022,P20,Intra-uterine hypoxia,1000.0,0.1
-1023,P21,Birth asphyxia,1000.0,0.1
-1024,P22,Respiratory distress of newborn,1000.0,0.1
-1025,P23,Congenital pneumonia,1000.0,0.1
-1026,P24,Neonatal aspiration syndromes,1000.0,0.1
-1027,P25,Interstitial emphysema and related conditions originating in the perinatal period,1000.0,0.1
-1028,P26,Pulmonary haemorrhage originating in the perinatal period,1000.0,0.1
-1029,P27,Chronic respiratory disease originating in the perinatal period,1000.0,0.1
-1030,P28,Other respiratory conditions originating in the perinatal period,1000.0,0.1
-1031,P29,Cardiovascular disorders originating in the perinatal period,1000.0,0.1
-1032,P35,Congenital viral diseases,1000.0,0.1
-1033,P36,Bacterial sepsis of newborn,1000.0,0.1
-1034,P37,Other congenital infectious and parasitic diseases,1000.0,0.1
-1035,P38,Omphalitis of newborn with or without mild haemorrhage,1000.0,0.1
-1036,P39,Other infections specific to the perinatal period,1000.0,0.1
-1037,P50,Foetal blood loss,1000.0,0.1
-1038,P51,Umbilical haemorrhage of newborn,1000.0,0.1
-1039,P52,Intracranial nontraumatic haemorrhage of foetus and newborn,1000.0,0.1
-1040,P53,Haemorrhagic disease of foetus and newborn,1000.0,0.1
-1041,P54,Other neonatal haemorrhages,1000.0,0.1
-1042,P55,Haemolytic disease of foetus and newborn,1000.0,0.1
-1043,P58,Neonatal jaundice due to other excessive haemolysis,1000.0,0.1
-1044,P59,Neonatal jaundice from other and unspecified causes,1000.0,0.1
-1045,P61,Other perinatal haematological disorders,1000.0,0.1
-1046,P70,Transitory disorders of carbohydrate metabolism specific to foetus and newborn,1000.0,0.1
-1047,P71,Transitory neonatal disorders of calcium and magnesium metabolism,1000.0,0.1
-1048,P78,Other perinatal digestive system disorders,1000.0,0.1
-1049,P83,Other conditions of integument specific to foetus and newborn,1000.0,0.1
-1050,P91,Other disturbances of cerebral status of newborn,1000.0,0.1
-1051,P92,Feeding problems of newborn,1000.0,0.1
-1052,P94,Disorders of muscle tone of newborn,1000.0,0.1
-1053,P95,Foetal death of unspecified cause,1000.0,0.1
-1054,P96,Other conditions originating in the perinatal period,1000.0,0.1
-1055,Q00,Anencephaly and similar malformations,1000.0,0.1
-1056,Q01,Encephalocele,1000.0,0.1
-1057,Q02,Microcephaly,1000.0,0.1
-1058,Q03,Congenital hydrocephalus,1000.0,0.1
-1059,Q04,Other congenital malformations of brain,1000.0,0.1
-1060,Q05,Spina bifida,1000.0,0.1
-1061,Q06,Other congenital malformations of spinal cord,1000.0,0.1
-1062,Q07,Other congenital malformations of nervous system,1000.0,0.1
-1063,Q10,"Congenital malformations of eyelid, lachrymal apparatus and orbit",1000.0,0.1
-1064,Q11,"Anophthalmos, microphthalmos and macrophthalmos",1000.0,0.1
-1065,Q12,Congenital lens malformations,1000.0,0.1
-1066,Q13,Congenital malformations of anterior segment of eye,1000.0,0.1
-1067,Q14,Congenital malformations of posterior segment of eye,1000.0,0.1
-1068,Q15,Other congenital malformations of eye,1000.0,0.1
-1069,Q16,Congenital malformations of ear causing impairment of hearing,1000.0,0.1
-1070,Q17,Other congenital malformations of ear,1000.0,0.1
-1071,Q18,Other congenital malformations of face and neck,1000.0,0.1
-1072,Q20,Congenital malformations of cardiac chambers and connexions,1000.0,0.1
-1073,Q21,Congenital malformations of cardiac septa,1000.0,0.1
-1074,Q22,Congenital malformations of pulmonary and tricuspid valves,1000.0,0.1
-1075,Q23,Congenital malformations of aortic and mitral valves,1000.0,0.1
-1076,Q24,Other congenital malformations of heart,1000.0,0.1
-1077,Q25,Congenital malformations of great arteries,1000.0,0.1
-1078,Q26,Congenital malformations of great veins,1000.0,0.1
-1079,Q27,Other congenital malformations of peripheral vascular system,1000.0,0.1
-1080,Q28,Other congenital malformations of circulatory system,1000.0,0.1
-1081,Q30,Congenital malformations of nose,1000.0,0.1
-1082,Q31,Congenital malformations of larynx,1000.0,0.1
-1083,Q32,Congenital malformations of trachea and bronchus,1000.0,0.1
-1084,Q33,Congenital malformations of lung,1000.0,0.1
-1085,Q34,Other congenital malformations of respiratory system,1000.0,0.1
-1086,Q35,Cleft palate,1000.0,0.1
-1087,Q36,Cleft lip,1000.0,0.1
-1088,Q37,Cleft palate with cleft lip,1000.0,0.1
-1089,Q38,"Other congenital malformations of tongue, mouth and pharynx",1000.0,0.1
-1090,Q39,Congenital malformations of oesophagus,1000.0,0.1
-1091,Q40,Other congenital malformations of upper alimentary tract,1000.0,0.1
-1092,Q41,"Congenital absence, atresia and stenosis of small intestine",1000.0,0.1
-1093,Q42,"Congenital absence, atresia and stenosis of large intestine",1000.0,0.1
-1094,Q43,Other congenital malformations of intestine,1000.0,0.1
-1095,Q44,"Congenital malformations of gallbladder, bile ducts and liver",1000.0,0.1
-1096,Q45,Other congenital malformations of digestive system,1000.0,0.1
-1097,Q50,"Congenital malformations of ovaries, fallopian tubes and broad ligaments",1000.0,0.1
-1098,Q51,Congenital malformations of uterus and cervix,1000.0,0.1
-1099,Q52,Other congenital malformations of female genitalia,1000.0,0.1
-1100,Q53,Undescended testicle,1000.0,0.1
-1101,Q54,Hypospadias,1000.0,0.1
-1102,Q55,Other congenital malformations of male genital organs,1000.0,0.1
-1103,Q56,Indeterminate sex and pseudohermaphroditism,1000.0,0.1
-1104,Q60,Renal agenesis and other reduction defects of kidney,1000.0,0.1
-1105,Q61,Cystic kidney disease,1000.0,0.1
-1106,Q62,Congenital obstructive defects of renal pelvis and congenital malformations of ureter,1000.0,0.1
-1107,Q63,Other congenital malformations of kidney,1000.0,0.1
-1108,Q64,Other congenital malformations of urinary system,1000.0,0.1
-1109,Q65,Congenital deformities of hip,1000.0,0.1
-1110,Q66,Congenital deformities of feet,1000.0,0.1
-1111,Q67,"Congenital musculoskeletal deformities of head, face, spine and chest",1000.0,0.1
-1112,Q68,Other congenital musculoskeletal deformities,1000.0,0.1
-1113,Q69,Polydactyly,1000.0,0.1
-1114,Q70,Syndactyly,1000.0,0.1
-1115,Q71,Reduction defects of upper limb,1000.0,0.1
-1116,Q72,Reduction defects of lower limb,1000.0,0.1
-1117,Q73,Reduction defects of unspecified limb,1000.0,0.1
-1118,Q74,Other congenital malformations of limb(s,1000.0,0.1
-1119,Q75,Other congenital malformations of skull and face bones,1000.0,0.1
-1120,Q76,Congenital malformations of spine and bony thorax,1000.0,0.1
-1121,Q77,Osteochondrodysplasia with defects of growth of tubular bones and spine,1000.0,0.1
-1122,Q78,Other osteochondrodysplasias,1000.0,0.1
-1123,Q79,"Congenital malformations of musculoskeletal system, not elsewhere classified",1000.0,0.1
-1124,Q80,Congenital ichthyosis,1000.0,0.1
-1125,Q81,Epidermolysis bullosa,1000.0,0.1
-1126,Q82,Other congenital malformations of skin,1000.0,0.1
-1127,Q83,Congenital malformations of breast,1000.0,0.1
-1128,Q84,Other congenital malformations of integument,1000.0,0.1
-1129,Q85,"Phakomatoses, not elsewhere classified",1000.0,0.1
-1130,Q86,"Congenital malformation syndromes due to known exogenous causes, not elsewhere classified",1000.0,0.1
-1131,Q87,Other specified congenital malformation syndromes affecting multiple systems,1000.0,0.1
-1132,Q89,"Other congenital malformations, not elsewhere classified",1000.0,0.1
-1133,Q90,Down's syndrome,1000.0,0.1
-1134,Q91,Edwards' syndrome and patau's syndrome,1000.0,0.1
-1135,Q92,"Other trisomies and partial trisomies of the autosomes, not elsewhere classified",1000.0,0.1
-1136,Q93,"Monosomies and deletions from the autosomes, not elsewhere classified",1000.0,0.1
-1137,Q95,"Balanced rearrangements and structural markers, not elsewhere classified",1000.0,0.1
-1138,Q96,Turner's syndrome,1000.0,0.1
-1139,Q97,"Other sex chromosome abnormalities, female phenotype, not elsewhere classified",1000.0,0.1
-1140,Q98,"Other sex chromosome abnormalities, male phenotype, not elsewhere classified",1000.0,0.1
-1141,Q99,"Other chromosome abnormalities, not elsewhere classified",1000.0,0.1
-1180,C42,Hematopoietic and reticuloendothelial systems (icd-o-3 specific,1000.0,0.1
-1232,C97,Malignant neoplasms of independent (primary) multiple sites,1000.0,0.1
+13,A00,Cholera,1000,0.1
+14,A01,Typhoid and paratyphoid fevers,1000,0.1
+15,A02,Other salmonella infections,1000,0.1
+16,A03,Shigellosis,1000,0.1
+17,A04,Other bacterial intestinal infections,1000,0.1
+18,A05,Other bacterial foodborne intoxications,1000,0.1
+19,A06,Amoebiasis,1000,0.1
+20,A07,Other protozoal intestinal diseases,1000,0.1
+21,A08,Viral and other specified intestinal infections,1000,0.1
+22,A09,Diarrhoea and gastro-enteritis of presumed infectious origin,1000,0.1
+23,A15,"Respiratory tuberculosis, bacteriologically and histologically confirmed",1000,0.1
+24,A16,"Respiratory tuberculosis, not confirmed bacteriologically or histologically",1000,0.1
+25,A17,Tuberculosis of nervous system,1000,0.1
+26,A18,Tuberculosis of other organs,1000,0.1
+27,A19,Miliary tuberculosis,1000,0.1
+28,A20,Plague,1000,0.1
+29,A22,Anthrax,1000,0.1
+30,A23,Brucellosis,1000,0.1
+31,A24,Glanders and melioidosis,1000,0.1
+32,A25,Rat-bite fevers,1000,0.1
+33,A26,Erysipeloid,1000,0.1
+34,A27,Leptospirosis,1000,0.1
+35,A28,"Other zoonotic bacterial diseases, not elsewhere classified",1000,0.1
+36,A30,Leprosy [hansen's disease],1000,0.1
+37,A31,Infection due to other mycobacteria,1000,0.1
+38,A32,Listeriosis,1000,0.1
+39,A33,Tetanus neonatorum,1000,0.1
+40,A35,Other tetanus,1000,0.1
+41,A36,Diphtheria,1000,0.1
+42,A37,Whooping cough,1000,0.1
+43,A38,Scarlet fever,1000,0.1
+44,A39,Meningococcal infection,1000,0.1
+45,A40,Streptococcal septicaemia,1000,0.1
+46,A41,Other septicaemia,1000,0.1
+47,A42,Actinomycosis,1000,0.1
+48,A43,Nocardiosis,1000,0.1
+49,A44,Bartonellosis,1000,0.1
+50,A46,Erysipelas,1000,0.1
+51,A48,"Other bacterial diseases, not elsewhere classified",1000,0.1
+52,A49,Bacterial infection of unspecified site,1000,0.1
+53,A50,Congenital syphilis,1000,0.1
+54,A51,Early syphilis,1000,0.1
+55,A52,Late syphilis,1000,0.1
+56,A53,Other and unspecified syphilis,1000,0.1
+57,A54,Gonococcal infection,1000,0.1
+58,A55,Chlamydial lymphogranuloma (venereum,1000,0.1
+59,A56,Other sexually transmitted chlamydial diseases,1000,0.1
+60,A58,Granuloma inguinale,1000,0.1
+61,A59,Trichomoniasis,1000,0.1
+62,A60,Anogenital herpesviral [herpes simplex] infections,1000,0.1
+63,A63,"Other predominantly sexually transmitted diseases, not elsewhere classified",1000,0.1
+64,A64,Unspecified sexually transmitted disease,1000,0.1
+65,A66,Yaws,1000,0.1
+66,A67,Pinta [carate],1000,0.1
+67,A68,Relapsing fevers,1000,0.1
+68,A69,Other spirochaetal infections,1000,0.1
+69,A70,Chlamydia psittaci infection,1000,0.1
+70,A71,Trachoma,1000,0.1
+71,A74,Other diseases caused by chlamydiae,1000,0.1
+72,A75,Typhus fever,1000,0.1
+73,A77,Spotted fever [tick-borne rickettsioses],1000,0.1
+74,A78,Q fever,1000,0.1
+75,A79,Other rickettsioses,1000,0.1
+76,A80,Acute poliomyelitis,1000,0.1
+77,A81,Atypical virus infections of central nervous system,1000,0.1
+78,A82,Rabies,1000,0.1
+79,A83,Mosquito-borne viral encephalitis,1000,0.1
+80,A84,Tick-borne viral encephalitis,1000,0.1
+81,A85,"Other viral encephalitis, not elsewhere classified",1000,0.1
+82,A86,Unspecified viral encephalitis,1000,0.1
+83,A87,Viral meningitis,1000,0.1
+84,A88,"Other viral infections of central nervous system, not elsewhere classified",1000,0.1
+85,A89,Unspecified viral infection of central nervous system,1000,0.1
+86,A90,Dengue fever [classical dengue],1000,0.1
+87,A91,Dengue haemorrhagic fever,1000,0.1
+88,A92,Other mosquito-borne viral fevers,1000,0.1
+89,A93,"Other arthropod-borne viral fevers, not elsewhere classified",1000,0.1
+90,A94,Unspecified arthropod-borne viral fever,1000,0.1
+91,A95,Yellow fever,1000,0.1
+92,A97,Dengue,1000,0.1
+93,A98,"Other viral haemorrhagic fevers, not elsewhere classified",1000,0.1
+94,B00,Herpesviral [herpes simplex] infections,1000,0.1
+95,B01,Varicella [chickenpox],1000,0.1
+96,B02,Zoster [herpes zoster],1000,0.1
+97,B03,Smallpox,1000,0.1
+98,B05,Measles,1000,0.1
+99,B06,Rubella [german measles],1000,0.1
+100,B07,Viral warts,1000,0.1
+101,B08,"Other viral infections characterised by skin and mucous membrane lesions, not elsewhere classified",1000,0.1
+102,B09,Unspecified viral infection characterised by skin and mucous membrane lesions,1000,0.1
+103,B15,Acute hepatitis a,1000,0.1
+104,B16,Acute hepatitis b,1000,0.1
+105,B17,Other acute viral hepatitis,1000,0.1
+106,B18,Chronic viral hepatitis,1000,0.1
+107,B19,Unspecified viral hepatitis,1000,0.1
+108,B20,Human immunodeficiency virus [hiv] disease resulting in infectious and parasitic diseases,1000,0.1
+109,B21,Human immunodeficiency virus [hiv] disease resulting in malignant neoplasms,1000,0.1
+110,B22,Human immunodeficiency virus [hiv] disease resulting in other specified diseases,1000,0.1
+111,B23,Human immunodeficiency virus [hiv] disease resulting in other conditions,1000,0.1
+112,B24,Unspecified human immunodeficiency virus [hiv] disease,1000,0.1
+113,B25,Cytomegaloviral disease,1000,0.1
+114,B26,Mumps,1000,0.1
+115,B27,Infectious mononucleosis,1000,0.1
+116,B30,Viral conjunctivitis,1000,0.1
+117,B33,"Other viral diseases, not elsewhere classified",1000,0.1
+118,B34,Viral infection of unspecified site,1000,0.1
+119,B35,Dermatophytosis,1000,0.1
+120,B36,Other superficial mycoses,1000,0.1
+121,B37,Candidiasis,1000,0.1
+122,B38,Coccidioidomycosis,1000,0.1
+123,B39,Histoplasmosis,1000,0.1
+124,B40,Blastomycosis,1000,0.1
+125,B42,Sporotrichosis,1000,0.1
+126,B43,Chromomycosis and phaeomycotic abscess,1000,0.1
+127,B44,Aspergillosis,1000,0.1
+128,B45,Cryptococcosis,1000,0.1
+129,B46,Zygomycosis,1000,0.1
+130,B47,Mycetoma,1000,0.1
+131,B48,"Other mycoses, not elsewhere classified",1000,0.1
+132,B49,Unspecified mycosis,1000,0.1
+133,B50,Plasmodium falciparum malaria,1000,0.1
+134,B51,Plasmodium vivax malaria,1000,0.1
+135,B52,Plasmodium malariae malaria,1000,0.1
+136,B53,Other parasitologically confirmed malaria,1000,0.1
+137,B54,Unspecified malaria,1000,0.1
+138,B55,Leishmaniasis,1000,0.1
+139,B57,Chagas' disease,1000,0.1
+140,B58,Toxoplasmosis,1000,0.1
+141,B59,Pneumocystosis,1000,0.1
+142,B60,"Other protozoal diseases, not elsewhere classified",1000,0.1
+143,B65,Schistosomiasis [bilharziasis],1000,0.1
+144,B66,Other fluke infections,1000,0.1
+145,B67,Echinococcosis,1000,0.1
+146,B68,Taeniasis,1000,0.1
+147,B69,Cysticercosis,1000,0.1
+148,B71,Other cestode infections,1000,0.1
+149,B73,Onchocerciasis,1000,0.1
+150,B74,Filariasis,1000,0.1
+151,B75,Trichinellosis,1000,0.1
+152,B76,Hookworm diseases,1000,0.1
+153,B77,Ascariasis,1000,0.1
+154,B78,Strongyloidiasis,1000,0.1
+155,B79,Trichuriasis,1000,0.1
+156,B80,Enterobiasis,1000,0.1
+157,B81,"Other intestinal helminthiases, not elsewhere classified",1000,0.1
+158,B82,Unspecified intestinal parasitism,1000,0.1
+159,B83,Other helminthiases,1000,0.1
+160,B85,Pediculosis and phthiriasis,1000,0.1
+161,B86,Scabies,1000,0.1
+162,B87,Myiasis,1000,0.1
+163,B88,Other infestations,1000,0.1
+164,B89,Unspecified parasitic disease,1000,0.1
+165,B90,Sequelae of tuberculosis,1000,0.1
+166,B91,Sequelae of poliomyelitis,1000,0.1
+167,B94,Sequelae of other and unspecified infectious and parasitic diseases,1000,0.1
+168,B95,Streptococcus and staphylococcus as the cause of diseases classified to other chapters,1000,0.1
+169,B96,Other bacterial agents as the cause of diseases classified to other chapters,1000,0.1
+170,B97,Viral agents as the cause of diseases classified to other chapters,1000,0.1
+171,B98,Other specified infectious agents as the cause of diseases classified to other chapters,1000,0.1
+172,B99,Other and unspecified infectious diseases,1000,0.1
+173,D50,Iron deficiency anaemia,1000,0.1
+174,D51,Vitamin b12 deficiency anaemia,1000,0.1
+175,D52,Folate deficiency anaemia,1000,0.1
+176,D53,Other nutritional anaemias,1000,0.1
+177,D55,Anaemia due to enzyme disorders,1000,0.1
+178,D56,Thalassaemia,1000,0.1
+179,D57,Sickle-cell disorders,1000,0.1
+180,D58,Other hereditary haemolytic anaemias,1000,0.1
+181,D59,Acquired haemolytic anaemia,1000,0.1
+182,D60,Acquired pure red cell aplasia [erythroblastopenia],1000,0.1
+183,D61,Other aplastic anaemias,1000,0.1
+184,D62,Acute posthaemorrhagic anaemia,1000,0.1
+185,D63,Anaemia in chronic diseases classified elsewhere,1000,0.1
+186,D64,Other anaemias,1000,0.1
+187,D65,Disseminated intravascular coagulation [defibrination syndrome],1000,0.1
+188,D66,Hereditary factor viii deficiency,1000,0.1
+189,D67,Hereditary factor ix deficiency,1000,0.1
+190,D68,Other coagulation defects,1000,0.1
+191,D69,Purpura and other haemorrhagic conditions,1000,0.1
+192,D70,Agranulocytosis,1000,0.1
+193,D71,Functional disorders of polymorphonuclear neutrophils,1000,0.1
+194,D72,Other disorders of white blood cells,1000,0.1
+195,D73,Diseases of spleen,1000,0.1
+196,D74,Methaemoglobinaemia,1000,0.1
+197,D75,Other diseases of blood and blood-forming organs,1000,0.1
+198,D76,Certain diseases involving lymphoreticular tissue and reticulohistiocytic system,1000,0.1
+199,D77,Other disorders of blood and blood-forming organs in diseases classified elsewhere,1000,0.1
+200,D80,Immunodeficiency with predominantly antibody defects,1000,0.1
+201,D81,Combined immunodeficiencies,1000,0.1
+202,D82,Immunodeficiency associated with other major defects,1000,0.1
+203,D83,Common variable immunodeficiency,1000,0.1
+204,D84,Other immunodeficiencies,1000,0.1
+205,D86,Sarcoidosis,1000,0.1
+206,D89,"Other disorders involving the immune mechanism, not elsewhere classified",1000,0.1
+207,E01,Iodine-deficiency-related thyroid disorders and allied conditions,1000,0.1
+208,E02,Subclinical iodine-deficiency hypothyroidism,1000,0.1
+209,E03,Other hypothyroidism,1000,0.1
+210,E04,Other non-toxic goitre,1000,0.1
+211,E05,Thyrotoxicosis [hyperthyroidism],1000,0.1
+212,E06,Thyroiditis,1000,0.1
+213,E07,Other disorders of thyroid,1000,0.1
+214,E10,Insulin-dependent diabetes mellitus,1000,0.1
+215,E11,Non-insulin-dependent diabetes mellitus,1000,0.1
+216,E12,Malnutrition-related diabetes mellitus,1000,0.1
+217,E13,Other specified diabetes mellitus,1000,0.1
+218,E14,Unspecified diabetes mellitus,1000,0.1
+219,E15,Nondiabetic hypoglycaemic coma,1000,0.1
+220,E16,Other disorders of pancreatic internal secretion,1000,0.1
+221,E20,Hypoparathyroidism,1000,0.1
+222,E21,Hyperparathyroidism and other disorders of parathyroid gland,1000,0.1
+223,E22,Hyperfunction of pituitary gland,1000,0.1
+224,E23,Hypofunction and other disorders of pituitary gland,1000,0.1
+225,E24,Cushing's syndrome,1000,0.1
+226,E25,Adrenogenital disorders,1000,0.1
+227,E26,Hyperaldosteronism,1000,0.1
+228,E27,Other disorders of adrenal gland,1000,0.1
+229,E28,Ovarian dysfunction,1000,0.1
+230,E29,Testicular dysfunction,1000,0.1
+231,E30,"Disorders of puberty, not elsewhere classified",1000,0.1
+232,E31,Polyglandular dysfunction,1000,0.1
+233,E32,Diseases of thymus,1000,0.1
+234,E34,Other endocrine disorders,1000,0.1
+235,E35,Disorders of endocrine glands in diseases classified elsewhere,1000,0.1
+236,E41,Nutritional marasmus,1000,0.1
+237,E43,Unspecified severe protein-energy malnutrition,1000,0.1
+238,E44,Protein-energy malnutrition of moderate and mild degree,1000,0.1
+239,E45,Retarded development following protein-energy malnutrition,1000,0.1
+240,E46,Unspecified protein-energy malnutrition,1000,0.1
+241,E50,Vitamin a deficiency,1000,0.1
+242,E51,Thiamine deficiency,1000,0.1
+243,E52,Niacin deficiency [pellagra],1000,0.1
+244,E53,Deficiency of other b group vitamins,1000,0.1
+245,E54,Ascorbic acid deficiency,1000,0.1
+246,E55,Vitamin d deficiency,1000,0.1
+247,E56,Other vitamin deficiencies,1000,0.1
+248,E58,Dietary calcium deficiency,1000,0.1
+249,E59,Dietary selenium deficiency,1000,0.1
+250,E60,Dietary zinc deficiency,1000,0.1
+251,E61,Deficiency of other nutrient elements,1000,0.1
+252,E63,Other nutritional deficiencies,1000,0.1
+253,E64,Sequelae of malnutrition and other nutritional deficiencies,1000,0.1
+254,E65,Localised adiposity,1000,0.1
+255,E66,Obesity,1000,0.1
+256,E67,Other hyperalimentation,1000,0.1
+257,E68,Sequelae of hyperalimentation,1000,0.1
+258,E70,Disorders of aromatic amino-acid metabolism,1000,0.1
+259,E71,Disorders of branched-chain amino-acid metabolism and fatty-acid metabolism,1000,0.1
+260,E72,Other disorders of amino-acid metabolism,1000,0.1
+261,E73,Lactose intolerance,1000,0.1
+262,E74,Other disorders of carbohydrate metabolism,1000,0.1
+263,E75,Disorders of sphingolipid metabolism and other lipid storage disorders,1000,0.1
+264,E76,Disorders of glycosaminoglycan metabolism,1000,0.1
+265,E77,Disorders of glycoprotein metabolism,1000,0.1
+266,E78,Disorders of lipoprotein metabolism and other lipidaemias,1000,0.1
+267,E79,Disorders of purine and pyrimidine metabolism,1000,0.1
+268,E80,Disorders of porphyrin and bilirubin metabolism,1000,0.1
+269,E83,Disorders of mineral metabolism,1000,0.1
+270,E84,Cystic fibrosis,1000,0.1
+271,E85,Amyloidosis,1000,0.1
+272,E86,Volume depletion,1000,0.1
+273,E87,"Other disorders of fluid, electrolyte and acid-base balance",1000,0.1
+274,E88,Other metabolic disorders,1000,0.1
+275,E89,"Postprocedural endocrine and metabolic disorders, not elsewhere classified",1000,0.1
+276,F00,Dementia in alzheimer's disease,1000,0.1
+277,F01,Vascular dementia,1000,0.1
+278,F02,Dementia in other diseases classified elsewhere,1000,0.1
+279,F03,Unspecified dementia,1000,0.1
+280,F04,"Organic amnesic syndrome, not induced by alcohol and other psychoactive substances",1000,0.1
+281,F05,"Delirium, not induced by alcohol and other psychoactive substances",1000,0.1
+282,F06,Other mental disorders due to brain damage and dysfunction and to physical disease,1000,0.1
+283,F07,"Personality and behavioural disorders due to brain disease, damage and dysfunction",1000,0.1
+284,F09,Unspecified organic or symptomatic mental disorder,1000,0.1
+285,F10,Mental and behavioural disorders due to use of alcohol,1000,0.1
+286,F11,Mental and behavioural disorders due to use of opioids,1000,0.1
+287,F12,Mental and behavioural disorders due to use of cannabinoids,1000,0.1
+288,F13,Mental and behavioural disorders due to use of sedatives or hypnotics,1000,0.1
+289,F14,Mental and behavioural disorders due to use of cocaine,1000,0.1
+290,F15,"Mental and behavioural disorders due to use of other stimulants, including caffeine",1000,0.1
+291,F16,Mental and behavioural disorders due to use of hallucinogens,1000,0.1
+292,F17,Mental and behavioural disorders due to use of tobacco,1000,0.1
+293,F18,Mental and behavioural disorders due to use of volatile solvents,1000,0.1
+294,F19,Mental and behavioural disorders due to multiple drug use and use of other psychoactive substances,1000,0.1
+295,F20,Schizophrenia,1000,0.1
+296,F21,Schizotypal disorder,1000,0.1
+297,F22,Persistent delusional disorders,1000,0.1
+298,F23,Acute and transient psychotic disorders,1000,0.1
+299,F24,Induced delusional disorder,1000,0.1
+300,F25,Schizoaffective disorders,1000,0.1
+301,F28,Other nonorganic psychotic disorders,1000,0.1
+302,F29,Unspecified nonorganic psychosis,1000,0.1
+303,F30,Manic episode,1000,0.1
+304,F31,Bipolar affective disorder,1000,0.1
+305,F32,Depressive episode,1000,0.1
+306,F33,Recurrent depressive disorder,1000,0.1
+307,F34,Persistent mood [affective] disorders,1000,0.1
+308,F38,Other mood [affective] disorders,1000,0.1
+309,F39,Unspecified mood [affective] disorder,1000,0.1
+310,F40,Phobic anxiety disorders,1000,0.1
+311,F41,Other anxiety disorders,1000,0.1
+312,F42,Obsessive-compulsive disorder,1000,0.1
+313,F43,"Reaction to severe stress, and adjustment disorders",1000,0.1
+314,F44,Dissociative [conversion] disorders,1000,0.1
+315,F45,Somatoform disorders,1000,0.1
+316,F48,Other neurotic disorders,1000,0.1
+317,F50,Eating disorders,1000,0.1
+318,F51,Nonorganic sleep disorders,1000,0.1
+319,F52,"Sexual dysfunction, not caused by organic disorder or disease",1000,0.1
+320,F53,"Mental and behavioural disorders associated with the puerperium, not elsewhere classified",1000,0.1
+321,F54,Psychological and behavioural factors associated with disorders or diseases classified elsewhere,1000,0.1
+322,F55,Abuse of non-dependence-producing substances,1000,0.1
+323,F59,Unspecified behavioural syndromes associated with physiological disturbances and physical factors,1000,0.1
+324,F60,Specific personality disorders,1000,0.1
+325,F61,Mixed and other personality disorders,1000,0.1
+326,F62,"Enduring personality changes, not attributable to brain damage and disease",1000,0.1
+327,F63,Habit and impulse disorders,1000,0.1
+328,F64,Gender identity disorders,1000,0.1
+329,F65,Disorders of sexual preference,1000,0.1
+330,F66,Psychological and behavioural disorders associated with sexual development and orientation,1000,0.1
+331,F68,Other disorders of adult personality and behaviour,1000,0.1
+332,F69,Unspecified disorder of adult personality and behaviour,1000,0.1
+333,F70,Mild mental retardation,1000,0.1
+334,F71,Moderate mental retardation,1000,0.1
+335,F72,Severe mental retardation,1000,0.1
+336,F78,Other mental retardation,1000,0.1
+337,F79,Unspecified mental retardation,1000,0.1
+338,F80,Specific developmental disorders of speech and language,1000,0.1
+339,F81,Specific developmental disorders of scholastic skills,1000,0.1
+340,F82,Specific developmental disorder of motor function,1000,0.1
+341,F83,Mixed specific developmental disorders,1000,0.1
+342,F84,Pervasive developmental disorders,1000,0.1
+343,F88,Other disorders of psychological development,1000,0.1
+344,F89,Unspecified disorder of psychological development,1000,0.1
+345,F90,Hyperkinetic disorders,1000,0.1
+346,F91,Conduct disorders,1000,0.1
+347,F92,Mixed disorders of conduct and emotions,1000,0.1
+348,F93,Emotional disorders with onset specific to childhood,1000,0.1
+349,F94,Disorders of social functioning with onset specific to childhood and adolescence,1000,0.1
+350,F95,Tic disorders,1000,0.1
+351,F98,Other behavioural and emotional disorders with onset usually occurring in childhood and adolescence,1000,0.1
+352,F99,"Mental disorder, not otherwise specified",1000,0.1
+353,G00,"Bacterial meningitis, not elsewhere classified",1000,0.1
+354,G01,Meningitis in bacterial diseases classified elsewhere,1000,0.1
+355,G02,Meningitis in other infectious and parasitic diseases classified elsewhere,1000,0.1
+356,G03,Meningitis due to other and unspecified causes,1000,0.1
+357,G04,"Encephalitis, myelitis and encephalomyelitis",1000,0.1
+358,G05,"Encephalitis, myelitis and encephalomyelitis in diseases classified elsewhere",1000,0.1
+359,G06,Intracranial and intraspinal abscess and granuloma,1000,0.1
+360,G07,Intracranial and intraspinal abscess and granuloma in diseases classified elsewhere,1000,0.1
+361,G08,Intracranial and intraspinal phlebitis and thrombophlebitis,1000,0.1
+362,G09,Sequelae of inflammatory diseases of central nervous system,1000,0.1
+363,G10,Huntington's disease,1000,0.1
+364,G11,Hereditary ataxia,1000,0.1
+365,G12,Spinal muscular atrophy and related syndromes,1000,0.1
+366,G13,Systemic atrophies primarily affecting central nervous system in diseases classified elsewhere,1000,0.1
+367,G14,Postpolio syndrome,1000,0.1
+368,G20,Parkinson's disease,1000,0.1
+369,G21,Secondary parkinsonism,1000,0.1
+370,G22,Parkinsonism in diseases classified elsewhere,1000,0.1
+371,G23,Other degenerative diseases of basal ganglia,1000,0.1
+372,G24,Dystonia,1000,0.1
+373,G25,Other extrapyramidal and movement disorders,1000,0.1
+374,G30,Alzheimer's disease,1000,0.1
+375,G31,"Other degenerative diseases of nervous system, not elsewhere classified",1000,0.1
+376,G32,Other degenerative disorders of nervous system in diseases classified elsewhere,1000,0.1
+377,G35,Multiple sclerosis,1000,0.1
+378,G36,Other acute disseminated demyelination,1000,0.1
+379,G37,Other demyelinating diseases of central nervous system,1000,0.1
+380,G40,Epilepsy,1000,0.1
+381,G41,Status epilepticus,1000,0.1
+382,G43,Migraine,1000,0.1
+383,G44,Other headache syndromes,1000,0.1
+384,G45,Transient cerebral ischaemic attacks and related syndromes,1000,0.1
+385,G46,Vascular syndromes of brain in cerebrovascular diseases,1000,0.1
+386,G47,Sleep disorders,1000,0.1
+387,G50,Disorders of trigeminal nerve,1000,0.1
+388,G51,Facial nerve disorders,1000,0.1
+389,G52,Disorders of other cranial nerves,1000,0.1
+390,G53,Cranial nerve disorders in diseases classified elsewhere,1000,0.1
+391,G54,Nerve root and plexus disorders,1000,0.1
+392,G55,Nerve root and plexus compressions in diseases classified elsewhere,1000,0.1
+393,G56,Mononeuropathies of upper limb,1000,0.1
+394,G57,Mononeuropathies of lower limb,1000,0.1
+395,G58,Other mononeuropathies,1000,0.1
+396,G59,Mononeuropathy in diseases classified elsewhere,1000,0.1
+397,G60,Hereditary and idiopathic neuropathy,1000,0.1
+398,G61,Inflammatory polyneuropathy,1000,0.1
+399,G62,Other polyneuropathies,1000,0.1
+400,G63,Polyneuropathy in diseases classified elsewhere,1000,0.1
+401,G64,Other disorders of peripheral nervous system,1000,0.1
+402,G70,Myasthenia gravis and other myoneural disorders,1000,0.1
+403,G71,Primary disorders of muscles,1000,0.1
+404,G72,Other myopathies,1000,0.1
+405,G73,Disorders of myoneural junction and muscle in diseases classified elsewhere,1000,0.1
+406,G80,Infantile cerebral palsy,1000,0.1
+407,G81,Hemiplegia,1000,0.1
+408,G82,Paraplegia and tetraplegia,1000,0.1
+409,G83,Other paralytic syndromes,1000,0.1
+410,G90,Disorders of autonomic nervous system,1000,0.1
+411,G91,Hydrocephalus,1000,0.1
+412,G92,Toxic encephalopathy,1000,0.1
+413,G93,Other disorders of brain,1000,0.1
+414,G94,Other disorders of brain in diseases classified elsewhere,1000,0.1
+415,G95,Other diseases of spinal cord,1000,0.1
+416,G96,Other disorders of central nervous system,1000,0.1
+417,G97,"Postprocedural disorders of nervous system, not elsewhere classified",1000,0.1
+418,G98,"Other disorders of nervous system, not elsewhere classified",1000,0.1
+419,G99,Other disorders of nervous system in diseases classified elsewhere,1000,0.1
+420,H00,Hordeolum and chalazion,1000,0.1
+421,H01,Other inflammation of eyelid,1000,0.1
+422,H02,Other disorders of eyelid,1000,0.1
+423,H03,Disorders of eyelid in diseases classified elsewhere,1000,0.1
+424,H04,Disorders of lachrymal system,1000,0.1
+425,H05,Disorders of orbit,1000,0.1
+426,H06,Disorders of lachrymal system and orbit in diseases classified elsewhere,1000,0.1
+427,H10,Conjunctivitis,1000,0.1
+428,H11,Other disorders of conjunctiva,1000,0.1
+429,H13,Disorders of conjunctiva in diseases classified elsewhere,1000,0.1
+430,H15,Disorders of sclera,1000,0.1
+431,H16,Keratitis,1000,0.1
+432,H17,Corneal scars and opacities,1000,0.1
+433,H18,Other disorders of cornea,1000,0.1
+434,H19,Disorders of sclera and cornea in diseases classified elsewhere,1000,0.1
+435,H20,Iridocyclitis,1000,0.1
+436,H21,Other disorders of iris and ciliary body,1000,0.1
+437,H22,Disorders of iris and ciliary body in diseases classified elsewhere,1000,0.1
+438,H25,Senile cataract,1000,0.1
+439,H26,Other cataract,1000,0.1
+440,H27,Other disorders of lens,1000,0.1
+441,H28,Cataract and other disorders of lens in diseases classified elsewhere,1000,0.1
+442,H30,Chorioretinal inflammation,1000,0.1
+443,H31,Other disorders of choroid,1000,0.1
+444,H32,Chorioretinal disorders in diseases classified elsewhere,1000,0.1
+445,H33,Retinal detachments and breaks,1000,0.1
+446,H34,Retinal vascular occlusions,1000,0.1
+447,H35,Other retinal disorders,1000,0.1
+448,H36,Retinal disorders in diseases classified elsewhere,1000,0.1
+449,H40,Glaucoma,1000,0.1
+450,H42,Glaucoma in diseases classified elsewhere,1000,0.1
+451,H43,Disorders of vitreous body,1000,0.1
+452,H44,Disorders of globe,1000,0.1
+453,H45,Disorders of vitreous body and globe in diseases classified elsewhere,1000,0.1
+454,H46,Optic neuritis,1000,0.1
+455,H47,Other disorders of optic [2nd] nerve and visual pathways,1000,0.1
+456,H48,Disorders of optic [2nd] nerve and visual pathways in diseases classified elsewhere,1000,0.1
+457,H49,Paralytic strabismus,1000,0.1
+458,H50,Other strabismus,1000,0.1
+459,H51,Other disorders of binocular movement,1000,0.1
+460,H52,Disorders of refraction and accommodation,1000,0.1
+461,H53,Visual disturbances,1000,0.1
+462,H54,Blindness and low vision,1000,0.1
+463,H55,Nystagmus and other irregular eye movements,1000,0.1
+464,H57,Other disorders of eye and adnexa,1000,0.1
+465,H58,Other disorders of eye and adnexa in diseases classified elsewhere,1000,0.1
+466,H59,"Postprocedural disorders of eye and adnexa, not elsewhere classified",1000,0.1
+467,H60,Otitis externa,1000,0.1
+468,H61,Other disorders of external ear,1000,0.1
+469,H62,Disorders of external ear in diseases classified elsewhere,1000,0.1
+470,H65,Nonsuppurative otitis media,1000,0.1
+471,H66,Suppurative and unspecified otitis media,1000,0.1
+472,H67,Otitis media in diseases classified elsewhere,1000,0.1
+473,H68,Eustachian salpingitis and obstruction,1000,0.1
+474,H69,Other disorders of eustachian tube,1000,0.1
+475,H70,Mastoiditis and related conditions,1000,0.1
+476,H71,Cholesteatoma of middle ear,1000,0.1
+477,H72,Perforation of tympanic membrane,1000,0.1
+478,H73,Other disorders of tympanic membrane,1000,0.1
+479,H74,Other disorders of middle ear and mastoid,1000,0.1
+480,H75,Other disorders of middle ear and mastoid in diseases classified elsewhere,1000,0.1
+481,H80,Otosclerosis,1000,0.1
+482,H81,Disorders of vestibular function,1000,0.1
+483,H82,Vertiginous syndromes in diseases classified elsewhere,1000,0.1
+484,H83,Other diseases of inner ear,1000,0.1
+485,H90,Conductive and sensorineural hearing loss,1000,0.1
+486,H91,Other hearing loss,1000,0.1
+487,H92,Otalgia and effusion of ear,1000,0.1
+488,H93,"Other disorders of ear, not elsewhere classified",1000,0.1
+489,H94,Other disorders of ear in diseases classified elsewhere,1000,0.1
+490,H95,"Postprocedural disorders of ear and mastoid process, not elsewhere classified",1000,0.1
+491,I00,Rheumatic fever without mention of heart involvement,1000,0.1
+492,I01,Rheumatic fever with heart involvement,1000,0.1
+493,I02,Rheumatic chorea,1000,0.1
+494,I05,Rheumatic mitral valve diseases,1000,0.1
+495,I06,Rheumatic aortic valve diseases,1000,0.1
+496,I07,Rheumatic tricuspid valve diseases,1000,0.1
+497,I08,Multiple valve diseases,1000,0.1
+498,I09,Other rheumatic heart diseases,1000,0.1
+499,I10,Essential (primary) hypertension,1000,0.1
+500,I11,Hypertensive heart disease,1000,0.1
+501,I12,Hypertensive renal disease,1000,0.1
+502,I13,Hypertensive heart and renal disease,1000,0.1
+503,I15,Secondary hypertension,1000,0.1
+504,I20,Angina pectoris,1000,0.1
+505,I21,Acute myocardial infarction,1000,0.1
+506,I22,Subsequent myocardial infarction,1000,0.1
+507,I23,Certain current complications following acute myocardial infarction,1000,0.1
+508,I24,Other acute ischaemic heart diseases,1000,0.1
+509,I25,Chronic ischaemic heart disease,1000,0.1
+510,I26,Pulmonary embolism,1000,0.1
+511,I27,Other pulmonary heart diseases,1000,0.1
+512,I28,Other diseases of pulmonary vessels,1000,0.1
+513,I30,Acute pericarditis,1000,0.1
+514,I31,Other diseases of pericardium,1000,0.1
+515,I32,Pericarditis in diseases classified elsewhere,1000,0.1
+516,I33,Acute and subacute endocarditis,1000,0.1
+517,I34,Nonrheumatic mitral valve disorders,1000,0.1
+518,I35,Nonrheumatic aortic valve disorders,1000,0.1
+519,I36,Nonrheumatic tricuspid valve disorders,1000,0.1
+520,I37,Pulmonary valve disorders,1000,0.1
+521,I38,"Endocarditis, valve unspecified",1000,0.1
+522,I39,Endocarditis and heart valve disorders in diseases classified elsewhere,1000,0.1
+523,I40,Acute myocarditis,1000,0.1
+524,I41,Myocarditis in diseases classified elsewhere,1000,0.1
+525,I42,Cardiomyopathy,1000,0.1
+526,I43,Cardiomyopathy in diseases classified elsewhere,1000,0.1
+527,I44,Atrioventricular and left bundle-branch block,1000,0.1
+528,I45,Other conduction disorders,1000,0.1
+529,I46,Cardiac arrest,1000,0.1
+530,I47,Paroxysmal tachycardia,1000,0.1
+531,I48,Atrial fibrillation and flutter,1000,0.1
+532,I49,Other cardiac arrhythmias,1000,0.1
+533,I50,Heart failure,1000,0.1
+534,I51,Complications and ill-defined descriptions of heart disease,1000,0.1
+535,I52,Other heart disorders in diseases classified elsewhere,1000,0.1
+536,I60,Subarachnoid haemorrhage,1000,0.1
+537,I61,Intracerebral haemorrhage,1000,0.1
+538,I62,Other nontraumatic intracranial haemorrhage,1000,0.1
+539,I63,Cerebral infarction,1000,0.1
+540,I64,"Stroke, not specified as haemorrhage or infarction",1000,0.1
+541,I65,"Occlusion and stenosis of precerebral arteries, not resulting in cerebral infarction",1000,0.1
+542,I66,"Occlusion and stenosis of cerebral arteries, not resulting in cerebral infarction",1000,0.1
+543,I67,Other cerebrovascular diseases,1000,0.1
+544,I68,Cerebrovascular disorders in diseases classified elsewhere,1000,0.1
+545,I69,Sequelae of cerebrovascular disease,1000,0.1
+546,I70,Atherosclerosis,1000,0.1
+547,I71,Aortic aneurysm and dissection,1000,0.1
+548,I72,Other aneurysm,1000,0.1
+549,I73,Other peripheral vascular diseases,1000,0.1
+550,I74,Arterial embolism and thrombosis,1000,0.1
+551,I77,Other disorders of arteries and arterioles,1000,0.1
+552,I78,Diseases of capillaries,1000,0.1
+553,I79,"Disorders of arteries, arterioles and capillaries in diseases classified elsewhere",1000,0.1
+554,I80,Phlebitis and thrombophlebitis,1000,0.1
+555,I81,Portal vein thrombosis,1000,0.1
+556,I82,Other venous embolism and thrombosis,1000,0.1
+557,I83,Varicose veins of lower extremities,1000,0.1
+558,I84,Haemorrhoids,1000,0.1
+559,I85,Oesophageal varices,1000,0.1
+560,I86,Varicose veins of other sites,1000,0.1
+561,I87,Other disorders of veins,1000,0.1
+562,I88,Nonspecific lymphadenitis,1000,0.1
+563,I89,Other non-infective disorders of lymphatic vessels and lymph nodes,1000,0.1
+564,I95,Hypotension,1000,0.1
+565,I97,"Postprocedural disorders of circulatory system, not elsewhere classified",1000,0.1
+566,I98,Other disorders of circulatory system in diseases classified elsewhere,1000,0.1
+567,I99,Other and unspecified disorders of circulatory system,1000,0.1
+568,J00,Acute nasopharyngitis [common cold],1000,0.1
+569,J01,Acute sinusitis,1000,0.1
+570,J02,Acute pharyngitis,1000,0.1
+571,J03,Acute tonsillitis,1000,0.1
+572,J04,Acute laryngitis and tracheitis,1000,0.1
+573,J05,Acute obstructive laryngitis [croup] and epiglottitis,1000,0.1
+574,J06,Acute upper respiratory infections of multiple and unspecified sites,1000,0.1
+575,J09,Influenza due to certain identified influenza virus,1000,0.1
+576,J10,Influenza due to identified influenza virus,1000,0.1
+577,J11,"Influenza, virus not identified",1000,0.1
+578,J12,"Viral pneumonia, not elsewhere classified",1000,0.1
+579,J13,Pneumonia due to streptococcus pneumoniae,1000,0.1
+580,J14,Pneumonia due to haemophilus influenzae,1000,0.1
+581,J15,"Bacterial pneumonia, not elsewhere classified",1000,0.1
+582,J16,"Pneumonia due to other infectious organisms, not elsewhere classified",1000,0.1
+583,J17,Pneumonia in diseases classified elsewhere,1000,0.1
+584,J18,"Pneumonia, organism unspecified",1000,0.1
+585,J20,Acute bronchitis,1000,0.1
+586,J21,Acute bronchiolitis,1000,0.1
+587,J22,Unspecified acute lower respiratory infection,1000,0.1
+588,J30,Vasomotor and allergic rhinitis,1000,0.1
+589,J31,"Chronic rhinitis, nasopharyngitis and pharyngitis",1000,0.1
+590,J32,Chronic sinusitis,1000,0.1
+591,J33,Nasal polyp,1000,0.1
+592,J34,Other disorders of nose and nasal sinuses,1000,0.1
+593,J35,Chronic diseases of tonsils and adenoids,1000,0.1
+594,J36,Peritonsillar abscess,1000,0.1
+595,J37,Chronic laryngitis and laryngotracheitis,1000,0.1
+596,J38,"Diseases of vocal cords and larynx, not elsewhere classified",1000,0.1
+597,J39,Other diseases of upper respiratory tract,1000,0.1
+598,J40,"Bronchitis, not specified as acute or chronic",1000,0.1
+599,J41,Simple and mucopurulent chronic bronchitis,1000,0.1
+600,J42,Unspecified chronic bronchitis,1000,0.1
+601,J43,Emphysema,1000,0.1
+602,J44,Other chronic obstructive pulmonary disease,1000,0.1
+603,J45,Asthma,1000,0.1
+604,J46,Status asthmaticus,1000,0.1
+605,J47,Bronchiectasis,1000,0.1
+606,J60,Coalworker's pneumoconiosis,1000,0.1
+607,J61,Pneumoconiosis due to asbestos and other mineral fibres,1000,0.1
+608,J62,Pneumoconiosis due to dust containing silica,1000,0.1
+609,J63,Pneumoconiosis due to other inorganic dusts,1000,0.1
+610,J64,Unspecified pneumoconiosis,1000,0.1
+611,J66,Airway disease due to specific organic dust,1000,0.1
+612,J67,Hypersensitivity pneumonitis due to organic dust,1000,0.1
+613,J68,"Respiratory conditions due to inhalation of chemicals, gases, fumes and vapours",1000,0.1
+614,J69,Pneumonitis due to solids and liquids,1000,0.1
+615,J70,Respiratory conditions due to other external agents,1000,0.1
+616,J80,Adult respiratory distress syndrome,1000,0.1
+617,J81,Pulmonary oedema,1000,0.1
+618,J82,"Pulmonary eosinophilia, not elsewhere classified",1000,0.1
+619,J84,Other interstitial pulmonary diseases,1000,0.1
+620,J85,Abscess of lung and mediastinum,1000,0.1
+621,J86,Pyothorax,1000,0.1
+622,J90,"Pleural effusion, not elsewhere classified",1000,0.1
+623,J91,Pleural effusion in conditions classified elsewhere,1000,0.1
+624,J92,Pleural plaque,1000,0.1
+625,J93,Pneumothorax,1000,0.1
+626,J94,Other pleural conditions,1000,0.1
+627,J95,"Postprocedural respiratory disorders, not elsewhere classified",1000,0.1
+628,J96,"Respiratory failure, not elsewhere classified",1000,0.1
+629,J98,Other respiratory disorders,1000,0.1
+630,J99,Respiratory disorders in diseases classified elsewhere,1000,0.1
+631,K00,Disorders of tooth development and eruption,1000,0.1
+632,K01,Embedded and impacted teeth,1000,0.1
+633,K02,Dental caries,1000,0.1
+634,K03,Other diseases of hard tissues of teeth,1000,0.1
+635,K04,Diseases of pulp and periapical tissues,1000,0.1
+636,K05,Gingivitis and periodontal diseases,1000,0.1
+637,K06,Other disorders of gingiva and edentulous alveolar ridge,1000,0.1
+638,K07,Dentofacial anomalies [including malocclusion],1000,0.1
+639,K08,Other disorders of teeth and supporting structures,1000,0.1
+640,K09,"Cysts of oral region, not elsewhere classified",1000,0.1
+641,K10,Other diseases of jaws,1000,0.1
+642,K11,Diseases of salivary glands,1000,0.1
+643,K12,Stomatitis and related lesions,1000,0.1
+644,K13,Other diseases of lip and oral mucosa,1000,0.1
+645,K14,Diseases of tongue,1000,0.1
+646,K20,Oesophagitis,1000,0.1
+647,K21,Gastro-oesophageal reflux disease,1000,0.1
+648,K22,Other diseases of oesophagus,1000,0.1
+649,K23,Disorders of oesophagus in diseases classified elsewhere,1000,0.1
+650,K25,Gastric ulcer,1000,0.1
+651,K26,Duodenal ulcer,1000,0.1
+652,K27,"Peptic ulcer, site unspecified",1000,0.1
+653,K28,Gastrojejunal ulcer,1000,0.1
+654,K29,Gastritis and duodenitis,1000,0.1
+655,K30,Dyspepsia,1000,0.1
+656,K31,Other diseases of stomach and duodenum,1000,0.1
+657,K35,Acute appendicitis,1000,0.1
+658,K36,Other appendicitis,1000,0.1
+659,K37,Unspecified appendicitis,1000,0.1
+660,K38,Other diseases of appendix,1000,0.1
+661,K40,Inguinal hernia,1000,0.1
+662,K41,Femoral hernia,1000,0.1
+663,K42,Umbilical hernia,1000,0.1
+664,K43,Ventral hernia,1000,0.1
+665,K44,Diaphragmatic hernia,1000,0.1
+666,K45,Other abdominal hernia,1000,0.1
+667,K46,Unspecified abdominal hernia,1000,0.1
+668,K50,Crohn's disease [regional enteritis],1000,0.1
+669,K51,Ulcerative colitis,1000,0.1
+670,K52,Other non-infective gastro-enteritis and colitis,1000,0.1
+671,K55,Vascular disorders of intestine,1000,0.1
+672,K56,Paralytic ileus and intestinal obstruction without hernia,1000,0.1
+673,K57,Diverticular disease of intestine,1000,0.1
+674,K58,Irritable bowel syndrome,1000,0.1
+675,K59,Other functional intestinal disorders,1000,0.1
+676,K60,Fissure and fistula of anal and rectal regions,1000,0.1
+677,K61,Abscess of anal and rectal regions,1000,0.1
+678,K62,Other diseases of anus and rectum,1000,0.1
+679,K63,Other diseases of intestine,1000,0.1
+680,K64,Haemorrhoids and perianal venous thrombosis,1000,0.1
+681,K65,Peritonitis,1000,0.1
+682,K66,Other disorders of peritoneum,1000,0.1
+683,K67,Disorders of peritoneum in infectious diseases classified elsewhere,1000,0.1
+684,K70,Alcoholic liver disease,1000,0.1
+685,K71,Toxic liver disease,1000,0.1
+686,K72,"Hepatic failure, not elsewhere classified",1000,0.1
+687,K73,"Chronic hepatitis, not elsewhere classified",1000,0.1
+688,K74,Fibrosis and cirrhosis of liver,1000,0.1
+689,K75,Other inflammatory liver diseases,1000,0.1
+690,K76,Other diseases of liver,1000,0.1
+691,K77,Liver disorders in diseases classified elsewhere,1000,0.1
+692,K80,Cholelithiasis,1000,0.1
+693,K81,Cholecystitis,1000,0.1
+694,K82,Other diseases of gallbladder,1000,0.1
+695,K83,Other diseases of biliary tract,1000,0.1
+696,K85,Acute pancreatitis,1000,0.1
+697,K86,Other diseases of pancreas,1000,0.1
+698,K87,"Disorders of gallbladder, biliary tract and pancreas in diseases classified elsewhere",1000,0.1
+699,K90,Intestinal malabsorption,1000,0.1
+700,K91,"Postprocedural disorders of digestive system, not elsewhere classified",1000,0.1
+701,K92,Other diseases of digestive system,1000,0.1
+702,K93,Disorders of other digestive organs in diseases classified elsewhere,1000,0.1
+703,L00,Staphylococcal scalded skin syndrome,1000,0.1
+704,L01,Impetigo,1000,0.1
+705,L02,"Cutaneous abscess, furuncle and carbuncle",1000,0.1
+706,L03,Cellulitis,1000,0.1
+707,L04,Acute lymphadenitis,1000,0.1
+708,L05,Pilonidal cyst,1000,0.1
+709,L08,Other local infections of skin and subcutaneous tissue,1000,0.1
+710,L10,Pemphigus,1000,0.1
+711,L11,Other acantholytic disorders,1000,0.1
+712,L12,Pemphigoid,1000,0.1
+713,L13,Other bullous disorders,1000,0.1
+714,L14,Bullous disorders in diseases classified elsewhere,1000,0.1
+715,L20,Atopic dermatitis,1000,0.1
+716,L21,Seborrhoeic dermatitis,1000,0.1
+717,L22,Diaper [napkin] dermatitis,1000,0.1
+718,L23,Allergic contact dermatitis,1000,0.1
+719,L24,Irritant contact dermatitis,1000,0.1
+720,L25,Unspecified contact dermatitis,1000,0.1
+721,L26,Exfoliative dermatitis,1000,0.1
+722,L27,Dermatitis due to substances taken internally,1000,0.1
+723,L28,Lichen simplex chronicus and prurigo,1000,0.1
+724,L29,Pruritus,1000,0.1
+725,L30,Other dermatitis,1000,0.1
+726,L40,Psoriasis,1000,0.1
+727,L41,Parapsoriasis,1000,0.1
+728,L42,Pityriasis rosea,1000,0.1
+729,L43,Lichen planus,1000,0.1
+730,L44,Other papulosquamous disorders,1000,0.1
+731,L50,Urticaria,1000,0.1
+732,L51,Erythema multiforme,1000,0.1
+733,L52,Erythema nodosum,1000,0.1
+734,L53,Other erythematous conditions,1000,0.1
+735,L54,Erythema in diseases classified elsewhere,1000,0.1
+736,L55,Sunburn,1000,0.1
+737,L56,Other acute skin changes due to ultraviolet radiation,1000,0.1
+738,L57,Skin changes due to chronic exposure to nonionising radiation,1000,0.1
+739,L58,Radiodermatitis,1000,0.1
+740,L59,Other disorders of skin and subcutaneous tissue related to radiation,1000,0.1
+741,L60,Nail disorders,1000,0.1
+742,L62,Nail disorders in diseases classified elsewhere,1000,0.1
+743,L63,Alopecia areata,1000,0.1
+744,L64,Androgenic alopecia,1000,0.1
+745,L65,Other nonscarring hair loss,1000,0.1
+746,L66,Cicatricial alopecia [scarring hair loss],1000,0.1
+747,L67,Hair colour and hair shaft abnormalities,1000,0.1
+748,L68,Hypertrichosis,1000,0.1
+749,L70,Acne,1000,0.1
+750,L71,Rosacea,1000,0.1
+751,L72,Follicular cysts of skin and subcutaneous tissue,1000,0.1
+752,L73,Other follicular disorders,1000,0.1
+753,L74,Eccrine sweat disorders,1000,0.1
+754,L75,Apocrine sweat disorders,1000,0.1
+755,L80,Vitiligo,1000,0.1
+756,L81,Other disorders of pigmentation,1000,0.1
+757,L82,Seborrhoeic keratosis,1000,0.1
+758,L83,Acanthosis nigricans,1000,0.1
+759,L84,Corns and callosities,1000,0.1
+760,L85,Other epidermal thickening,1000,0.1
+761,L86,Keratoderma in diseases classified elsewhere,1000,0.1
+762,L87,Transepidermal elimination disorders,1000,0.1
+763,L88,Pyoderma gangrenosum,1000,0.1
+764,L89,Decubitus ulcer,1000,0.1
+765,L90,Atrophic disorders of skin,1000,0.1
+766,L91,Hypertrophic disorders of skin,1000,0.1
+767,L92,Granulomatous disorders of skin and subcutaneous tissue,1000,0.1
+768,L93,Lupus erythematosus,1000,0.1
+769,L94,Other localised connective tissue disorders,1000,0.1
+770,L95,"Vasculitis limited to skin, not elsewhere classified",1000,0.1
+771,L97,"Ulcer of lower limb, not elsewhere classified",1000,0.1
+772,L98,"Other disorders of skin and subcutaneous tissue, not elsewhere classified",1000,0.1
+773,L99,Other disorders of skin and subcutaneous tissue in diseases classified elsewhere,1000,0.1
+774,M00,Pyogenic arthritis,1000,0.1
+775,M01,Direct infections of joint in infectious and parasitic diseases classified elsewhere,1000,0.1
+776,M02,Reactive arthropathies,1000,0.1
+777,M03,Postinfective and reactive arthropathies in diseases classified elsewhere,1000,0.1
+778,M05,Seropositive rheumatoid arthritis,1000,0.1
+779,M06,Other rheumatoid arthritis,1000,0.1
+780,M07,Psoriatic and enteropathic arthropathies,1000,0.1
+781,M08,Juvenile arthritis,1000,0.1
+782,M09,Juvenile arthritis in diseases classified elsewhere,1000,0.1
+783,M10,Gout,1000,0.1
+784,M11,Other crystal arthropathies,1000,0.1
+785,M12,Other specific arthropathies,1000,0.1
+786,M13,Other arthritis,1000,0.1
+787,M14,Arthropathies in other diseases classified elsewhere,1000,0.1
+788,M15,Polyarthrosis,1000,0.1
+789,M16,Coxarthrosis [arthrosis of hip],1000,0.1
+790,M17,Gonarthrosis [arthrosis of knee],1000,0.1
+791,M18,Arthrosis of first carpometacarpal joint,1000,0.1
+792,M19,Other arthrosis,1000,0.1
+793,M20,Acquired deformities of fingers and toes,1000,0.1
+794,M21,Other acquired deformities of limbs,1000,0.1
+795,M22,Disorders of patella,1000,0.1
+796,M23,Internal derangement of knee,1000,0.1
+797,M24,Other specific joint derangements,1000,0.1
+798,M25,"Other joint disorders, not elsewhere classified",1000,0.1
+799,M30,Polyarteritis nodosa and related conditions,1000,0.1
+800,M31,Other necrotising vasculopathies,1000,0.1
+801,M32,Systemic lupus erythematosus,1000,0.1
+802,M33,Dermatopolymyositis,1000,0.1
+803,M34,Systemic sclerosis,1000,0.1
+804,M35,Other systemic involvement of connective tissue,1000,0.1
+805,M36,Systemic disorders of connective tissue in diseases classified elsewhere,1000,0.1
+806,M40,Kyphosis and lordosis,1000,0.1
+807,M41,Scoliosis,1000,0.1
+808,M42,Spinal osteochondrosis,1000,0.1
+809,M43,Other deforming dorsopathies,1000,0.1
+810,M45,Ankylosing spondylitis,1000,0.1
+811,M46,Other inflammatory spondylopathies,1000,0.1
+812,M47,Spondylosis,1000,0.1
+813,M48,Other spondylopathies,1000,0.1
+814,M49,Spondylopathies in diseases classified elsewhere,1000,0.1
+815,M50,Cervical disk disorders,1000,0.1
+816,M51,Other intervertebral disk disorders,1000,0.1
+817,M53,"Other dorsopathies, not elsewhere classified",1000,0.1
+818,M54,Dorsalgia,1000,0.1
+819,M60,Myositis,1000,0.1
+820,M61,Calcification and ossification of muscle,1000,0.1
+821,M62,Other disorders of muscle,1000,0.1
+822,M63,Disorders of muscle in diseases classified elsewhere,1000,0.1
+823,M65,Synovitis and tenosynovitis,1000,0.1
+824,M66,Spontaneous rupture of synovium and tendon,1000,0.1
+825,M67,Other disorders of synovium and tendon,1000,0.1
+826,M68,Disorders of synovium and tendon in diseases classified elsewhere,1000,0.1
+827,M70,"Soft tissue disorders related to use, overuse and pressure",1000,0.1
+828,M71,Other bursopathies,1000,0.1
+829,M72,Fibroblastic disorders,1000,0.1
+830,M73,Soft tissue disorders in diseases classified elsewhere,1000,0.1
+831,M75,Shoulder lesions,1000,0.1
+832,M76,"Enthesopathies of lower limb, excluding foot",1000,0.1
+833,M77,Other enthesopathies,1000,0.1
+834,M79,"Other soft tissue disorders, not elsewhere classified",1000,0.1
+835,M80,Osteoporosis with pathological fracture,1000,0.1
+836,M81,Osteoporosis without pathological fracture,1000,0.1
+837,M82,Osteoporosis in diseases classified elsewhere,1000,0.1
+838,M83,Adult osteomalacia,1000,0.1
+839,M84,Disorders of continuity of bone,1000,0.1
+840,M85,Other disorders of bone density and structure,1000,0.1
+841,M86,Osteomyelitis,1000,0.1
+842,M87,Osteonecrosis,1000,0.1
+843,M88,Paget's disease of bone [osteitis deformans],1000,0.1
+844,M89,Other disorders of bone,1000,0.1
+845,M90,Osteopathies in diseases classified elsewhere,1000,0.1
+846,M91,Juvenile osteochondrosis of hip and pelvis,1000,0.1
+847,M92,Other juvenile osteochondrosis,1000,0.1
+848,M93,Other osteochondropathies,1000,0.1
+849,M94,Other disorders of cartilage,1000,0.1
+850,M95,Other acquired deformities of musculoskeletal system and connective tissue,1000,0.1
+851,M96,"Postprocedural musculoskeletal disorders, not elsewhere classified",1000,0.1
+852,M99,"Biomechanical lesions, not elsewhere classified",1000,0.1
+853,N00,Acute nephritic syndrome,1000,0.1
+854,N01,Rapidly progressive nephritic syndrome,1000,0.1
+855,N02,Recurrent and persistent haematuria,1000,0.1
+856,N03,Chronic nephritic syndrome,1000,0.1
+857,N04,Nephrotic syndrome,1000,0.1
+858,N05,Unspecified nephritic syndrome,1000,0.1
+859,N06,Isolated proteinuria with specified morphological lesion,1000,0.1
+860,N07,"Hereditary nephropathy, not elsewhere classified",1000,0.1
+861,N08,Glomerular disorders in diseases classified elsewhere,1000,0.1
+862,N10,Acute tubulo-interstitial nephritis,1000,0.1
+863,N11,Chronic tubulo-interstitial nephritis,1000,0.1
+864,N12,"Tubulo-interstitial nephritis, not specified as acute or chronic",1000,0.1
+865,N13,Obstructive and reflux uropathy,1000,0.1
+866,N14,Drug- and heavy-metal-induced tubulo-interstitial and tubular conditions,1000,0.1
+867,N15,Other renal tubulo-interstitial diseases,1000,0.1
+868,N16,Renal tubulo-interstitial disorders in diseases classified elsewhere,1000,0.1
+869,N17,Acute renal failure,1000,0.1
+870,N18,Chronic renal failure,1000,0.1
+871,N19,Unspecified renal failure,1000,0.1
+872,N20,Calculus of kidney and ureter,1000,0.1
+873,N21,Calculus of lower urinary tract,1000,0.1
+874,N22,Calculus of urinary tract in diseases classified elsewhere,1000,0.1
+875,N23,Unspecified renal colic,1000,0.1
+876,N25,Disorders resulting from impaired renal tubular function,1000,0.1
+877,N26,Unspecified contracted kidney,1000,0.1
+878,N27,Small kidney of unknown cause,1000,0.1
+879,N28,"Other disorders of kidney and ureter, not elsewhere classified",1000,0.1
+880,N29,Other disorders of kidney and ureter in diseases classified elsewhere,1000,0.1
+881,N30,Cystitis,1000,0.1
+882,N31,"Neuromuscular dysfunction of bladder, not elsewhere classified",1000,0.1
+883,N32,Other disorders of bladder,1000,0.1
+884,N33,Bladder disorders in diseases classified elsewhere,1000,0.1
+885,N34,Urethritis and urethral syndrome,1000,0.1
+886,N35,Urethral stricture,1000,0.1
+887,N36,Other disorders of urethra,1000,0.1
+888,N37,Urethral disorders in diseases classified elsewhere,1000,0.1
+889,N39,Other disorders of urinary system,1000,0.1
+890,N40,Hyperplasia of prostate,1000,0.1
+891,N41,Inflammatory diseases of prostate,1000,0.1
+892,N42,Other disorders of prostate,1000,0.1
+893,N43,Hydrocele and spermatocele,1000,0.1
+894,N44,Torsion of testis,1000,0.1
+895,N45,Orchitis and epididymitis,1000,0.1
+896,N46,Male infertility,1000,0.1
+897,N47,"Redundant prepuce, phimosis and paraphimosis",1000,0.1
+898,N48,Other disorders of penis,1000,0.1
+899,N49,"Inflammatory disorders of male genital organs, not elsewhere classified",1000,0.1
+900,N50,Other disorders of male genital organs,1000,0.1
+901,N51,Disorders of male genital organs in diseases classified elsewhere,1000,0.1
+902,N60,Benign mammary dysplasia,1000,0.1
+903,N61,Inflammatory disorders of breast,1000,0.1
+904,N62,Hypertrophy of breast,1000,0.1
+905,N63,Unspecified lump in breast,1000,0.1
+906,N64,Other disorders of breast,1000,0.1
+907,N70,Salpingitis and oophoritis,1000,0.1
+908,N71,"Inflammatory disease of uterus, except cervix",1000,0.1
+909,N72,Inflammatory disease of cervix uteri,1000,0.1
+910,N73,Other female pelvic inflammatory diseases,1000,0.1
+911,N74,Female pelvic inflammatory disorders in diseases classified elsewhere,1000,0.1
+912,N75,Diseases of bartholin's gland,1000,0.1
+913,N76,Other inflammation of vagina and vulva,1000,0.1
+914,N77,Vulvovaginal ulceration and inflammation in diseases classified elsewhere,1000,0.1
+915,N80,Endometriosis,1000,0.1
+916,N81,Female genital prolapse,1000,0.1
+917,N82,Fistulae involving female genital tract,1000,0.1
+918,N83,"Noninflammatory disorders of ovary, fallopian tube and broad ligament",1000,0.1
+919,N84,Polyp of female genital tract,1000,0.1
+920,N85,"Other noninflammatory disorders of uterus, except cervix",1000,0.1
+921,N86,Erosion and ectropion of cervix uteri,1000,0.1
+922,N87,Dysplasia of cervix uteri,1000,0.1
+923,N88,Other noninflammatory disorders of cervix uteri,1000,0.1
+924,N89,Other noninflammatory disorders of vagina,1000,0.1
+925,N90,Other noninflammatory disorders of vulva and perineum,1000,0.1
+926,N91,"Absent, scanty and rare menstruation",1000,0.1
+927,N92,"Excessive, frequent and irregular menstruation",1000,0.1
+928,N93,Other abnormal uterine and vaginal bleeding,1000,0.1
+929,N94,Pain and other conditions associated with female genital organs and menstrual cycle,1000,0.1
+930,N95,Menopausal and other perimenopausal disorders,1000,0.1
+931,N96,Habitual aborter,1000,0.1
+932,N97,Female infertility,1000,0.1
+933,N98,Complications associated with artificial fertilisation,1000,0.1
+934,N99,"Postprocedural disorders of genito-urinary system, not elsewhere classified",1000,0.1
+935,O00,Ectopic pregnancy,1000,0.1
+936,O01,Hydatidiform mole,1000,0.1
+937,O02,Other abnormal products of conception,1000,0.1
+938,O03,Spontaneous abortion,1000,0.1
+939,O04,Medical abortion,1000,0.1
+940,O05,Other abortion,1000,0.1
+941,O06,Unspecified abortion,1000,0.1
+942,O07,Failed attempted abortion,1000,0.1
+943,O08,Complications following abortion and ectopic and molar pregnancy,1000,0.1
+944,O10,"Pre-existing hypertension complicating pregnancy, childbirth and the puerperium",1000,0.1
+945,O11,Pre-existing hypertensive disorder with superimposed proteinuria,1000,0.1
+946,O12,Gestational [pregnancy-induced] oedema and proteinuria without hypertension,1000,0.1
+947,O13,Gestational [pregnancy-induced] hypertension without significant proteinuria,1000,0.1
+948,O14,Gestational [pregnancy-induced] hypertension with significant proteinuria,1000,0.1
+949,O15,Eclampsia,1000,0.1
+950,O16,Unspecified maternal hypertension,1000,0.1
+951,O20,Haemorrhage in early pregnancy,1000,0.1
+952,O21,Excessive vomiting in pregnancy,1000,0.1
+953,O22,Venous complications in pregnancy,1000,0.1
+954,O23,Infections of genito-urinary tract in pregnancy,1000,0.1
+955,O24,Diabetes mellitus in pregnancy,1000,0.1
+956,O25,Malnutrition in pregnancy,1000,0.1
+957,O26,Maternal care for other conditions predominantly related to pregnancy,1000,0.1
+958,O28,Abnormal findings on antenatal screening of mother,1000,0.1
+959,O29,Complications of anaesthesia during pregnancy,1000,0.1
+960,O30,Multiple gestation,1000,0.1
+961,O31,Complications specific to multiple gestation,1000,0.1
+962,O32,Maternal care for known or suspected malpresentation of foetus,1000,0.1
+963,O33,Maternal care for known or suspected disproportion,1000,0.1
+964,O34,Maternal care for known or suspected abnormality of pelvic organs,1000,0.1
+965,O35,Maternal care for known or suspected foetal abnormality and damage,1000,0.1
+966,O36,Maternal care for other known or suspected foetal problems,1000,0.1
+967,O40,Polyhydramnios,1000,0.1
+968,O41,Other disorders of amniotic fluid and membranes,1000,0.1
+969,O42,Premature rupture of membranes,1000,0.1
+970,O43,Placental disorders,1000,0.1
+971,O44,Placenta praevia,1000,0.1
+972,O45,Premature separation of placenta [abruptio placentae],1000,0.1
+973,O46,"Antepartum haemorrhage, not elsewhere classified",1000,0.1
+974,O47,False labour,1000,0.1
+975,O48,Prolonged pregnancy,1000,0.1
+976,O60,Preterm delivery,1000,0.1
+977,O61,Failed induction of labour,1000,0.1
+978,O62,Abnormalities of forces of labour,1000,0.1
+979,O63,Long labour,1000,0.1
+980,O64,Obstructed labour due to malposition and malpresentation of foetus,1000,0.1
+981,O65,Obstructed labour due to maternal pelvic abnormality,1000,0.1
+982,O66,Other obstructed labour,1000,0.1
+983,O67,"Labour and delivery complicated by intrapartum haemorrhage, not elsewhere classified",1000,0.1
+984,O68,Labour and delivery complicated by foetal stress [distress],1000,0.1
+985,O69,Labour and delivery complicated by umbilical cord complications,1000,0.1
+986,O70,Perineal laceration during delivery,1000,0.1
+987,O71,Other obstetric trauma,1000,0.1
+988,O72,Postpartum haemorrhage,1000,0.1
+989,O73,"Retained placenta and membranes, without haemorrhage",1000,0.1
+990,O74,Complications of anaesthesia during labour and delivery,1000,0.1
+991,O75,"Other complications of labour and delivery, not elsewhere classified",1000,0.1
+992,O80,Single spontaneous delivery,1000,0.1
+993,O81,Single delivery by forceps and vacuum extractor,1000,0.1
+994,O82,Single delivery by caesarean section,1000,0.1
+995,O83,Other assisted single delivery,1000,0.1
+996,O84,Multiple delivery,1000,0.1
+997,O85,Puerperal sepsis,1000,0.1
+998,O86,Other puerperal infections,1000,0.1
+999,O87,Venous complications in the puerperium,1000,0.1
+1000,O88,Obstetric embolism,1000,0.1
+1001,O89,Complications of anaesthesia during the puerperium,1000,0.1
+1002,O90,"Complications of the puerperium, not elsewhere classified",1000,0.1
+1003,O91,Infections of breast associated with childbirth,1000,0.1
+1004,O92,Other disorders of breast and lactation associated with childbirth,1000,0.1
+1005,O94,"Sequelae of complication of pregnancy, childbirth and the puerperium",1000,0.1
+1006,O96,Death from any obstetric cause occurring more than 42 days but less than one year after delivery,1000,0.1
+1007,O98,"Maternal infectious and parasitic diseases classifiable elsewhere but complicating pregnancy, childbirth and the puerperium",1000,0.1
+1008,O99,"Other maternal diseases classifiable elsewhere but complicating pregnancy, childbirth and the puerperium",1000,0.1
+1009,P00,Foetus and newborn affected by maternal conditions that may be unrelated to present pregnancy,1000,0.1
+1010,P02,"Foetus and newborn affected by complications of placenta, cord and membranes",1000,0.1
+1011,P03,Foetus and newborn affected by other complications of labour and delivery,1000,0.1
+1012,P04,Foetus and newborn affected by noxious influences transmitted via placenta or breast milk,1000,0.1
+1013,P05,Slow foetal growth and foetal malnutrition,1000,0.1
+1014,P07,"Disorders related to short gestation and low birth weight, not elsewhere classified",1000,0.1
+1015,P08,Disorders related to long gestation and high birth weight,1000,0.1
+1016,P10,Intracranial laceration and haemorrhage due to birth injury,1000,0.1
+1017,P11,Other birth injuries to central nervous system,1000,0.1
+1018,P12,Birth injury to scalp,1000,0.1
+1019,P13,Birth injury to skeleton,1000,0.1
+1020,P14,Birth injury to peripheral nervous system,1000,0.1
+1021,P15,Other birth injuries,1000,0.1
+1022,P20,Intra-uterine hypoxia,1000,0.1
+1023,P21,Birth asphyxia,1000,0.1
+1024,P22,Respiratory distress of newborn,1000,0.1
+1025,P23,Congenital pneumonia,1000,0.1
+1026,P24,Neonatal aspiration syndromes,1000,0.1
+1027,P25,Interstitial emphysema and related conditions originating in the perinatal period,1000,0.1
+1028,P26,Pulmonary haemorrhage originating in the perinatal period,1000,0.1
+1029,P27,Chronic respiratory disease originating in the perinatal period,1000,0.1
+1030,P28,Other respiratory conditions originating in the perinatal period,1000,0.1
+1031,P29,Cardiovascular disorders originating in the perinatal period,1000,0.1
+1032,P35,Congenital viral diseases,1000,0.1
+1033,P36,Bacterial sepsis of newborn,1000,0.1
+1034,P37,Other congenital infectious and parasitic diseases,1000,0.1
+1035,P38,Omphalitis of newborn with or without mild haemorrhage,1000,0.1
+1036,P39,Other infections specific to the perinatal period,1000,0.1
+1037,P50,Foetal blood loss,1000,0.1
+1038,P51,Umbilical haemorrhage of newborn,1000,0.1
+1039,P52,Intracranial nontraumatic haemorrhage of foetus and newborn,1000,0.1
+1040,P53,Haemorrhagic disease of foetus and newborn,1000,0.1
+1041,P54,Other neonatal haemorrhages,1000,0.1
+1042,P55,Haemolytic disease of foetus and newborn,1000,0.1
+1043,P58,Neonatal jaundice due to other excessive haemolysis,1000,0.1
+1044,P59,Neonatal jaundice from other and unspecified causes,1000,0.1
+1045,P61,Other perinatal haematological disorders,1000,0.1
+1046,P70,Transitory disorders of carbohydrate metabolism specific to foetus and newborn,1000,0.1
+1047,P71,Transitory neonatal disorders of calcium and magnesium metabolism,1000,0.1
+1048,P78,Other perinatal digestive system disorders,1000,0.1
+1049,P83,Other conditions of integument specific to foetus and newborn,1000,0.1
+1050,P91,Other disturbances of cerebral status of newborn,1000,0.1
+1051,P92,Feeding problems of newborn,1000,0.1
+1052,P94,Disorders of muscle tone of newborn,1000,0.1
+1053,P95,Foetal death of unspecified cause,1000,0.1
+1054,P96,Other conditions originating in the perinatal period,1000,0.1
+1055,Q00,Anencephaly and similar malformations,1000,0.1
+1056,Q01,Encephalocele,1000,0.1
+1057,Q02,Microcephaly,1000,0.1
+1058,Q03,Congenital hydrocephalus,1000,0.1
+1059,Q04,Other congenital malformations of brain,1000,0.1
+1060,Q05,Spina bifida,1000,0.1
+1061,Q06,Other congenital malformations of spinal cord,1000,0.1
+1062,Q07,Other congenital malformations of nervous system,1000,0.1
+1063,Q10,"Congenital malformations of eyelid, lachrymal apparatus and orbit",1000,0.1
+1064,Q11,"Anophthalmos, microphthalmos and macrophthalmos",1000,0.1
+1065,Q12,Congenital lens malformations,1000,0.1
+1066,Q13,Congenital malformations of anterior segment of eye,1000,0.1
+1067,Q14,Congenital malformations of posterior segment of eye,1000,0.1
+1068,Q15,Other congenital malformations of eye,1000,0.1
+1069,Q16,Congenital malformations of ear causing impairment of hearing,1000,0.1
+1070,Q17,Other congenital malformations of ear,1000,0.1
+1071,Q18,Other congenital malformations of face and neck,1000,0.1
+1072,Q20,Congenital malformations of cardiac chambers and connexions,1000,0.1
+1073,Q21,Congenital malformations of cardiac septa,1000,0.1
+1074,Q22,Congenital malformations of pulmonary and tricuspid valves,1000,0.1
+1075,Q23,Congenital malformations of aortic and mitral valves,1000,0.1
+1076,Q24,Other congenital malformations of heart,1000,0.1
+1077,Q25,Congenital malformations of great arteries,1000,0.1
+1078,Q26,Congenital malformations of great veins,1000,0.1
+1079,Q27,Other congenital malformations of peripheral vascular system,1000,0.1
+1080,Q28,Other congenital malformations of circulatory system,1000,0.1
+1081,Q30,Congenital malformations of nose,1000,0.1
+1082,Q31,Congenital malformations of larynx,1000,0.1
+1083,Q32,Congenital malformations of trachea and bronchus,1000,0.1
+1084,Q33,Congenital malformations of lung,1000,0.1
+1085,Q34,Other congenital malformations of respiratory system,1000,0.1
+1086,Q35,Cleft palate,1000,0.1
+1087,Q36,Cleft lip,1000,0.1
+1088,Q37,Cleft palate with cleft lip,1000,0.1
+1089,Q38,"Other congenital malformations of tongue, mouth and pharynx",1000,0.1
+1090,Q39,Congenital malformations of oesophagus,1000,0.1
+1091,Q40,Other congenital malformations of upper alimentary tract,1000,0.1
+1092,Q41,"Congenital absence, atresia and stenosis of small intestine",1000,0.1
+1093,Q42,"Congenital absence, atresia and stenosis of large intestine",1000,0.1
+1094,Q43,Other congenital malformations of intestine,1000,0.1
+1095,Q44,"Congenital malformations of gallbladder, bile ducts and liver",1000,0.1
+1096,Q45,Other congenital malformations of digestive system,1000,0.1
+1097,Q50,"Congenital malformations of ovaries, fallopian tubes and broad ligaments",1000,0.1
+1098,Q51,Congenital malformations of uterus and cervix,1000,0.1
+1099,Q52,Other congenital malformations of female genitalia,1000,0.1
+1100,Q53,Undescended testicle,1000,0.1
+1101,Q54,Hypospadias,1000,0.1
+1102,Q55,Other congenital malformations of male genital organs,1000,0.1
+1103,Q56,Indeterminate sex and pseudohermaphroditism,1000,0.1
+1104,Q60,Renal agenesis and other reduction defects of kidney,1000,0.1
+1105,Q61,Cystic kidney disease,1000,0.1
+1106,Q62,Congenital obstructive defects of renal pelvis and congenital malformations of ureter,1000,0.1
+1107,Q63,Other congenital malformations of kidney,1000,0.1
+1108,Q64,Other congenital malformations of urinary system,1000,0.1
+1109,Q65,Congenital deformities of hip,1000,0.1
+1110,Q66,Congenital deformities of feet,1000,0.1
+1111,Q67,"Congenital musculoskeletal deformities of head, face, spine and chest",1000,0.1
+1112,Q68,Other congenital musculoskeletal deformities,1000,0.1
+1113,Q69,Polydactyly,1000,0.1
+1114,Q70,Syndactyly,1000,0.1
+1115,Q71,Reduction defects of upper limb,1000,0.1
+1116,Q72,Reduction defects of lower limb,1000,0.1
+1117,Q73,Reduction defects of unspecified limb,1000,0.1
+1118,Q74,Other congenital malformations of limb(s,1000,0.1
+1119,Q75,Other congenital malformations of skull and face bones,1000,0.1
+1120,Q76,Congenital malformations of spine and bony thorax,1000,0.1
+1121,Q77,Osteochondrodysplasia with defects of growth of tubular bones and spine,1000,0.1
+1122,Q78,Other osteochondrodysplasias,1000,0.1
+1123,Q79,"Congenital malformations of musculoskeletal system, not elsewhere classified",1000,0.1
+1124,Q80,Congenital ichthyosis,1000,0.1
+1125,Q81,Epidermolysis bullosa,1000,0.1
+1126,Q82,Other congenital malformations of skin,1000,0.1
+1127,Q83,Congenital malformations of breast,1000,0.1
+1128,Q84,Other congenital malformations of integument,1000,0.1
+1129,Q85,"Phakomatoses, not elsewhere classified",1000,0.1
+1130,Q86,"Congenital malformation syndromes due to known exogenous causes, not elsewhere classified",1000,0.1
+1131,Q87,Other specified congenital malformation syndromes affecting multiple systems,1000,0.1
+1132,Q89,"Other congenital malformations, not elsewhere classified",1000,0.1
+1133,Q90,Down's syndrome,1000,0.1
+1134,Q91,Edwards' syndrome and patau's syndrome,1000,0.1
+1135,Q92,"Other trisomies and partial trisomies of the autosomes, not elsewhere classified",1000,0.1
+1136,Q93,"Monosomies and deletions from the autosomes, not elsewhere classified",1000,0.1
+1137,Q95,"Balanced rearrangements and structural markers, not elsewhere classified",1000,0.1
+1138,Q96,Turner's syndrome,1000,0.1
+1139,Q97,"Other sex chromosome abnormalities, female phenotype, not elsewhere classified",1000,0.1
+1140,Q98,"Other sex chromosome abnormalities, male phenotype, not elsewhere classified",1000,0.1
+1141,Q99,"Other chromosome abnormalities, not elsewhere classified",1000,0.1
+1143,C00,Malignant neoplasm of lip,15000,0.25
+1144,C01,Malignant neoplasm of base of tongue,15000,0.25
+1145,C02,Malignant neoplasm of other and unspecified parts of tongue,15000,0.25
+1146,C03,Malignant neoplasm of gum,15000,0.25
+1147,C04,Malignant neoplasm of floor of mouth,15000,0.25
+1148,C05,Malignant neoplasm of palate,15000,0.25
+1149,C06,Malignant neoplasm of other and unspecified parts of mouth,15000,0.25
+1150,C07,Malignant neoplasm of parotid gland,15000,0.25
+1151,C08,Malignant neoplasm of other and unspecified major salivary glands,15000,0.25
+1152,C09,Malignant neoplasm of tonsil,15000,0.25
+1153,C10,Malignant neoplasm of oropharynx,15000,0.25
+1154,C11,Malignant neoplasm of nasopharynx,15000,0.25
+1155,C12,Malignant neoplasm of pyriform sinus,15000,0.25
+1156,C13,Malignant neoplasm of hypopharynx,15000,0.25
+1157,C14,"Malignant neoplasm of other and ill-defined sites in the lip, oral cavity and pharynx",15000,0.25
+1158,C15,Malignant neoplasm of oesophagus,15000,0.25
+1159,C16,Malignant neoplasm of stomach,15000,0.25
+1160,C17,Malignant neoplasm of small intestine,15000,0.25
+1161,C18,Malignant neoplasm of colon,15000,0.25
+1162,C19,Malignant neoplasm of rectosigmoid junction,15000,0.25
+1163,C20,Malignant neoplasm of rectum,15000,0.25
+1164,C21,Malignant neoplasm of anus and anal canal,15000,0.25
+1165,C22,Malignant neoplasm of liver and intrahepatic bile ducts,15000,0.25
+1166,C23,Malignant neoplasm of gallbladder,15000,0.25
+1167,C24,Malignant neoplasm of other and unspecified parts of biliary tract,15000,0.25
+1168,C25,Malignant neoplasm of pancreas,15000,0.25
+1169,C26,Malignant neoplasm of other and ill-defined digestive organs,15000,0.25
+1170,C30,Malignant neoplasm of nasal cavity and middle ear,15000,0.25
+1171,C31,Malignant neoplasm of accessory sinuses,15000,0.25
+1172,C32,Malignant neoplasm of larynx,15000,0.25
+1173,C33,Malignant neoplasm of trachea,15000,0.25
+1174,C34,Malignant neoplasm of bronchus and lung,15000,0.25
+1175,C37,Malignant neoplasm of thymus,15000,0.25
+1176,C38,"Malignant neoplasm of heart, mediastinum and pleura",15000,0.25
+1177,C39,Malignant neoplasm of other and ill-defined sites in the respiratory system and intrathoracic organs,15000,0.25
+1178,C40,Malignant neoplasm of bone and articular cartilage of limbs,15000,0.25
+1179,C41,Malignant neoplasm of bone and articular cartilage of other and unspecified sites,15000,0.25
+1180,C42,Hematopoietic and reticuloendothelial systems (icd-o-3 specific,15000,0.25
+1181,C43,Malignant melanoma of skin,15000,0.25
+1182,C44,Other malignant neoplasms of skin,15000,0.25
+1183,C45,Mesothelioma,15000,0.25
+1184,C46,Kaposi's sarcoma,15000,0.25
+1185,C47,Malignant neoplasm of peripheral nerves and autonomic nervous system,15000,0.25
+1186,C48,Malignant neoplasm of retroperitoneum and peritoneum,15000,0.25
+1187,C49,Malignant neoplasm of other connective and soft tissue,15000,0.25
+1188,C50,Malignant neoplasm of breast,15000,0.25
+1189,C51,Malignant neoplasm of vulva,15000,0.25
+1190,C52,Malignant neoplasm of vagina,15000,0.25
+1191,C53,Malignant neoplasm of cervix uteri,15000,0.25
+1192,C54,Malignant neoplasm of corpus uteri,15000,0.25
+1193,C55,"Malignant neoplasm of uterus, part unspecified",15000,0.25
+1194,C56,Malignant neoplasm of ovary,15000,0.25
+1195,C57,Malignant neoplasm of other and unspecified female genital organs,15000,0.25
+1196,C58,Malignant neoplasm of placenta,15000,0.25
+1197,C60,Malignant neoplasm of penis,15000,0.25
+1198,C61,Malignant neoplasm of prostate,15000,0.25
+1199,C62,Malignant neoplasm of testis,15000,0.25
+1200,C63,Malignant neoplasm of other and unspecified male genital organs,15000,0.25
+1201,C64,"Malignant neoplasm of kidney, except renal pelvis",15000,0.25
+1202,C65,Malignant neoplasm of renal pelvis,15000,0.25
+1203,C66,Malignant neoplasm of ureter,15000,0.25
+1204,C67,Malignant neoplasm of bladder,15000,0.25
+1205,C68,Malignant neoplasm of other and unspecified urinary organs,15000,0.25
+1206,C69,Malignant neoplasm of eye and adnexa,15000,0.25
+1207,C70,Malignant neoplasm of meninges,15000,0.25
+1208,C71,Malignant neoplasm of brain,15000,0.25
+1209,C72,"Malignant neoplasm of spinal cord, cranial nerves and other parts of central nervous system",15000,0.25
+1210,C73,Malignant neoplasm of thyroid gland,15000,0.25
+1211,C74,Malignant neoplasm of adrenal gland,15000,0.25
+1212,C75,Malignant neoplasm of other endocrine glands and related structures,15000,0.25
+1213,C76,Malignant neoplasm of other and ill-defined sites,15000,0.25
+1214,C77,Secondary and unspecified malignant neoplasm of lymph nodes,15000,0.25
+1215,C78,Secondary malignant neoplasm of respiratory and digestive organs,15000,0.25
+1216,C79,Secondary malignant neoplasm of other sites,15000,0.25
+1217,C80,Malignant neoplasm without specification of site,15000,0.25
+1218,C81,Hodgkin's disease,15000,0.25
+1219,C82,Follicular [nodular] non-hodgkin's lymphoma,15000,0.25
+1220,C83,Diffuse non-hodgkin's lymphoma,15000,0.25
+1221,C84,Peripheral and cutaneous t-cell lymphomas,15000,0.25
+1222,C85,Other and unspecified types of non-hodgkin's lymphoma,15000,0.25
+1223,C86,Other specified types of t/nk-cell lymphoma,15000,0.25
+1224,C88,Malignant immunoproliferative diseases,15000,0.25
+1225,C90,Multiple myeloma and malignant plasma cell neoplasms,15000,0.25
+1226,C91,Lymphoid leukaemia,15000,0.25
+1227,C92,Myeloid leukaemia,15000,0.25
+1228,C93,Monocytic leukaemia,15000,0.25
+1229,C94,Other leukaemias of specified cell type,15000,0.25
+1230,C95,Leukaemia of unspecified cell type,15000,0.25
+1231,C96,"Other and unspecified malignant neoplasms of lymphoid, haematopoietic and related tissue",15000,0.25
+1232,C97,Malignant neoplasms of independent (primary) multiple sites,15000,0.25
+1233,D00,"Carcinoma in situ of oral cavity, oesophagus and stomach",1000,0.1
+1234,D01,Carcinoma in situ of other and unspecified digestive organs,1000,0.1
+1235,D02,Carcinoma in situ of middle ear and respiratory system,1000,0.1
+1236,D03,Melanoma in situ,1000,0.1
+1237,D04,Carcinoma in situ of skin,1000,0.1
+1238,D05,Carcinoma in situ of breast,1000,0.1
+1239,D06,Carcinoma in situ of cervix uteri,1000,0.1
+1240,D07,Carcinoma in situ of other and unspecified genital organs,1000,0.1
+1241,D09,Carcinoma in situ of other and unspecified sites,1000,0.1
+1242,D10,Benign neoplasm of mouth and pharynx,1000,0.1
+1243,D11,Benign neoplasm of major salivary glands,1000,0.1
+1244,D12,"Benign neoplasm of colon, rectum, anus and anal canal",1000,0.1
+1245,D13,Benign neoplasm of other and ill-defined parts of digestive system,1000,0.1
+1246,D15,Benign neoplasm of other and unspecified intrathoracic organs,1000,0.1
+1247,D16,Benign neoplasm of bone and articular cartilage,1000,0.1
+1248,D18,"Haemangioma and lymphangioma, any site",1000,0.1
+1249,D27,Benign neoplasm of ovary,1000,0.1
+1250,D30,Benign neoplasm of urinary organs,1000,0.1
+1251,D32,Benign neoplasm of meninges,1000,0.1
+1252,D33,Benign neoplasm of brain and other parts of central nervous system,1000,0.1
+1253,D34,Benign neoplasm of thyroid gland,1000,0.1
+1254,D35,Benign neoplasm of other and unspecified endocrine glands,1000,0.1
+1255,D36,Benign neoplasm of other and unspecified sites,1000,0.1
+1256,D37,Neoplasm of uncertain or unknown behaviour of oral cavity and digestive organs,1000,0.1
+1257,D38,Neoplasm of uncertain or unknown behaviour of middle ear and respiratory and intrathoracic organs,1000,0.1
+1258,D39,Neoplasm of uncertain or unknown behaviour of female genital organs,1000,0.1
+1259,D40,Neoplasm of uncertain or unknown behaviour of male genital organs,1000,0.1
+1260,D41,Neoplasm of uncertain or unknown behaviour of urinary organs,1000,0.1
+1261,D42,Neoplasm of uncertain or unknown behaviour of meninges,1000,0.1
+1262,D43,Neoplasm of uncertain or unknown behaviour of brain and central nervous system,1000,0.1
+1263,D44,Neoplasm of uncertain or unknown behaviour of endocrine glands,1000,0.1
+1264,D45,Polycythaemia vera,1000,0.1
+1265,D46,Myelodysplastic syndromes,1000,0.1
+1266,D47,"Other neoplasms of uncertain or unknown behaviour of lymphoid, haematopoietic and related tissue",1000,0.1
+1267,D48,Neoplasm of uncertain or unknown behaviour of other and unspecified sites,1000,0.1
+1268,O01,Hydatidiform mole38,1000,0.1

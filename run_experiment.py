@@ -1,8 +1,8 @@
 import subprocess, pandas as pd, sys
 
 CONFIG = {
-    "num_patients": 1000,
-    "time_horizon": 20,
+    "num_patients": 20000,
+    "time_horizon": 40,
     "start_age": 40.0,
     "seed_offset": 42,
     "logit_bias": 0.0 # NIGHTLY PURE RUN

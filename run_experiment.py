@@ -1,39 +1,43 @@
-import subprocess, pandas as pd, sys
+import subprocess, pandas as pd, sys, os
 
 CONFIG = {
     "num_patients": 1000,
-    "time_horizon": 20,
+    "time_horizon": 40,
     "start_age": 40.0,
-    "seed_offset": 42,
-    "logit_bias": 0.0 # NIGHTLY PURE RUN
+    "logit_bias": 0.0,
+    "pin_identity": "true",
+    "remind_bmi": "true"
 }
 
-def run_experiment():
-    print(f"🔔 Nightly Experiment: N={CONFIG['num_patients']}, Bias={CONFIG['logit_bias']}")
+def run():
     args = ["--num_patients", str(CONFIG['num_patients']), "--time_horizon", str(CONFIG['time_horizon']),
-            "--start_age", str(CONFIG['start_age']), "--seed_offset", str(CONFIG['seed_offset']),
-            "--logit_bias", str(CONFIG['logit_bias'])]
+            "--start_age", str(CONFIG['start_age']), "--logit_bias", str(CONFIG['logit_bias']),
+            "--pin_identity", CONFIG['pin_identity'], "--remind_bmi", CONFIG['remind_bmi']]
 
+    # Run Simulation
     subprocess.run([sys.executable, "delfino.py"] + args, check=True)
     subprocess.run([sys.executable, "delfino.py"] + args + ["--apply_intervention"], check=True)
 
-    print("\n📊 Aggregating Results...")
-    base, glp = pd.read_csv("delfino_individual_base.csv"), pd.read_csv("delfino_individual_glp1.csv")
-    summary = [["Total Cost", base['Cost'].sum(), glp['Cost'].sum()],
-               ["Total DALYs", base['DALYs'].sum(), glp['DALYs'].sum()]]
+    # Post-Process
+    base = pd.read_csv("delfino_individual_base.csv")
+    glp = pd.read_csv("delfino_individual_glp1.csv")
 
-    all_inc_cols = sorted(list(set([c for c in base.columns if c.startswith('inc_')]) | 
-                               set([c for c in glp.columns if c.startswith('inc_')])))
-    for col in all_inc_cols:
-        b_cnt = (base[col] > 0).sum() if col in base.columns else 0
-        g_cnt = (glp[col] > 0).sum() if col in glp.columns else 0
-        if b_cnt > 0 or g_cnt > 0:
-            summary.append([f"Cases: {col[4:]}", b_cnt, g_cnt])
+    metrics = ["Cost", "YLD", "YLL", "DALYs", "QALYs_Add", "QALYs_Mult"]
+    summary = []
+    for m in metrics:
+        summary.append([m, base[m].mean(), glp[m].mean()])
 
-    df_sum = pd.DataFrame(summary, columns=["Metric", "Baseline", "Intervention"])
-    df_sum["Delta"] = df_sum["Baseline"] - df_sum["Intervention"]
+    df_sum = pd.DataFrame(summary, columns=["Metric", "Base", "GLP1"])
+    df_sum["Delta"] = df_sum["GLP1"] - df_sum["Base"]
+    
+    # Simple ICER
+    q_gain = df_sum.loc[df_sum['Metric'] == 'QALYs_Mult', 'Delta'].values[0]
+    c_inc = df_sum.loc[df_sum['Metric'] == 'Cost', 'Delta'].values[0]
+    
     df_sum.to_csv("delfino_comparison_summary.csv", index=False)
-    print("\n✅ Nightly results saved to delfino_comparison_summary.csv")
+    print("\n--- Summary Results ---")
+    print(df_sum.to_string(index=False))
+    if q_gain > 0: print(f"\n💰 ICER: £{c_inc / q_gain:,.2f} per QALY gained")
 
 if __name__ == "__main__":
-    run_experiment()
+    run()

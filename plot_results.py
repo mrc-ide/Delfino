@@ -3,52 +3,62 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-def plot_curves(start_age=40.0, horizon=40):
-    print("📈 Generating Cumulative Incidence Plot with full names...")
-    
-    # 1. Load Data
+def plot_all():
+    print("📊 Loading results for plotting...")
     base = pd.read_csv("delfino_individual_base.csv")
     glp = pd.read_csv("delfino_individual_glp1.csv")
+    params_df = pd.read_csv("dummy_disease_params.csv")
     
-    # 2. Load Names Mapping
-    params_path = "dummy_disease_params.csv"
-    if os.path.exists(params_path):
-        params_df = pd.read_csv(params_path)
-        # Map Code (e.g. 'E11') -> Name (e.g. 'Non-insulin-dependent diabetes mellitus')
-        name_map = dict(zip(params_df['Code'], params_df['Name']))
-    else:
-        name_map = {}
+    # Create Name Lookup: Code -> Name
+    name_map = dict(zip(params_df['Code'], params_df['Name']))
 
-    # 3. Identify top 5 most frequent diseases (excluding death)
+    # --- PLOT 1: CUMULATIVE INCIDENCE (TOP 5) ---
     inc_cols = [c for c in base.columns if c.startswith("inc_") and c != "inc_death"]
+    # Get top 5 by count in Baseline
     counts = {c: (base[c] > 0).sum() for c in inc_cols}
     top_diseases = sorted(counts, key=counts.get, reverse=True)[:5]
     
+    start_age, horizon = 40, 40
     ages = np.arange(start_age, start_age + horizon + 1)
-    plt.figure(figsize=(14, 9))
+    
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 12))
 
     for i, disease in enumerate(top_diseases):
-        code = disease[4:] # Strip 'inc_' to get the ICD-10 code
-        full_name = name_map.get(code, code) # Fallback to code if name not found
+        code = disease[4:] # Strip 'inc_'
+        name = name_map.get(code, code)
         
-        # Calculate cumulative cases at each age
         b_curve = [(base[disease] <= age).where(base[disease] > 0).sum() for age in ages]
         g_curve = [(glp[disease] <= age).where(glp[disease] > 0).sum() if disease in glp.columns else 0 for age in ages]
         
-        plt.plot(ages, b_curve, label=f"{full_name} (Base)", linestyle='--', color=f"C{i}", alpha=0.6)
-        plt.plot(ages, g_curve, label=f"{full_name} (GLP-1)", linestyle='-', color=f"C{i}", linewidth=2.5)
+        ax1.plot(ages, b_curve, label=f"{name} (Base)", linestyle='--', color=f"C{i}", alpha=0.5)
+        ax1.plot(ages, g_curve, label=f"{name} (GLP-1)", linestyle='-', color=f"C{i}", linewidth=2)
 
-    plt.title(f"Cumulative Disease Incidence (N={len(base)}, T={horizon})", fontsize=16)
-    plt.xlabel("Patient Age", fontsize=12)
-    plt.ylabel("Cumulative Number of Cases", fontsize=12)
+    ax1.set_title(f"Cumulative Disease Incidence (N={len(base)})", fontsize=14)
+    ax1.set_ylabel("Total Number of Cases")
+    ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9)
+    ax1.grid(True, alpha=0.3)
+
+    # --- PLOT 2: QALY COMPARISON (ADDITIVE vs MULTIPLICATIVE) ---
+    qaly_metrics = ["QALYs_Add", "QALYs_Mult"]
+    means_base = [base[m].mean() for m in qaly_metrics]
+    means_glp = [glp[m].mean() for m in qaly_metrics]
     
-    # Place legend outside the plot for readability given the long names
-    plt.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=10)
-    plt.grid(True, alpha=0.3)
+    x = np.arange(len(qaly_metrics))
+    width = 0.35
+
+    ax2.bar(x - width/2, means_base, width, label='Baseline', color='gray', alpha=0.6)
+    ax2.bar(x + width/2, means_glp, width, label='GLP-1 Intervention', color='seagreen')
+
+    ax2.set_ylabel('Mean QALYs per Patient')
+    ax2.set_title('Comparison of Quality-Adjusted Life Years by Accounting Method')
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(['Additive (DW Sum)', 'Multiplicative (Utility Product)'])
+    ax2.legend()
+    ax2.set_ylim(min(means_base + means_glp) * 0.9, max(means_base + means_glp) * 1.1)
+
     plt.tight_layout()
-    
-    plt.savefig("delfino_incidence_plot.png")
-    print("✅ Plot saved as delfino_incidence_plot.png")
+    plt.savefig("delfino_comprehensive_results.png")
+    print("✅ Comprehensive plot saved as delfino_comprehensive_results.png")
 
 if __name__ == "__main__":
-    plot_curves()
+    plot_all()

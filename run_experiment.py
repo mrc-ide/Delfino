@@ -1,43 +1,50 @@
-import subprocess, pandas as pd, sys, os
+import subprocess
+import sys
 
+# --- GLOBAL CONFIGURATION ---
 CONFIG = {
-    "num_patients": 1000,
+    "num_patients": 500,
     "time_horizon": 40,
     "start_age": 40.0,
     "logit_bias": 0.0,
     "pin_identity": "true",
-    "remind_bmi": "true"
+    "remind_bmi": "true",
+    "seed_offset": 42
 }
 
-def run():
-    args = ["--num_patients", str(CONFIG['num_patients']), "--time_horizon", str(CONFIG['time_horizon']),
-            "--start_age", str(CONFIG['start_age']), "--logit_bias", str(CONFIG['logit_bias']),
-            "--pin_identity", CONFIG['pin_identity'], "--remind_bmi", CONFIG['remind_bmi']]
+def run_experiment():
+    # Convert CONFIG to a list of CLI arguments
+    common_args = [
+        "--num_patients", str(CONFIG["num_patients"]),
+        "--time_horizon", str(CONFIG["time_horizon"]),
+        "--start_age", str(CONFIG["start_age"]),
+        "--logit_bias", str(CONFIG["logit_bias"]),
+        "--pin_identity", CONFIG["pin_identity"],
+        "--remind_bmi", CONFIG["remind_bmi"],
+        "--seed_offset", str(CONFIG["seed_offset"])
+    ]
 
-    # Run Simulation
-    subprocess.run([sys.executable, "delfino.py"] + args, check=True)
-    subprocess.run([sys.executable, "delfino.py"] + args + ["--apply_intervention"], check=True)
+    print(f"🔔 Starting Orchestration: N={CONFIG['num_patients']}, T={CONFIG['time_horizon']}")
 
-    # Post-Process
-    base = pd.read_csv("delfino_individual_base.csv")
-    glp = pd.read_csv("delfino_individual_glp1.csv")
-
-    metrics = ["Cost", "YLD", "YLL", "DALYs", "QALYs_Add", "QALYs_Mult"]
-    summary = []
-    for m in metrics:
-        summary.append([m, base[m].mean(), glp[m].mean()])
-
-    df_sum = pd.DataFrame(summary, columns=["Metric", "Base", "GLP1"])
-    df_sum["Delta"] = df_sum["GLP1"] - df_sum["Base"]
+    # Phase 1: Simulations
+    print("\n▶️ Running Baseline...")
+    subprocess.run([sys.executable, "delfino.py"] + common_args, check=True)
     
-    # Simple ICER
-    q_gain = df_sum.loc[df_sum['Metric'] == 'QALYs_Mult', 'Delta'].values[0]
-    c_inc = df_sum.loc[df_sum['Metric'] == 'Cost', 'Delta'].values[0]
-    
-    df_sum.to_csv("delfino_comparison_summary.csv", index=False)
-    print("\n--- Summary Results ---")
-    print(df_sum.to_string(index=False))
-    if q_gain > 0: print(f"\n💰 ICER: £{c_inc / q_gain:,.2f} per QALY gained")
+    print("\n▶️ Running Intervention...")
+    subprocess.run([sys.executable, "delfino.py"] + common_args + ["--apply_intervention"], check=True)
+
+    # Phase 2: Post-Processing Comparison
+    print("\n▶️ Running Comparison Script...")
+    subprocess.run([sys.executable, "compare_results.py"], check=True)
+
+    # Phase 3: Visualization
+    print("\n▶️ Running Plotting Script...")
+    # We pass age/horizon to the plotter so the axis matches the config
+    subprocess.run([sys.executable, "plot_results.py", 
+                    "--start_age", str(CONFIG["start_age"]), 
+                    "--horizon", str(CONFIG["time_horizon"])], check=True)
+
+    print("\n🏆 Full Project Delfino Pipeline Completed Successfully.")
 
 if __name__ == "__main__":
-    run()
+    run_experiment()

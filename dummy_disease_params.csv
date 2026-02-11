@@ -159,6 +159,132 @@ TokenID,Code,Name,Cost,Weight
 170,B97,Viral agents as the cause of diseases classified to other chapters,1000,0.1
 171,B98,Other specified infectious agents as the cause of diseases classified to other chapters,1000,0.1
 172,B99,Other and unspecified infectious diseases,1000,0.1
+1143,C00,Malignant neoplasm of lip,15000,0.25
+1144,C01,Malignant neoplasm of base of tongue,15000,0.25
+1145,C02,Malignant neoplasm of other and unspecified parts of tongue,15000,0.25
+1146,C03,Malignant neoplasm of gum,15000,0.25
+1147,C04,Malignant neoplasm of floor of mouth,15000,0.25
+1148,C05,Malignant neoplasm of palate,15000,0.25
+1149,C06,Malignant neoplasm of other and unspecified parts of mouth,15000,0.25
+1150,C07,Malignant neoplasm of parotid gland,15000,0.25
+1151,C08,Malignant neoplasm of other and unspecified major salivary glands,15000,0.25
+1152,C09,Malignant neoplasm of tonsil,15000,0.25
+1153,C10,Malignant neoplasm of oropharynx,15000,0.25
+1154,C11,Malignant neoplasm of nasopharynx,15000,0.25
+1155,C12,Malignant neoplasm of pyriform sinus,15000,0.25
+1156,C13,Malignant neoplasm of hypopharynx,15000,0.25
+1157,C14,"Malignant neoplasm of other and ill-defined sites in the lip, oral cavity and pharynx",15000,0.25
+1158,C15,Malignant neoplasm of oesophagus,15000,0.25
+1159,C16,Malignant neoplasm of stomach,15000,0.25
+1160,C17,Malignant neoplasm of small intestine,15000,0.25
+1161,C18,Malignant neoplasm of colon,15000,0.25
+1162,C19,Malignant neoplasm of rectosigmoid junction,15000,0.25
+1163,C20,Malignant neoplasm of rectum,15000,0.25
+1164,C21,Malignant neoplasm of anus and anal canal,15000,0.25
+1165,C22,Malignant neoplasm of liver and intrahepatic bile ducts,15000,0.25
+1166,C23,Malignant neoplasm of gallbladder,15000,0.25
+1167,C24,Malignant neoplasm of other and unspecified parts of biliary tract,15000,0.25
+1168,C25,Malignant neoplasm of pancreas,15000,0.25
+1169,C26,Malignant neoplasm of other and ill-defined digestive organs,15000,0.25
+1170,C30,Malignant neoplasm of nasal cavity and middle ear,15000,0.25
+1171,C31,Malignant neoplasm of accessory sinuses,15000,0.25
+1172,C32,Malignant neoplasm of larynx,15000,0.25
+1173,C33,Malignant neoplasm of trachea,15000,0.25
+1174,C34,Malignant neoplasm of bronchus and lung,15000,0.25
+1175,C37,Malignant neoplasm of thymus,15000,0.25
+1176,C38,"Malignant neoplasm of heart, mediastinum and pleura",15000,0.25
+1177,C39,Malignant neoplasm of other and ill-defined sites in the respiratory system and intrathoracic organs,15000,0.25
+1178,C40,Malignant neoplasm of bone and articular cartilage of limbs,15000,0.25
+1179,C41,Malignant neoplasm of bone and articular cartilage of other and unspecified sites,15000,0.25
+1180,C42,Hematopoietic and reticuloendothelial systems (icd-o-3 specific,15000,0.25
+1181,C43,Malignant melanoma of skin,15000,0.25
+1182,C44,Other malignant neoplasms of skin,15000,0.25
+1183,C45,Mesothelioma,15000,0.25
+1184,C46,Kaposi's sarcoma,15000,0.25
+1185,C47,Malignant neoplasm of peripheral nerves and autonomic nervous system,15000,0.25
+1186,C48,Malignant neoplasm of retroperitoneum and peritoneum,15000,0.25
+1187,C49,Malignant neoplasm of other connective and soft tissue,15000,0.25
+1188,C50,Malignant neoplasm of breast,15000,0.25
+1189,C51,Malignant neoplasm of vulva,15000,0.25
+1190,C52,Malignant neoplasm of vagina,15000,0.25
+1191,C53,Malignant neoplasm of cervix uteri,15000,0.25
+1192,C54,Malignant neoplasm of corpus uteri,15000,0.25
+1193,C55,"Malignant neoplasm of uterus, part unspecified",15000,0.25
+1194,C56,Malignant neoplasm of ovary,15000,0.25
+1195,C57,Malignant neoplasm of other and unspecified female genital organs,15000,0.25
+1196,C58,Malignant neoplasm of placenta,15000,0.25
+1197,C60,Malignant neoplasm of penis,15000,0.25
+1198,C61,Malignant neoplasm of prostate,15000,0.25
+1199,C62,Malignant neoplasm of testis,15000,0.25
+1200,C63,Malignant neoplasm of other and unspecified male genital organs,15000,0.25
+1201,C64,"Malignant neoplasm of kidney, except renal pelvis",15000,0.25
+1202,C65,Malignant neoplasm of renal pelvis,15000,0.25
+1203,C66,Malignant neoplasm of ureter,15000,0.25
+1204,C67,Malignant neoplasm of bladder,15000,0.25
+1205,C68,Malignant neoplasm of other and unspecified urinary organs,15000,0.25
+1206,C69,Malignant neoplasm of eye and adnexa,15000,0.25
+1207,C70,Malignant neoplasm of meninges,15000,0.25
+1208,C71,Malignant neoplasm of brain,15000,0.25
+1209,C72,"Malignant neoplasm of spinal cord, cranial nerves and other parts of central nervous system",15000,0.25
+1210,C73,Malignant neoplasm of thyroid gland,15000,0.25
+1211,C74,Malignant neoplasm of adrenal gland,15000,0.25
+1212,C75,Malignant neoplasm of other endocrine glands and related structures,15000,0.25
+1213,C76,Malignant neoplasm of other and ill-defined sites,15000,0.25
+1214,C77,Secondary and unspecified malignant neoplasm of lymph nodes,15000,0.25
+1215,C78,Secondary malignant neoplasm of respiratory and digestive organs,15000,0.25
+1216,C79,Secondary malignant neoplasm of other sites,15000,0.25
+1217,C80,Malignant neoplasm without specification of site,15000,0.25
+1218,C81,Hodgkin's disease,15000,0.25
+1219,C82,Follicular [nodular] non-hodgkin's lymphoma,15000,0.25
+1220,C83,Diffuse non-hodgkin's lymphoma,15000,0.25
+1221,C84,Peripheral and cutaneous t-cell lymphomas,15000,0.25
+1222,C85,Other and unspecified types of non-hodgkin's lymphoma,15000,0.25
+1223,C86,Other specified types of t/nk-cell lymphoma,15000,0.25
+1224,C88,Malignant immunoproliferative diseases,15000,0.25
+1225,C90,Multiple myeloma and malignant plasma cell neoplasms,15000,0.25
+1226,C91,Lymphoid leukaemia,15000,0.25
+1227,C92,Myeloid leukaemia,15000,0.25
+1228,C93,Monocytic leukaemia,15000,0.25
+1229,C94,Other leukaemias of specified cell type,15000,0.25
+1230,C95,Leukaemia of unspecified cell type,15000,0.25
+1231,C96,"Other and unspecified malignant neoplasms of lymphoid, haematopoietic and related tissue",15000,0.25
+1232,C97,Malignant neoplasms of independent (primary) multiple sites,15000,0.25
+1142,CXX,Unknown cancer,15000,0.25
+1233,D00,"Carcinoma in situ of oral cavity, oesophagus and stomach",1000,0.1
+1234,D01,Carcinoma in situ of other and unspecified digestive organs,1000,0.1
+1235,D02,Carcinoma in situ of middle ear and respiratory system,1000,0.1
+1236,D03,Melanoma in situ,1000,0.1
+1237,D04,Carcinoma in situ of skin,1000,0.1
+1238,D05,Carcinoma in situ of breast,1000,0.1
+1239,D06,Carcinoma in situ of cervix uteri,1000,0.1
+1240,D07,Carcinoma in situ of other and unspecified genital organs,1000,0.1
+1241,D09,Carcinoma in situ of other and unspecified sites,1000,0.1
+1242,D10,Benign neoplasm of mouth and pharynx,1000,0.1
+1243,D11,Benign neoplasm of major salivary glands,1000,0.1
+1244,D12,"Benign neoplasm of colon, rectum, anus and anal canal",1000,0.1
+1245,D13,Benign neoplasm of other and ill-defined parts of digestive system,1000,0.1
+1246,D15,Benign neoplasm of other and unspecified intrathoracic organs,1000,0.1
+1247,D16,Benign neoplasm of bone and articular cartilage,1000,0.1
+1248,D18,"Haemangioma and lymphangioma, any site",1000,0.1
+1249,D27,Benign neoplasm of ovary,1000,0.1
+1250,D30,Benign neoplasm of urinary organs,1000,0.1
+1251,D32,Benign neoplasm of meninges,1000,0.1
+1252,D33,Benign neoplasm of brain and other parts of central nervous system,1000,0.1
+1253,D34,Benign neoplasm of thyroid gland,1000,0.1
+1254,D35,Benign neoplasm of other and unspecified endocrine glands,1000,0.1
+1255,D36,Benign neoplasm of other and unspecified sites,1000,0.1
+1256,D37,Neoplasm of uncertain or unknown behaviour of oral cavity and digestive organs,1000,0.1
+1257,D38,Neoplasm of uncertain or unknown behaviour of middle ear and respiratory and intrathoracic organs,1000,0.1
+1258,D39,Neoplasm of uncertain or unknown behaviour of female genital organs,1000,0.1
+1259,D40,Neoplasm of uncertain or unknown behaviour of male genital organs,1000,0.1
+1260,D41,Neoplasm of uncertain or unknown behaviour of urinary organs,1000,0.1
+1261,D42,Neoplasm of uncertain or unknown behaviour of meninges,1000,0.1
+1262,D43,Neoplasm of uncertain or unknown behaviour of brain and central nervous system,1000,0.1
+1263,D44,Neoplasm of uncertain or unknown behaviour of endocrine glands,1000,0.1
+1264,D45,Polycythaemia vera,1000,0.1
+1265,D46,Myelodysplastic syndromes,1000,0.1
+1266,D47,"Other neoplasms of uncertain or unknown behaviour of lymphoid, haematopoietic and related tissue",1000,0.1
+1267,D48,Neoplasm of uncertain or unknown behaviour of other and unspecified sites,1000,0.1
 173,D50,Iron deficiency anaemia,1000,0.1
 174,D51,Vitamin b12 deficiency anaemia,1000,0.1
 175,D52,Folate deficiency anaemia,1000,0.1
@@ -200,13 +326,13 @@ TokenID,Code,Name,Cost,Weight
 211,E05,Thyrotoxicosis [hyperthyroidism],1000,0.1
 212,E06,Thyroiditis,1000,0.1
 213,E07,Other disorders of thyroid,1000,0.1
-214,E10,Insulin-dependent diabetes mellitus,1000,0.1
-215,E11,Non-insulin-dependent diabetes mellitus,1000,0.1
-216,E12,Malnutrition-related diabetes mellitus,1000,0.1
-217,E13,Other specified diabetes mellitus,1000,0.1
-218,E14,Unspecified diabetes mellitus,1000,0.1
-219,E15,Nondiabetic hypoglycaemic coma,1000,0.1
-220,E16,Other disorders of pancreatic internal secretion,1000,0.1
+214,E10,Insulin-dependent diabetes mellitus,3000,0.15
+215,E11,Non-insulin-dependent diabetes mellitus,3000,0.15
+216,E12,Malnutrition-related diabetes mellitus,3000,0.15
+217,E13,Other specified diabetes mellitus,3000,0.15
+218,E14,Unspecified diabetes mellitus,3000,0.15
+219,E15,Nondiabetic hypoglycaemic coma,3000,0.15
+220,E16,Other disorders of pancreatic internal secretion,3000,0.15
 221,E20,Hypoparathyroidism,1000,0.1
 222,E21,Hyperparathyroidism and other disorders of parathyroid gland,1000,0.1
 223,E22,Hyperfunction of pituitary gland,1000,0.1
@@ -922,6 +1048,7 @@ TokenID,Code,Name,Cost,Weight
 933,N98,Complications associated with artificial fertilisation,1000,0.1
 934,N99,"Postprocedural disorders of genito-urinary system, not elsewhere classified",1000,0.1
 935,O00,Ectopic pregnancy,1000,0.1
+1268,O01,Hydatidiform mole38,1000,0.1
 936,O01,Hydatidiform mole,1000,0.1
 937,O02,Other abnormal products of conception,1000,0.1
 938,O03,Spontaneous abortion,1000,0.1
@@ -1128,129 +1255,3 @@ TokenID,Code,Name,Cost,Weight
 1139,Q97,"Other sex chromosome abnormalities, female phenotype, not elsewhere classified",1000,0.1
 1140,Q98,"Other sex chromosome abnormalities, male phenotype, not elsewhere classified",1000,0.1
 1141,Q99,"Other chromosome abnormalities, not elsewhere classified",1000,0.1
-1143,C00,Malignant neoplasm of lip,15000,0.25
-1144,C01,Malignant neoplasm of base of tongue,15000,0.25
-1145,C02,Malignant neoplasm of other and unspecified parts of tongue,15000,0.25
-1146,C03,Malignant neoplasm of gum,15000,0.25
-1147,C04,Malignant neoplasm of floor of mouth,15000,0.25
-1148,C05,Malignant neoplasm of palate,15000,0.25
-1149,C06,Malignant neoplasm of other and unspecified parts of mouth,15000,0.25
-1150,C07,Malignant neoplasm of parotid gland,15000,0.25
-1151,C08,Malignant neoplasm of other and unspecified major salivary glands,15000,0.25
-1152,C09,Malignant neoplasm of tonsil,15000,0.25
-1153,C10,Malignant neoplasm of oropharynx,15000,0.25
-1154,C11,Malignant neoplasm of nasopharynx,15000,0.25
-1155,C12,Malignant neoplasm of pyriform sinus,15000,0.25
-1156,C13,Malignant neoplasm of hypopharynx,15000,0.25
-1157,C14,"Malignant neoplasm of other and ill-defined sites in the lip, oral cavity and pharynx",15000,0.25
-1158,C15,Malignant neoplasm of oesophagus,15000,0.25
-1159,C16,Malignant neoplasm of stomach,15000,0.25
-1160,C17,Malignant neoplasm of small intestine,15000,0.25
-1161,C18,Malignant neoplasm of colon,15000,0.25
-1162,C19,Malignant neoplasm of rectosigmoid junction,15000,0.25
-1163,C20,Malignant neoplasm of rectum,15000,0.25
-1164,C21,Malignant neoplasm of anus and anal canal,15000,0.25
-1165,C22,Malignant neoplasm of liver and intrahepatic bile ducts,15000,0.25
-1166,C23,Malignant neoplasm of gallbladder,15000,0.25
-1167,C24,Malignant neoplasm of other and unspecified parts of biliary tract,15000,0.25
-1168,C25,Malignant neoplasm of pancreas,15000,0.25
-1169,C26,Malignant neoplasm of other and ill-defined digestive organs,15000,0.25
-1170,C30,Malignant neoplasm of nasal cavity and middle ear,15000,0.25
-1171,C31,Malignant neoplasm of accessory sinuses,15000,0.25
-1172,C32,Malignant neoplasm of larynx,15000,0.25
-1173,C33,Malignant neoplasm of trachea,15000,0.25
-1174,C34,Malignant neoplasm of bronchus and lung,15000,0.25
-1175,C37,Malignant neoplasm of thymus,15000,0.25
-1176,C38,"Malignant neoplasm of heart, mediastinum and pleura",15000,0.25
-1177,C39,Malignant neoplasm of other and ill-defined sites in the respiratory system and intrathoracic organs,15000,0.25
-1178,C40,Malignant neoplasm of bone and articular cartilage of limbs,15000,0.25
-1179,C41,Malignant neoplasm of bone and articular cartilage of other and unspecified sites,15000,0.25
-1180,C42,Hematopoietic and reticuloendothelial systems (icd-o-3 specific,15000,0.25
-1181,C43,Malignant melanoma of skin,15000,0.25
-1182,C44,Other malignant neoplasms of skin,15000,0.25
-1183,C45,Mesothelioma,15000,0.25
-1184,C46,Kaposi's sarcoma,15000,0.25
-1185,C47,Malignant neoplasm of peripheral nerves and autonomic nervous system,15000,0.25
-1186,C48,Malignant neoplasm of retroperitoneum and peritoneum,15000,0.25
-1187,C49,Malignant neoplasm of other connective and soft tissue,15000,0.25
-1188,C50,Malignant neoplasm of breast,15000,0.25
-1189,C51,Malignant neoplasm of vulva,15000,0.25
-1190,C52,Malignant neoplasm of vagina,15000,0.25
-1191,C53,Malignant neoplasm of cervix uteri,15000,0.25
-1192,C54,Malignant neoplasm of corpus uteri,15000,0.25
-1193,C55,"Malignant neoplasm of uterus, part unspecified",15000,0.25
-1194,C56,Malignant neoplasm of ovary,15000,0.25
-1195,C57,Malignant neoplasm of other and unspecified female genital organs,15000,0.25
-1196,C58,Malignant neoplasm of placenta,15000,0.25
-1197,C60,Malignant neoplasm of penis,15000,0.25
-1198,C61,Malignant neoplasm of prostate,15000,0.25
-1199,C62,Malignant neoplasm of testis,15000,0.25
-1200,C63,Malignant neoplasm of other and unspecified male genital organs,15000,0.25
-1201,C64,"Malignant neoplasm of kidney, except renal pelvis",15000,0.25
-1202,C65,Malignant neoplasm of renal pelvis,15000,0.25
-1203,C66,Malignant neoplasm of ureter,15000,0.25
-1204,C67,Malignant neoplasm of bladder,15000,0.25
-1205,C68,Malignant neoplasm of other and unspecified urinary organs,15000,0.25
-1206,C69,Malignant neoplasm of eye and adnexa,15000,0.25
-1207,C70,Malignant neoplasm of meninges,15000,0.25
-1208,C71,Malignant neoplasm of brain,15000,0.25
-1209,C72,"Malignant neoplasm of spinal cord, cranial nerves and other parts of central nervous system",15000,0.25
-1210,C73,Malignant neoplasm of thyroid gland,15000,0.25
-1211,C74,Malignant neoplasm of adrenal gland,15000,0.25
-1212,C75,Malignant neoplasm of other endocrine glands and related structures,15000,0.25
-1213,C76,Malignant neoplasm of other and ill-defined sites,15000,0.25
-1214,C77,Secondary and unspecified malignant neoplasm of lymph nodes,15000,0.25
-1215,C78,Secondary malignant neoplasm of respiratory and digestive organs,15000,0.25
-1216,C79,Secondary malignant neoplasm of other sites,15000,0.25
-1217,C80,Malignant neoplasm without specification of site,15000,0.25
-1218,C81,Hodgkin's disease,15000,0.25
-1219,C82,Follicular [nodular] non-hodgkin's lymphoma,15000,0.25
-1220,C83,Diffuse non-hodgkin's lymphoma,15000,0.25
-1221,C84,Peripheral and cutaneous t-cell lymphomas,15000,0.25
-1222,C85,Other and unspecified types of non-hodgkin's lymphoma,15000,0.25
-1223,C86,Other specified types of t/nk-cell lymphoma,15000,0.25
-1224,C88,Malignant immunoproliferative diseases,15000,0.25
-1225,C90,Multiple myeloma and malignant plasma cell neoplasms,15000,0.25
-1226,C91,Lymphoid leukaemia,15000,0.25
-1227,C92,Myeloid leukaemia,15000,0.25
-1228,C93,Monocytic leukaemia,15000,0.25
-1229,C94,Other leukaemias of specified cell type,15000,0.25
-1230,C95,Leukaemia of unspecified cell type,15000,0.25
-1231,C96,"Other and unspecified malignant neoplasms of lymphoid, haematopoietic and related tissue",15000,0.25
-1232,C97,Malignant neoplasms of independent (primary) multiple sites,15000,0.25
-1233,D00,"Carcinoma in situ of oral cavity, oesophagus and stomach",1000,0.1
-1234,D01,Carcinoma in situ of other and unspecified digestive organs,1000,0.1
-1235,D02,Carcinoma in situ of middle ear and respiratory system,1000,0.1
-1236,D03,Melanoma in situ,1000,0.1
-1237,D04,Carcinoma in situ of skin,1000,0.1
-1238,D05,Carcinoma in situ of breast,1000,0.1
-1239,D06,Carcinoma in situ of cervix uteri,1000,0.1
-1240,D07,Carcinoma in situ of other and unspecified genital organs,1000,0.1
-1241,D09,Carcinoma in situ of other and unspecified sites,1000,0.1
-1242,D10,Benign neoplasm of mouth and pharynx,1000,0.1
-1243,D11,Benign neoplasm of major salivary glands,1000,0.1
-1244,D12,"Benign neoplasm of colon, rectum, anus and anal canal",1000,0.1
-1245,D13,Benign neoplasm of other and ill-defined parts of digestive system,1000,0.1
-1246,D15,Benign neoplasm of other and unspecified intrathoracic organs,1000,0.1
-1247,D16,Benign neoplasm of bone and articular cartilage,1000,0.1
-1248,D18,"Haemangioma and lymphangioma, any site",1000,0.1
-1249,D27,Benign neoplasm of ovary,1000,0.1
-1250,D30,Benign neoplasm of urinary organs,1000,0.1
-1251,D32,Benign neoplasm of meninges,1000,0.1
-1252,D33,Benign neoplasm of brain and other parts of central nervous system,1000,0.1
-1253,D34,Benign neoplasm of thyroid gland,1000,0.1
-1254,D35,Benign neoplasm of other and unspecified endocrine glands,1000,0.1
-1255,D36,Benign neoplasm of other and unspecified sites,1000,0.1
-1256,D37,Neoplasm of uncertain or unknown behaviour of oral cavity and digestive organs,1000,0.1
-1257,D38,Neoplasm of uncertain or unknown behaviour of middle ear and respiratory and intrathoracic organs,1000,0.1
-1258,D39,Neoplasm of uncertain or unknown behaviour of female genital organs,1000,0.1
-1259,D40,Neoplasm of uncertain or unknown behaviour of male genital organs,1000,0.1
-1260,D41,Neoplasm of uncertain or unknown behaviour of urinary organs,1000,0.1
-1261,D42,Neoplasm of uncertain or unknown behaviour of meninges,1000,0.1
-1262,D43,Neoplasm of uncertain or unknown behaviour of brain and central nervous system,1000,0.1
-1263,D44,Neoplasm of uncertain or unknown behaviour of endocrine glands,1000,0.1
-1264,D45,Polycythaemia vera,1000,0.1
-1265,D46,Myelodysplastic syndromes,1000,0.1
-1266,D47,"Other neoplasms of uncertain or unknown behaviour of lymphoid, haematopoietic and related tissue",1000,0.1
-1267,D48,Neoplasm of uncertain or unknown behaviour of other and unspecified sites,1000,0.1
-1268,O01,Hydatidiform mole38,1000,0.1

@@ -1,25 +1,26 @@
-# --- Project Delfino: Collaborator Configuration ---
+# --- Project Delfino: Experimental Noise ---
 
-# Keep checkpoints and training data for collaboration
-# !data/ukb_simulated_data/*.bin
-# !out-*/*.pt
+# Ignore ALL CSVs in the root (results, copies, old versions)
+# But keep the important parameters file
+*.csv
+!dummy_disease_params.csv
+!labels.csv
 
-# --- Simulation Outputs: IGNORE THESE ---
-# These are generated per-run and should stay local
-delfino_individual_base.csv
-delfino_individual_glp1.csv
-delfino_comparison_summary.csv
+# Ignore ALL PNGs (plots, copies)
+*.png
 
-# Temporary Parallel Worker Files
-temp_base_*.csv
-temp_glp1_*.csv
+# Ignore all temporary worker chunks
+temp_*_*.csv
 
-# Visualization & Reporting
-delfino_comprehensive_results.png
-*.txt
-*.log
+# Ignore all "decoded" or "readable" data artifacts
+data/ukb_simulated_data/decoded_*.csv
+data/ukb_simulated_data/human_readable_*.csv
+data/ukb_simulated_data/preview_*.csv
 
-# --- Python & Environment Standard ---
+# Ignore extra binary reconstructions
+data/ukb_simulated_data/reconstructed_*.bin
+
+# --- Machine Learning & Environment ---
 __pycache__/
 *.py[cod]
 *$py.class
@@ -28,7 +29,10 @@ env/
 venv/
 .vscode/
 .idea/
-
-# OS Specific
 .DS_Store
 Thumbs.db
+
+# --- Keep the Core Assets (The "!" means "Don't ignore") ---
+!data/ukb_simulated_data/train.bin
+!data/ukb_simulated_data/test.bin
+!out-*/*.pt

@@ -1,0 +1,34 @@
+# --- Project Delfino: Collaborator Configuration ---
+
+# Keep checkpoints and training data for collaboration
+# !data/ukb_simulated_data/*.bin
+# !out-*/*.pt
+
+# --- Simulation Outputs: IGNORE THESE ---
+# These are generated per-run and should stay local
+delfino_individual_base.csv
+delfino_individual_glp1.csv
+delfino_comparison_summary.csv
+
+# Temporary Parallel Worker Files
+temp_base_*.csv
+temp_glp1_*.csv
+
+# Visualization & Reporting
+delfino_comprehensive_results.png
+*.txt
+*.log
+
+# --- Python & Environment Standard ---
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+env/
+venv/
+.vscode/
+.idea/
+
+# OS Specific
+.DS_Store
+Thumbs.db

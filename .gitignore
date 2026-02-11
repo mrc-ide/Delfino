@@ -6,6 +6,9 @@
 !dummy_disease_params.csv
 !labels.csv
 
+# Ignore ALL Text files (trajectories/logs)
+*.txt
+
 # Ignore ALL PNGs (plots, copies)
 *.png
 

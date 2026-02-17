@@ -3,8 +3,8 @@ import subprocess, pandas as pd, sys, os, glob, time
 print("--- 🏛️ DELFINO MASTER v2.7 (Performance Benchmarking) ---")
 
 CONFIG = {
-    "total_patients": 500,    
-    "num_workers": 4,         # Try 4, 8, or 16 to find your Blackwell sweet spot
+    "total_patients": 1000,    
+    "num_workers": 2,         # Try 4, 8, or 16 to find your Blackwell sweet spot
     "time_horizon": 40,
     "start_age": 40.0,
     "logit_bias": 0.0,

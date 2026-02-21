@@ -132,4 +132,14 @@ def simulate_patient(patient_id, apply_glp1):
             inc_record[f"inc_{TRACKED_CODES[next_token]}"] = current_age
 
         history.append(next_token)
-        current_age +=
+        current_age += 1.0
+
+    return {"ID": patient_id, "Cost": total_costs, "YLD": total_yld, "YLL": total_yll, "DALYs": total_yld+total_yll, "QALYs_Add": qalys_add, "QALYs_Mult": qalys_mult, **inc_record}
+
+desc = f"{'GLP1' if args.apply_intervention else 'Base'} {args.start_id}-{args.end_id}"
+results = [simulate_patient(i, args.apply_intervention) 
+           for i in tqdm(range(args.start_id, args.end_id), position=args.position, leave=False, desc=desc)]
+
+df = pd.DataFrame(results)
+suffix = f"{args.start_id}_{args.end_id}"
+df.to_csv(f"temp_{'glp1' if args.apply_intervention else 'base'}_{suffix}.csv", index=False)

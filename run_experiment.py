@@ -1,13 +1,13 @@
 import subprocess, pandas as pd, sys, os, glob, time
 
-print("--- 🏛️ DELFINO MASTER v2.7 (Performance Benchmarking) ---")
+print("--- 🏛️ DELFINO MASTER v2.7 ---")
 
 CONFIG = {
-    "total_patients": 1000,    
-    "num_workers": 2,         # Try 4, 8, or 16 to find your Blackwell sweet spot
-    "time_horizon": 40,
+    "total_patients": 2000,    
+    "num_workers": 2,         # 2 good on my Laptop
+    "time_horizon": 20,
     "start_age": 40.0,
-    "logit_bias": 0.0,
+    "logit_bias": -14,
     "pin_identity": "true",
     "remind_bmi": "true",
     "seed_offset": 42
@@ -46,7 +46,7 @@ def run():
         procs.append(subprocess.Popen(base_cmd + ["--apply_intervention", "--position", str(current_pos)]))
         current_pos += 1
 
-    print(f"⏳ Monitoring {len(procs)} parallel streams...\n" + "\n" * (CONFIG["num_workers"] * 2))
+    print(f"⏳ Monitoring {len(procs)} parallel streams...\n" + "" * (CONFIG["num_workers"] * 2))
     for p in procs: p.wait()
 
     end_time = time.time()

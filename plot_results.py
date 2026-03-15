@@ -1,73 +1,57 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-import argparse
 import os
 
-def plot():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--start_age', type=float, default=40.0)
-    parser.add_argument('--horizon', type=int, default=40)
-    args = parser.parse_args()
+def get_code_to_name_map():
+    # Load labels and params to create a mapping
+    data_dir = os.path.join('data', 'ukb_simulated_data')
+    with open(os.path.join(data_dir, 'labels.csv'), 'r') as f:
+        labels_list = [line.strip() for line in f.readlines()]
+    
+    params = pd.read_csv('dummy_disease_params.csv')
+    # Map Code -> Full Name (e.g., "I21" -> "I21 (acute myocardial infarction)")
+    mapping = {row['Code']: labels_list[int(row['TokenID'])] for _, row in params.iterrows()}
+    return mapping
 
-    # 1. Load Data
-    if not os.path.exists("delfino_individual_base.csv"):
-        print("❌ Error: Result files not found. Run the simulation first.")
+def analyze_and_plot(k=10):
+    if not os.path.exists('delfino_individual_base.csv'):
+        print("Error: Merged CSVs not found.")
         return
+
+    base = pd.read_csv('delfino_individual_base.csv')
+    glp = pd.read_csv('delfino_individual_glp1.csv')
+    name_map = get_code_to_name_map()
+
+    inc_cols = [c for c in base.columns if c.startswith('inc_')]
+    
+    # Calculate Delta
+    deltas = {col: (base[col] > 0).sum() - (glp[col] > 0).sum() for col in inc_cols}
+    top_k_cols = sorted(deltas, key=lambda x: abs(deltas[x]), reverse=True)[:k]
+    
+    fig, axes = plt.subplots(nrows=(k+1)//2, ncols=2, figsize=(16, 5 * ((k+1)//2)))
+    axes = axes.flatten()
+
+    for i, col in enumerate(top_k_cols):
+        ax = axes[i]
+        code = col[4:] # strip 'inc_'
+        full_name = name_map.get(code, code) # Fallback to code if name missing
+
+        base_ages = base[base[col] > 0][col].sort_values()
+        glp_ages = glp[glp[col] > 0][col].sort_values()
+
+        ax.step(base_ages, np.arange(1, len(base_ages) + 1), label='Baseline', color='gray', alpha=0.6)
+        ax.step(glp_ages, np.arange(1, len(glp_ages) + 1), label='GLP-1', color='#2c7fb8', linewidth=2.5)
         
-    base = pd.read_csv("delfino_individual_base.csv")
-    glp = pd.read_csv("delfino_individual_glp1.csv")
-    params_df = pd.read_csv("dummy_disease_params.csv")
-    name_map = dict(zip(params_df['Code'], params_df['Name']))
+        # Heading with both Code and Name
+        ax.set_title(f"Impact on {full_name}", fontsize=12, fontweight='bold')
+        ax.set_xlabel("Age of Onset")
+        ax.set_ylabel("Cumulative Cases")
+        ax.legend()
 
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 12))
-
-    # --- 1. Cumulative Incidence Curves ---
-    inc_cols = [c for c in base.columns if c.startswith("inc_") and c != "inc_death"]
-    top_5 = sorted(inc_cols, key=lambda x: (base[x] > 0).sum(), reverse=True)[:5]
-    
-    ages = np.arange(args.start_age, args.start_age + args.horizon + 1)
-
-    for i, d in enumerate(top_5):
-        code = d[4:]
-        name = name_map.get(code, code)
-        # Calculate cumulative cases at each age
-        b_val = [(base[d] <= age).where(base[d] > 0).sum() for age in ages]
-        g_val = [(glp[d] <= age).where(glp[d] > 0).sum() if d in glp.columns else 0 for age in ages]
-        
-        ax1.plot(ages, b_val, '--', color=f"C{i}", alpha=0.5, label=f"{name} (Base)")
-        ax1.plot(ages, g_val, '-', color=f"C{i}", linewidth=2, label=f"{name} (GLP-1)")
-
-    ax1.set_title(f"Cumulative Disease Incidence (N={len(base)}, T={args.horizon})", fontsize=14)
-    ax1.set_xlabel("Patient Age")
-    ax1.set_ylabel("Total Number of Cases")
-    ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9)
-    ax1.grid(True, alpha=0.3)
-
-    # --- 2. QALY Bar Chart ---
-    x_pos = np.array([0, 1])
-    width = 0.35
-    
-    base_means = [base['QALYs_Add'].mean(), base['QALYs_Mult'].mean()]
-    glp_means = [glp['QALYs_Add'].mean(), glp['QALYs_Mult'].mean()]
-    
-    ax2.bar(x_pos - width/2, base_means, width, label='Baseline', color='gray', alpha=0.5)
-    ax2.bar(x_pos + width/2, glp_means, width, label='GLP-1 Intervention', color='seagreen')
-    
-    ax2.set_ylabel('Mean QALYs per Patient')
-    ax2.set_title('Quality-Adjusted Life Years by Accounting Method', fontsize=14)
-    ax2.set_xticks(x_pos)
-    ax2.set_xticklabels(['Additive (DW Sum)', 'Multiplicative (Utility)'])
-    ax2.legend()
-    
-    # FIX: Ensure y-axis starts at zero for absolute perspective
-    ax2.set_ylim(bottom=0) 
-    # Add a bit of headroom for labels
-    ax2.set_ylim(top=max(base_means + glp_means) * 1.2)
-    
     plt.tight_layout()
-    plt.savefig("delfino_comprehensive_results.png")
-    print("📈 Comprehensive plots saved to 'delfino_comprehensive_results.png'")
+    plt.savefig('delfino_top_impact_named.png', dpi=300)
+    print(f"📈 Named plots saved to 'delfino_top_impact_named.png'")
 
 if __name__ == "__main__":
-    plot()
+    analyze_and_plot(k=8)

@@ -9,7 +9,7 @@ CONFIG = {
     "start_age": 40.0,
     "logit_bias": 0,
     "pin_identity": "true",
-    "remind_bmi": "true",
+    "remind_bmi": "false",
     "seed_offset": 42
 }
 

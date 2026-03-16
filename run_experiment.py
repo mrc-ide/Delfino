@@ -3,7 +3,7 @@ import subprocess, pandas as pd, sys, os, glob, time
 print("--- 🏛️ DELFINO MASTER v2.7 ---")
 
 CONFIG = {
-    "total_patients": 22661,    
+    "total_patients": 1000,    
     "num_workers": 2,         # 2 good on my Laptop
     "time_horizon": 20,
     "start_age": 40.0,

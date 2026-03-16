@@ -43,6 +43,7 @@ def generate_trajectories():
     p2i = get_p2i(train_data)
 
     results = {}
+    manual_results = {}
     for pid in tqdm(range(START_ID, END_ID)):
         if pid >= len(p2i): continue
             
@@ -61,6 +62,62 @@ def generate_trajectories():
             for code, m_tid in target_map.items():
                 metrics[f"prob_{code}"] = probs_baseline[m_tid].item()
             all_metrics.append(metrics)
+
+        # --- MANUAL SAMPLING (THE COMPETING RISKS RACE) ---
+        # Initialize the generation context with history from get_batch
+        curr_x = x.clone()
+        curr_a = a.clone()
+        manual_traj_tokens = []
+        manual_traj_ages = []
+
+        for _ in range(MAX_NEW_TOKENS):
+            with torch.no_grad():
+                # 1. Calculate Hazard Rates (Logits)
+                out = model(curr_x, age=curr_a)
+                logits = out[0][:, -1, :] # Hazards for the next step
+
+                # 2. The Exponential Race (Inverse CDF sampling)
+                # t_wait is the time until each potential event happens
+                t_wait = torch.clamp(-torch.exp(-logits) * torch.rand(logits.shape, device=DEVICE).log(), min=0)
+                
+                # Find the winner: shortest wait time
+                # t_next[0] is the wait time, t_next[1] is the token ID
+                t_next = t_wait.min(1)
+                
+                next_token_id = t_next[1][:, None]
+                next_age = curr_a[..., [-1]] + t_next[0][:, None]
+
+            # Store the winner
+            manual_traj_tokens.append(next_token_id.item())
+            manual_traj_ages.append(next_age.item())
+
+            # Update the context for the next step in the loop
+            curr_x = torch.cat([curr_x, next_token_id], dim=1)
+            curr_a = torch.cat([curr_a, next_age], dim=1)
+
+            # TERMINATION: Break if the winner is Death (1269)
+            if next_token_id.item() == 1269:
+                break
+        
+        # Format the manual trajectory string (following your existing logic)
+        hist_raw = (x[0].cpu().numpy() - 1)
+        hist_ages = a[0].cpu().numpy() / DAYS_PER_YEAR
+        
+        m_lines = ["Input trajectory:"]
+        for t, age in zip(hist_raw, hist_ages):
+            if t < 0: continue # Skip padding
+            m_lines.append(f"{age:2.1f}: {labels_list[t]}")
+        
+        m_lines.append("=====================")
+        m_lines.append("Manual Generated trajectory:")
+        
+        for t, age_days in zip(manual_traj_tokens, manual_traj_ages):
+            age_y = age_days / DAYS_PER_YEAR
+            # Note: For manual tokens, we use ID as-is (no shift needed for labels)
+            m_lines.append(f"{age_y:2.1f}: {labels_list[t]}")
+            if t == 1269: break
+            
+        manual_results[str(pid)] = "\n".join(m_lines)
 
         with torch.no_grad():
             # generate() returns [Input + Generated]
@@ -108,7 +165,11 @@ def generate_trajectories():
     df_probs.to_csv(f"temp_base_{START_ID}_{END_ID}_results.csv", index=False)
     print(f"Probabilities saved to temp_base_{START_ID}_{END_ID}_results.csv")
 
-    
+    # Save the manual race trajectories
+    df_manual = pd.DataFrame([manual_results])
+    manual_output_name = f"temp_manual_{START_ID}_{END_ID}_trajectories.csv"
+    df_manual.to_csv(manual_output_name, index=False)
+    print(f"Manual trajectories saved to: {manual_output_name}")
 
 if __name__ == "__main__":
     generate_trajectories()

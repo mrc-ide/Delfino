@@ -14,14 +14,14 @@ END_ID = 50
 MAX_NEW_TOKENS = 100
 DAYS_PER_YEAR = 365.25
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+MODE = 'manual'  # NEW: Options: 'base' or 'manual'
 
 DATA_DIR = os.path.join('data', 'ukb_simulated_data')
 TRAIN_PATH = os.path.join(DATA_DIR, 'train.bin')
 LABELS_PATH = os.path.join(DATA_DIR, 'labels.csv')
 CKPT_PATH = 'out-delfino-baseline/ckpt.pt'
 
-T_DEATH_RAW_ID = 1269
-T_DEATH_MODEL_ID = 1270 
+T_DEATH_ID = 1269
 
 def generate_trajectories():
     with open(LABELS_PATH, 'r') as f:
@@ -122,8 +122,7 @@ def generate_trajectories():
 
         with torch.no_grad():
             # generate() returns [Input + Generated]
-            #y, b, _ = model.generate(x, a, max_new_tokens=MAX_NEW_TOKENS, termination_tokens=[T_DEATH_MODEL_ID])
-            y, b, _ = model.generate(x, a, max_new_tokens=MAX_NEW_TOKENS, termination_tokens=[T_DEATH_RAW_ID])
+            y, b, _ = model.generate(x, a, max_new_tokens=MAX_NEW_TOKENS, termination_tokens=[T_DEATH_ID])
 
         full_tokens_model = y[0].cpu().numpy()
         full_ages_years = b[0].cpu().numpy() / DAYS_PER_YEAR

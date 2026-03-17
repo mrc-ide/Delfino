@@ -3,8 +3,8 @@ import subprocess, pandas as pd, sys, os, glob, time
 print("--- 🏛️ DELFINO ---")
 
 CONFIG = {
-    # "total_patients": 7143,    
-    "total_patients": 80,    
+    "total_patients": 7143,    
+    # "total_patients": 1000,    
     "num_workers": 2,         # 2 good on my Laptop
     "seed_offset": 42,
     "mode": "manual"
@@ -53,28 +53,42 @@ def run():
     throughput = (CONFIG["total_patients"] * 2) / total_duration
 
     # Merge 
-    print("\n" * 2 + "📦 Merging parallel chunks into final master files...")
+    print("\n" * 2 + f"📦 Merging chunks for patients {0} to {CONFIG['total_patients']}...")
     
-    def merge(status, file_type):
-        # Matches temp_manual_control_0_120_incidence.csv etc.
+    def merge(status, file_type, total_sid, total_eid):
+        # Pattern to find all the temporary chunk files
         pattern = f"temp_{CONFIG['mode']}_{status}_*_{file_type}.csv"
         files = glob.glob(pattern)
         
         if files:
-            # We sort by 'PatientID' (the new column name) to keep the twin cohorts aligned
+            # Sort by PatientID to maintain Digital Twin alignment
             df = pd.concat([pd.read_csv(f) for f in files]).sort_values(by="PatientID")
-            output_name = f"final_{status}_{file_type}.csv"
+            
+            # NEW NAMING CONVENTION: {status}_{start}_{end}_{type}.csv
+            output_name = f"{status}_{total_sid}_{total_eid}_{file_type}.csv"
             df.to_csv(output_name, index=False)
             
-            # Cleanup the temp chunks to keep your folder clean
+            # Cleanup
             for f in files: 
                 os.remove(f)
-            print(f" - Created {output_name} from {len(files)} chunks.")
+            print(f" - Created: {output_name}")
 
-    # Loop through both trial arms and both data types
+    # Execute the merge for both trial arms
     for status in ["control", "treated"]:
-        merge(status, "incidence")
-        merge(status, "trajectories")
+        merge(status, "incidence", 0, CONFIG["total_patients"])
+        merge(status, "trajectories", 0, CONFIG["total_patients"])
+
+    # --- ADD THIS AT THE END OF THE run() FUNCTION ---
+    print("\n" * 2 + "📊 Generating Cumulative Incidence plots...")
+    
+    # Pass the range so the plotter finds control_0_7143_incidence.csv
+    subprocess.run([
+        sys.executable, "plot_results.py", 
+        "--start_id", "0", 
+        "--end_id", str(CONFIG["total_patients"])
+    ], check=True)
+    
+    print(f"✅ Trial Complete. See plots for range 0-{CONFIG['total_patients']}")
 
     print("-" * 40)
     print(f"🏁 PERFORMANCE SUMMARY:")

@@ -1,5 +1,6 @@
 import os
 import torch
+import argparse
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
@@ -9,14 +10,38 @@ from model import Delphi, DelphiConfig
 from utils import get_p2i, get_batch
 
 # --- SETTINGS ---
-START_ID = 0
-END_ID = 300 # max of 7143
-MAX_NEW_TOKENS = 100
+# --- ARGUMENT PARSING ---
+parser = argparse.ArgumentParser(description="Delphi Trajectory Generator")
+parser.add_argument('--start_id', type=int, default=0)
+parser.add_argument('--end_id', type=int, default=120) # max of 7143
+parser.add_argument('--max_new_tokens', type=int, default=100)
+# MODE Options: 
+# 'manual' (Default): Uses the competing risks race loop directly on x and a.
+# 'automatic': Uses the model.generate() wrapper on cloned x and a. # note this currently has no tracking of disease timings, as can't easily input efficacies/logit biases
+parser.add_argument('--mode', type=str, default='manual', choices=['manual', 'automatic'])
+parser.add_argument('--apply_intervention', type=str, default='True', choices=['True', 'False'])
+parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu')
+parser.add_argument('--seed_offset', type=int, default=42)
+parser.add_argument('--position', type=int, default=0, help="Terminal line for tqdm progress bar")
+
+args = parser.parse_args()
+
+# extract CL arguments and put them here so you don't have to change rest of your code.
+START_ID = args.start_id
+END_ID = args.end_id # max of 7143
+MAX_NEW_TOKENS = args.max_new_tokens
+MODE = args.mode
+APPLY_INTERVENTION = args.apply_intervention == 'True'
+# APPLY_INTERVENTION = False 
+DEVICE = args.device
+SEED_OFFSET = args.seed_offset
+POSITION = args.position # Map it to a global like you did for others
+
 DAYS_PER_YEAR = 365.25
-DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+# Constants derived from args or fixed
 
 # --- INTERVENTION SETTINGS ---
-APPLY_INTERVENTION = True  
 # APPLY_INTERVENTION = False  
 # Map ICD-10 Code -> Hazard Ratio (HR)
 # e.g., {"I10": 0.5} means 50% reduction in Hypertension incidence
@@ -28,21 +53,13 @@ affected_diseases = {
     "I63": 0.78,   # Stroke: 22% reduction (SELECT / SUSTAIN-6)
     "N18": 0.76,   # Chronic Kidney Disease: 24% reduction (FLOW)
 }
-
 # Special handling for Mortality: 18% reduction (LEADER/SELECT/FLOW)
 DEATH_HR = 0.82
-
-# MODE Options: 
-# 'manual' (Default): Uses the competing risks race loop directly on x and a.
-# 'automatic': Uses the model.generate() wrapper on cloned x and a.
-MODE = 'manual'
-# MODE = 'automatic' # note this currently has no tracking of disease timings, as can't easily input efficacies/logit biases
 
 DATA_DIR = os.path.join('data', 'ukb_simulated_data')
 TRAIN_PATH = os.path.join(DATA_DIR, 'train.bin')
 LABELS_PATH = os.path.join(DATA_DIR, 'labels.csv')
 CKPT_PATH = 'out-delfino-baseline/ckpt.pt'
-
 T_DEATH_ID = 1269
 
 def generate_trajectories():
@@ -69,7 +86,7 @@ def generate_trajectories():
     logit_bias_vector = torch.zeros(len(labels_list), device=DEVICE)
 
     if APPLY_INTERVENTION:
-        print(f"Applying Intervention on {len(affected_diseases)} disease(s):")
+        # print(f"Applying Intervention on {len(affected_diseases)} disease(s):")
         # Reverse map to find indices for the affected codes
         code_to_id = {v: k for k, v in TRACKED_CODES.items()}
         
@@ -78,13 +95,13 @@ def generate_trajectories():
                 tid = code_to_id[code]
                 bias = np.log(hr)
                 logit_bias_vector[tid] = bias
-                print(f" - {code} (ID: {tid}): HR={hr} (Logit Bias: {bias:.4f})")
-            else:
-                print(f" - Warning: {code} not found in labels.")
+                # print(f" - {code} (ID: {tid}): HR={hr} (Logit Bias: {bias:.4f})")
+            # else:
+                # print(f" - Warning: {code} not found in labels.")
         # Explicitly apply the mortality benefit to the Death Token
         death_bias = np.log(DEATH_HR)
         logit_bias_vector[T_DEATH_ID] = death_bias
-        print(f" - Death (ID: {T_DEATH_ID}): HR={DEATH_HR} (Logit Bias: {death_bias:.4f})")
+        # print(f" - Death (ID: {T_DEATH_ID}): HR={DEATH_HR} (Logit Bias: {death_bias:.4f})")
 
     # Container for quantitative results (as opposed to string trajectories)
     all_metrics = []
@@ -103,10 +120,19 @@ def generate_trajectories():
 
     # create container for results
     trajectories = {}
-    print(f"Running generation in {MODE} mode...")
+    # print(f"Running generation in {MODE} mode...")
 
     # Begin person loop
-    for pid in tqdm(range(START_ID, END_ID)):
+    # for pid in tqdm(range(START_ID, END_ID)):
+    for pid in tqdm(range(START_ID, END_ID), position=POSITION, leave=True, desc=f"Chunk {POSITION}"):
+
+        # SEEDING FOR each digital twin
+        # Seed both Numpy and Torch for reproducibility
+        # Adding a large constant (SEED_OFFSET) prevents potential overlap with other seeds
+        torch.manual_seed(pid + SEED_OFFSET)
+        np.random.seed(pid + SEED_OFFSET)
+        if torch.cuda.is_available():
+            torch.cuda.manual_seed_all(pid + SEED_OFFSET)
         
         # skip if specific person id is out of range of data.
         if pid >= len(p2i): continue

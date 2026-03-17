@@ -1,16 +1,13 @@
 import subprocess, pandas as pd, sys, os, glob, time
 
-print("--- 🏛️ DELFINO MASTER v2.7 ---")
+print("--- 🏛️ DELFINO ---")
 
 CONFIG = {
-    "total_patients": 1000,    
+    # "total_patients": 7143,    
+    "total_patients": 80,    
     "num_workers": 2,         # 2 good on my Laptop
-    "time_horizon": 20,
-    "start_age": 40.0,
-    "logit_bias": 0,
-    "pin_identity": "true",
-    "remind_bmi": "false",
-    "seed_offset": 42
+    "seed_offset": 42,
+    "mode": "manual"
 }
 
 def run():
@@ -31,20 +28,21 @@ def run():
         eid = (i + 1) * chunk if i < CONFIG["num_workers"] - 1 else CONFIG["total_patients"]
         
         base_cmd = [
-            sys.executable, "delfino.py",
-            "--start_id", str(sid), "--end_id", str(eid),
-            "--time_horizon", str(CONFIG["time_horizon"]),
-            "--start_age", str(CONFIG["start_age"]),
-            "--logit_bias", str(CONFIG["logit_bias"]),
-            "--pin_identity", CONFIG["pin_identity"],
-            "--remind_bmi", CONFIG["remind_bmi"],
-            "--position", str(current_pos)
+            sys.executable, "generate_trajectories.py",
+            "--start_id", str(sid), 
+            "--end_id", str(eid),
+            "--mode", CONFIG["mode"],
+            "--seed_offset", str(CONFIG["seed_offset"])
         ]
 
-        procs.append(subprocess.Popen(base_cmd))
+        # Launch Control - Position 0, 2, 4...
+        procs.append(subprocess.Popen(base_cmd + ["--apply_intervention", "False", "--position", str(current_pos)]))
         current_pos += 1
-        procs.append(subprocess.Popen(base_cmd + ["--apply_intervention", "--position", str(current_pos)]))
+
+        # Launch Treated - Position 1, 3, 5...
+        procs.append(subprocess.Popen(base_cmd + ["--apply_intervention", "True", "--position", str(current_pos)]))
         current_pos += 1
+
 
     print(f"⏳ Monitoring {len(procs)} parallel streams..." + "" * (CONFIG["num_workers"] * 2))
     for p in procs: p.wait()
@@ -54,20 +52,29 @@ def run():
     # Throughput calculation
     throughput = (CONFIG["total_patients"] * 2) / total_duration
 
-    print("\n" * 2 + "📦 Merging and analyzing...")
+    # Merge 
+    print("\n" * 2 + "📦 Merging parallel chunks into final master files...")
     
-    def merge(prefix, out):
-        files = glob.glob(f"temp_{prefix}_*.csv")
+    def merge(status, file_type):
+        # Matches temp_manual_control_0_120_incidence.csv etc.
+        pattern = f"temp_{CONFIG['mode']}_{status}_*_{file_type}.csv"
+        files = glob.glob(pattern)
+        
         if files:
-            pd.concat([pd.read_csv(f) for f in files]).sort_values(by="ID").to_csv(out, index=False)
-            for f in files: os.remove(f)
+            # We sort by 'PatientID' (the new column name) to keep the twin cohorts aligned
+            df = pd.concat([pd.read_csv(f) for f in files]).sort_values(by="PatientID")
+            output_name = f"final_{status}_{file_type}.csv"
+            df.to_csv(output_name, index=False)
+            
+            # Cleanup the temp chunks to keep your folder clean
+            for f in files: 
+                os.remove(f)
+            print(f" - Created {output_name} from {len(files)} chunks.")
 
-    merge("base", "delfino_individual_base.csv")
-    merge("glp1", "delfino_individual_glp1.csv")
-
-    # Call modular Post-Processors
-    subprocess.run([sys.executable, "compare_results.py"], check=True)
-    subprocess.run([sys.executable, "plot_results.py", "--start_age", str(CONFIG["start_age"]), "--horizon", str(CONFIG["time_horizon"])], check=True)
+    # Loop through both trial arms and both data types
+    for status in ["control", "treated"]:
+        merge(status, "incidence")
+        merge(status, "trajectories")
 
     print("-" * 40)
     print(f"🏁 PERFORMANCE SUMMARY:")

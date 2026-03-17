@@ -10,10 +10,20 @@ from utils import get_p2i, get_batch
 
 # --- SETTINGS ---
 START_ID = 0
-END_ID = 30 # max of 7143
+END_ID = 300 # max of 7143
 MAX_NEW_TOKENS = 100
 DAYS_PER_YEAR = 365.25
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+# --- INTERVENTION SETTINGS ---
+# APPLY_INTERVENTION = True  
+APPLY_INTERVENTION = False  
+# Map ICD-10 Code -> Hazard Ratio (HR)
+# e.g., {"I10": 0.5} means 50% reduction in Hypertension incidence
+affected_diseases = {
+    "I10": 0.001,
+    # "I50": 0.8, # You can add multiple effects here
+}
 
 # MODE Options: 
 # 'manual' (Default): Uses the competing risks race loop directly on x and a.
@@ -47,7 +57,26 @@ def generate_trajectories():
 
     # Distinct list of unique codes for CSV columns
     unique_codes = sorted(list(set(TRACKED_CODES.values())))
-    all_metrics = [] # To store quantitative results
+
+    # Vocabulary size is len(labels_list)
+    logit_bias_vector = torch.zeros(len(labels_list), device=DEVICE)
+
+    if APPLY_INTERVENTION:
+        print(f"Applying Intervention on {len(affected_diseases)} disease(s):")
+        # Reverse map to find indices for the affected codes
+        code_to_id = {v: k for k, v in TRACKED_CODES.items()}
+        
+        for code, hr in affected_diseases.items():
+            if code in code_to_id:
+                tid = code_to_id[code]
+                bias = np.log(hr)
+                logit_bias_vector[tid] = bias
+                print(f" - {code} (ID: {tid}): HR={hr} (Logit Bias: {bias:.4f})")
+            else:
+                print(f" - Warning: {code} not found in labels.")
+
+    # Container for quantitative results (as opposed to string trajectories)
+    all_metrics = []
 
     # load model checkpoint (weights)
     checkpoint = torch.load(CKPT_PATH, map_location=DEVICE)
@@ -96,6 +125,12 @@ def generate_trajectories():
                     # Forward pass to get Hazard Rates (logits)
                     out = model(curr_x, age=curr_a)
                     logits = out[0][:, -1, :] 
+
+                    # --- VECTORIZED INTERVENTION GATE ---
+                    if APPLY_INTERVENTION:
+                        # Adding the vector (mostly zeros) to the logits
+                        logits += logit_bias_vector
+                    # ------------------------------------
 
                     # Competing Risks Race: Sample wait times from exponential distribution
                     # Inverse CDF method: T = -1/lambda * ln(U)
@@ -168,21 +203,25 @@ def generate_trajectories():
         all_metrics.append(inc_record)
 
     # 5. Save Outputs
-    output_filename = f"temp_{MODE}_{START_ID}_{END_ID}_trajectories.csv"
-    # pd.DataFrame([trajectories]).to_csv(output_filename, index=False)
-    df_results = pd.DataFrame(list(trajectories.items()), columns=["PatientID", "Trajectory"])
-    df_results.to_csv(output_filename, index=False)
-    print(f"\nDone. {MODE.capitalize()} results saved to {output_filename}")
 
-    # Save the Quantitative Incidence CSV
+    status = "treated" if APPLY_INTERVENTION else "control"
+
+    # Save string trajectories
+    trajectories_output_filename = f"temp_{MODE}_{status}_{START_ID}_{END_ID}_trajectories.csv"
+    df_results = pd.DataFrame(list(trajectories.items()), columns=["PatientID", "Trajectory"])
+    df_results.to_csv(trajectories_output_filename, index=False)
+
+    # Save the Incidence CSV
+    incidence_filename = f"temp_{MODE}_{status}_{START_ID}_{END_ID}_incidence.csv"
     df_incidence = pd.DataFrame(all_metrics)
     # Reorder columns to put PatientID and StartAge first
     cols = ["PatientID", "SimulationStartAge"] + unique_codes
     df_incidence = df_incidence[cols]
-    
-    incidence_filename = f"temp_{MODE}_{START_ID}_{END_ID}_incidence.csv"
     df_incidence.to_csv(incidence_filename, index=False)
-    print(f"Incidence records saved to {incidence_filename}")
+
+    print(f"\nDone. Results saved with status '{status}' to:")
+    print(f" - {trajectories_output_filename}")
+    print(f" - {incidence_filename}")
 
 if __name__ == "__main__":
     generate_trajectories()

@@ -16,14 +16,21 @@ DAYS_PER_YEAR = 365.25
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 # --- INTERVENTION SETTINGS ---
-# APPLY_INTERVENTION = True  
-APPLY_INTERVENTION = False  
+APPLY_INTERVENTION = True  
+# APPLY_INTERVENTION = False  
 # Map ICD-10 Code -> Hazard Ratio (HR)
 # e.g., {"I10": 0.5} means 50% reduction in Hypertension incidence
 affected_diseases = {
-    "I10": 0.001,
-    # "I50": 0.8, # You can add multiple effects here
+    "I10": 0.001,  # Your test "cure" for Hypertension
+    "E11": 0.06,   # Diabetes: 94% reduction (SURMOUNT-3)
+    "I50": 0.50,   # Heart Failure: 50% reduction (SUMMIT / STEP-HFpEF)
+    "I21": 0.78,   # MACE/MI: 22% reduction (SELECT / SUSTAIN-6)
+    "I63": 0.78,   # Stroke: 22% reduction (SELECT / SUSTAIN-6)
+    "N18": 0.76,   # Chronic Kidney Disease: 24% reduction (FLOW)
 }
+
+# Special handling for Mortality: 18% reduction (LEADER/SELECT/FLOW)
+DEATH_HR = 0.82
 
 # MODE Options: 
 # 'manual' (Default): Uses the competing risks race loop directly on x and a.
@@ -74,6 +81,10 @@ def generate_trajectories():
                 print(f" - {code} (ID: {tid}): HR={hr} (Logit Bias: {bias:.4f})")
             else:
                 print(f" - Warning: {code} not found in labels.")
+        # Explicitly apply the mortality benefit to the Death Token
+        death_bias = np.log(DEATH_HR)
+        logit_bias_vector[T_DEATH_ID] = death_bias
+        print(f" - Death (ID: {T_DEATH_ID}): HR={DEATH_HR} (Logit Bias: {death_bias:.4f})")
 
     # Container for quantitative results (as opposed to string trajectories)
     all_metrics = []

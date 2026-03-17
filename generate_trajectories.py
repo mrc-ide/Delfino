@@ -10,7 +10,7 @@ from utils import get_p2i, get_batch
 
 # --- SETTINGS ---
 START_ID = 0
-END_ID = 50
+END_ID = 7143 # max of 7143
 MAX_NEW_TOKENS = 100
 DAYS_PER_YEAR = 365.25
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -20,7 +20,6 @@ DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 # 'automatic': Uses the model.generate() wrapper on cloned x and a.
 MODE = 'manual'
 # MODE = 'automatic'
-
 
 DATA_DIR = os.path.join('data', 'ukb_simulated_data')
 TRAIN_PATH = os.path.join(DATA_DIR, 'train.bin')
@@ -136,7 +135,9 @@ def generate_trajectories():
 
     # 5. SAVE FINAL CSV
     output_filename = f"temp_{MODE}_{START_ID}_{END_ID}_trajectories.csv"
-    pd.DataFrame([trajectories]).to_csv(output_filename, index=False)
+    # pd.DataFrame([trajectories]).to_csv(output_filename, index=False)
+    df_results = pd.DataFrame(list(trajectories.items()), columns=["PatientID", "Trajectory"])
+    df_results.to_csv(output_filename, index=False)
     print(f"\nDone. {MODE.capitalize()} results saved to {output_filename}")
 
 if __name__ == "__main__":

@@ -49,11 +49,21 @@ prevalence_results <- lapply(disease_ids, function(tid) {
 # 4. CREATE SUMMARY TABLE
 prevalence_df <- do.call(rbind, prevalence_results)
 
-# Attach names and codes
-prevalence_df$Code <- params$Code
-prevalence_df$Name <- labels[prevalence_df$TokenID + 1] # +1 because R is 1-indexed
+# THE SYNC FIX:
+# We treat (TokenID + 1) as the 'Model ID'.
+# Since R is 1-indexed, we look up index (TokenID + 2) in the labels list.
+model_labels <- labels[prevalence_df$TokenID + 2]
 
-# Sort by frequency
+# Extract the Code (everything before the first space)
+prevalence_df$Code <- sub(" .*", "", model_labels)
+
+# Extract the Name (the full string)
+prevalence_df$Name <- model_labels
+
+# Increment the TokenID in the CSV so it matches the Python IDs
+prevalence_df$TokenID <- prevalence_df$TokenID + 1
+
+# Sort by count
 prevalence_df <- prevalence_df[order(-prevalence_df$Count), ]
 
 # 5. PRINT THE TRUTH

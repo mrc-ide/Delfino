@@ -10,7 +10,7 @@ from utils import get_p2i, get_batch
 
 # --- SETTINGS ---
 START_ID = 0
-END_ID = 7143 # max of 7143
+END_ID = 30 # max of 7143
 MAX_NEW_TOKENS = 100
 DAYS_PER_YEAR = 365.25
 DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -19,7 +19,7 @@ DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 # 'manual' (Default): Uses the competing risks race loop directly on x and a.
 # 'automatic': Uses the model.generate() wrapper on cloned x and a.
 MODE = 'manual'
-# MODE = 'automatic'
+# MODE = 'automatic' # note this currently has no tracking of disease timings, as can't easily input efficacies/logit biases
 
 DATA_DIR = os.path.join('data', 'ukb_simulated_data')
 TRAIN_PATH = os.path.join(DATA_DIR, 'train.bin')
@@ -34,6 +34,20 @@ def generate_trajectories():
     # load Token labels
     with open(LABELS_PATH, 'r') as f:
         labels_list = [line.strip() for line in f.readlines()]
+
+    # Identify all ICD-10 codes (Letter followed by numbers)
+    # Mapping: {TokenID: "Code"}
+    TRACKED_CODES = {}
+    for i, label in enumerate(labels_list):
+        # Match codes like I50, E11, but skip 'Padding' or 'No event'
+        if len(label) >= 3 and label[0].isalpha() and label[1].isdigit():
+            # Extract just the code part (e.g., "I50" from "I50 (heart failure)")
+            code = label.split(' ')[0]
+            TRACKED_CODES[i] = code
+
+    # Distinct list of unique codes for CSV columns
+    unique_codes = sorted(list(set(TRACKED_CODES.values())))
+    all_metrics = [] # To store quantitative results
 
     # load model checkpoint (weights)
     checkpoint = torch.load(CKPT_PATH, map_location=DEVICE)
@@ -61,6 +75,15 @@ def generate_trajectories():
         x, a, _, _ = get_batch(ix=[pid], data=train_data, p2i=p2i, select='left', 
                               block_size=128, device=DEVICE, padding='random', no_event_token_rate=5)
         
+        # Initialize record with -1.0 (Absence)
+        # SimulationStartAge is the age of the very last token in history
+        start_age_y = a[0, -1].item() / DAYS_PER_YEAR
+        inc_record = {
+            "PatientID": pid, 
+            "SimulationStartAge": start_age_y,
+            **{code: -1.0 for code in unique_codes}
+        }
+
         # Begin caculating trajectories
         if MODE == 'manual':
             # Direct pass: no cloning, uses the original tensors from get_batch
@@ -81,6 +104,13 @@ def generate_trajectories():
                     
                     next_id = t_next[1][:, None]
                     next_age = curr_a[..., [-1]] + t_next[0][:, None]
+
+                    # TRACKING: If token is a disease and not yet recorded, save the age
+                    token_id = next_id.item()
+                    if token_id in TRACKED_CODES:
+                         code = TRACKED_CODES[token_id]
+                         if inc_record[code] == -1.0:
+                             inc_record[code] = next_age.item() / DAYS_PER_YEAR
 
                 manual_tokens.append(next_id.item())
                 manual_ages.append(next_age.item())
@@ -131,14 +161,28 @@ def generate_trajectories():
             if i >= input_len and tid == T_DEATH_ID:
                 break
                 
+        # add this person's lines to trajectories
         trajectories[str(pid)] = "\n".join(lines)
 
-    # 5. SAVE FINAL CSV
+        # Append the record to the master list after each patient is done
+        all_metrics.append(inc_record)
+
+    # 5. Save Outputs
     output_filename = f"temp_{MODE}_{START_ID}_{END_ID}_trajectories.csv"
     # pd.DataFrame([trajectories]).to_csv(output_filename, index=False)
     df_results = pd.DataFrame(list(trajectories.items()), columns=["PatientID", "Trajectory"])
     df_results.to_csv(output_filename, index=False)
     print(f"\nDone. {MODE.capitalize()} results saved to {output_filename}")
+
+    # Save the Quantitative Incidence CSV
+    df_incidence = pd.DataFrame(all_metrics)
+    # Reorder columns to put PatientID and StartAge first
+    cols = ["PatientID", "SimulationStartAge"] + unique_codes
+    df_incidence = df_incidence[cols]
+    
+    incidence_filename = f"temp_{MODE}_{START_ID}_{END_ID}_incidence.csv"
+    df_incidence.to_csv(incidence_filename, index=False)
+    print(f"Incidence records saved to {incidence_filename}")
 
 if __name__ == "__main__":
     generate_trajectories()

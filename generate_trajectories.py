@@ -19,6 +19,8 @@ DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 # 'manual' (Default): Uses the competing risks race loop directly on x and a.
 # 'automatic': Uses the model.generate() wrapper on cloned x and a.
 MODE = 'manual'
+# MODE = 'automatic'
+
 
 DATA_DIR = os.path.join('data', 'ukb_simulated_data')
 TRAIN_PATH = os.path.join(DATA_DIR, 'train.bin')
@@ -34,12 +36,6 @@ def generate_trajectories():
     with open(LABELS_PATH, 'r') as f:
         labels_list = [line.strip() for line in f.readlines()]
 
-    # Define Target Diseases and map to Model IDs (Raw Index + 1)
-    # target_codes = ['E10', 'I50', 'I21', 'I63', 'N18']
-    # target_map = {code: i + 1 for code in target_codes 
-    #               for i, lbl in enumerate(labels_list) if lbl.startswith(code)}
-    # all_metrics = []
-
     # load model checkpoint (weights)
     checkpoint = torch.load(CKPT_PATH, map_location=DEVICE)
     model = Delphi(DelphiConfig(**checkpoint['model_args'])).to(DEVICE)
@@ -48,6 +44,7 @@ def generate_trajectories():
 
     # Load training data as uint32 triplets [PID, Age, Token] in 3-columns
     train_data = np.fromfile(TRAIN_PATH, dtype=np.uint32).reshape(-1, 3)
+    
     # Get the patient to index mapping.
     p2i = get_p2i(train_data)
 
@@ -63,7 +60,7 @@ def generate_trajectories():
             
         # Get person's input context using official batching logic (includes +1 shift)
         x, a, _, _ = get_batch(ix=[pid], data=train_data, p2i=p2i, select='left', 
-                              block_size=48, device=DEVICE, padding='random', no_event_token_rate=5)
+                              block_size=128, device=DEVICE, padding='random', no_event_token_rate=5)
         
         # Begin caculating trajectories
         if MODE == 'manual':

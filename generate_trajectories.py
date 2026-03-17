@@ -100,12 +100,14 @@ def generate_trajectories():
                 break
         
         # Format the manual trajectory string (following your existing logic)
-        hist_raw = (x[0].cpu().numpy() - 1)
+        #hist_raw = (x[0].cpu().numpy() - 1)
+        hist_raw = (x[0].cpu().numpy())
         hist_ages = a[0].cpu().numpy() / DAYS_PER_YEAR
         
         m_lines = ["Input trajectory:"]
         for t, age in zip(hist_raw, hist_ages):
-            if t < 0: continue # Skip padding
+            #if t < 0: continue # Skip padding
+            if t == 0: continue # Only skip padding
             m_lines.append(f"{age:2.1f}: {labels_list[t]}")
         
         m_lines.append("=====================")
@@ -113,9 +115,8 @@ def generate_trajectories():
         
         for t, age_days in zip(manual_traj_tokens, manual_traj_ages):
             age_y = age_days / DAYS_PER_YEAR
-            # Note: For manual tokens, we use ID as-is (no shift needed for labels)
             m_lines.append(f"{age_y:2.1f}: {labels_list[t]}")
-            if t == 1269: break
+            if t == T_DEATH_RAW_ID: break
             
         manual_results[str(pid)] = "\n".join(m_lines)
 

@@ -1,6 +1,6 @@
 import subprocess, pandas as pd, sys, os, glob, time
 
-print("--- 🏛️ DELFINO ---")
+print("--- 🏛️  DELFINO ---")
 
 CONFIG = {
     "total_patients": 7143,    

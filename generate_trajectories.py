@@ -23,6 +23,8 @@ parser.add_argument('--apply_intervention', type=str, default='True', choices=['
 parser.add_argument('--device', type=str, default='cuda' if torch.cuda.is_available() else 'cpu')
 parser.add_argument('--seed_offset', type=int, default=42)
 parser.add_argument('--position', type=int, default=0, help="Terminal line for tqdm progress bar")
+parser.add_argument('--strategy', type=str, default='always', choices=['always', 'on_diagnosis'])
+parser.add_argument('--trigger_codes', type=str, default='E66', help="ICD code that triggers treatment")
 
 args = parser.parse_args()
 
@@ -36,6 +38,9 @@ APPLY_INTERVENTION = args.apply_intervention == 'True'
 DEVICE = args.device
 SEED_OFFSET = args.seed_offset
 POSITION = args.position # Map it to a global like you did for others
+STRATEGY = args.strategy
+TRIGGER_CODES = args.trigger_codes
+
 
 DAYS_PER_YEAR = 365.25
 
@@ -64,10 +69,13 @@ T_DEATH_ID = 1269
 
 def generate_trajectories():
 
-    # 1. LOAD INPUTS
+    ### === LOAD INPUTS
     # load Token labels
     with open(LABELS_PATH, 'r') as f:
         labels_list = [line.strip() for line in f.readlines()]
+
+    # Load (dummy) disability weights for DALYs, utilities for QALYs, and costs (currently just dummy costs)
+    econ_df = pd.read_csv('disease_params_ihme.csv').set_index('TokenID')
 
     # Identify all ICD-10 codes (Letter followed by numbers)
     # Mapping: {TokenID: "Code"}
@@ -79,6 +87,9 @@ def generate_trajectories():
             code = label.split(' ')[0]
             TRACKED_CODES[i] = code
 
+    # Reverse map to find indices for the affected codes
+    code_to_id = {v: k for k, v in TRACKED_CODES.items()}
+
     # Distinct list of unique codes for CSV columns
     unique_codes = sorted(list(set(TRACKED_CODES.values())))
 
@@ -87,8 +98,11 @@ def generate_trajectories():
 
     if APPLY_INTERVENTION:
         # print(f"Applying Intervention on {len(affected_diseases)} disease(s):")
-        # Reverse map to find indices for the affected codes
-        code_to_id = {v: k for k, v in TRACKED_CODES.items()}
+        # Build a SET of IDs to support multiple trigger codes (e.g., "E66,E11")
+        # We split by comma and strip whitespace
+        target_trigger_codes = [c.strip() for c in TRIGGER_CODES.split(",")]
+        trigger_id_set = {code_to_id[c] for c in target_trigger_codes if c in code_to_id}
+        print(f"Monitoring for Trigger Codes: {target_trigger_codes} (IDs: {trigger_id_set})")
         
         for code, hr in affected_diseases.items():
             if code in code_to_id:
@@ -103,6 +117,8 @@ def generate_trajectories():
         logit_bias_vector[T_DEATH_ID] = death_bias
         # print(f" - Death (ID: {T_DEATH_ID}): HR={DEATH_HR} (Logit Bias: {death_bias:.4f})")
 
+    # create containers for results
+    trajectories = {}
     # Container for quantitative results (as opposed to string trajectories)
     all_metrics = []
 
@@ -118,13 +134,17 @@ def generate_trajectories():
     # Get the patient to index mapping.
     p2i = get_p2i(train_data)
 
-    # create container for results
-    trajectories = {}
     # print(f"Running generation in {MODE} mode...")
 
-    # Begin person loop
-    # for pid in tqdm(range(START_ID, END_ID)):
+    ### === Begin person loop
     for pid in tqdm(range(START_ID, END_ID), position=POSITION, leave=True, desc=f"Chunk {POSITION}"):
+
+        # 1. Check if patient ALREADY meets criteria in their history
+        # (Using the p2i lookup we already have)
+        trigger_id = code_to_id.get(TRIGGER_CODES)
+        
+        total_costs = 0.0
+        total_qalys = 0.0
 
         # SEEDING FOR each digital twin
         # Seed both Numpy and Torch for reproducibility
@@ -137,9 +157,17 @@ def generate_trajectories():
         # skip if specific person id is out of range of data.
         if pid >= len(p2i): continue
             
-        # Get person's input context using official batching logic (includes +1 shift)
+        # Get person's input context using delphi batching logic (includes +1 shift)
         x, a, _, _ = get_batch(ix=[pid], data=train_data, p2i=p2i, select='left', 
                               block_size=128, device=DEVICE, padding='random', no_event_token_rate=5)
+        
+        # Check for the drug trigger
+        history_tokens = set(x[0].cpu().numpy().tolist())
+        current_chronic_ids = [int(tid) for tid in x[0].cpu().numpy() if int(tid) in econ_df.index]
+        
+        # Drug is active if strategy is 'always' OR any trigger ID is in history
+        if APPLY_INTERVENTION:
+            drug_active = (STRATEGY == 'always') or bool(trigger_id_set & history_tokens)
         
         # Initialize record with -1.0 (Absence)
         # SimulationStartAge is the age of the very last token in history
@@ -162,11 +190,12 @@ def generate_trajectories():
                     # Forward pass to get Hazard Rates (logits)
                     out = model(curr_x, age=curr_a)
                     logits = out[0][:, -1, :] 
-
+                    
                     # --- VECTORIZED INTERVENTION GATE ---
                     if APPLY_INTERVENTION:
                         # Adding the vector (mostly zeros) to the logits
-                        logits += logit_bias_vector
+                        if drug_active:
+                            logits += logit_bias_vector
                     # ------------------------------------
 
                     # Competing Risks Race: Sample wait times from exponential distribution
@@ -177,6 +206,22 @@ def generate_trajectories():
                     next_id = t_next[1][:, None]
                     next_age = curr_a[..., [-1]] + t_next[0][:, None]
 
+                    # ... after calculating next_id and t_wait ...
+                    dt = t_wait.min(1)[0].item() # Years passed in this step
+
+                    # 1. Integration: QALYs and Maintenance Costs
+                    current_u = 1.0
+                    for tid in current_chronic_ids:
+                        current_u *= econ_df.loc[tid, 'Utility']
+                    total_qalys += (current_u * dt)
+                    
+                    # 2. Check for NEW Trigger (if not already active)
+                    new_tid = next_id.item()
+                    if APPLY_INTERVENTION:
+                        if not drug_active and new_tid == trigger_id:
+                            drug_active = True
+                            # Optional: Add a 'prescription cost' here
+                    
                     # TRACKING: If token is a disease and not yet recorded, save the age
                     token_id = next_id.item()
                     if token_id in TRACKED_CODES:
@@ -191,7 +236,7 @@ def generate_trajectories():
                 curr_x = torch.cat([curr_x, next_id], dim=1)
                 curr_a = torch.cat([curr_a, next_age], dim=1)
 
-                # Stop if the winner is Death
+                # Stop if the "winner" is Death
                 if next_id.item() == T_DEATH_ID:
                     break
             
@@ -201,7 +246,7 @@ def generate_trajectories():
             input_len = x.shape[1]
 
         elif MODE == 'automatic':
-            # Wrapper pass: Clones the tensors so the original x and a are preserved
+            # Wrapper pass: Clones tensors so original x and a tensors are preserved
             with torch.no_grad():
                 y, b, _ = model.generate(x.clone(), a.clone(), 
                                          max_new_tokens=MAX_NEW_TOKENS, 
@@ -210,7 +255,7 @@ def generate_trajectories():
             gen_ages = b[0].cpu().numpy()
             input_len = x.shape[1]
 
-        # 4. UNIFIED DISPLAY LOGIC (No-Shift interpretation)
+        # Join patient history (input trajectory) to predicted diseases (generated trajectory)
         lines = ["Input trajectory:"]
         for i in range(len(gen_tokens)):
             # Divider between History and Generated Future
@@ -239,9 +284,22 @@ def generate_trajectories():
         # Append the record to the master list after each patient is done
         all_metrics.append(inc_record)
 
-    # 5. Save Outputs
+    ### === SAVE OUTPUTS
+    # status = "treated" if APPLY_INTERVENTION else "control"
+    if not APPLY_INTERVENTION:
+        status = "control"
+    else:
+        if STRATEGY == 'always':
+            status = "treated_always"
+        else:
+            # e.g., "treated_on_diagnosis_E66-E11"
+            safe_codes = TRIGGER_CODES.replace(",", "-")
+            status = f"treated_{STRATEGY}_{safe_codes}"
 
-    status = "treated" if APPLY_INTERVENTION else "control"
+    # Results will save as:
+    # - control_0_200_incidence.csv
+    # - treated_always_0_200_incidence.csv
+    # - treated_on_diagnosis_E66-E11_0_200_incidence.csv
 
     # Save string trajectories
     trajectories_output_filename = f"temp_{MODE}_{status}_{START_ID}_{END_ID}_trajectories.csv"
@@ -256,9 +314,9 @@ def generate_trajectories():
     df_incidence = df_incidence[cols]
     df_incidence.to_csv(incidence_filename, index=False)
 
-    print(f"\nDone. Results saved with status '{status}' to:")
-    print(f" - {trajectories_output_filename}")
-    print(f" - {incidence_filename}")
+    # print(f"\nDone. Results saved with status '{status}' to:")
+    # print(f" - {trajectories_output_filename}")
+    # print(f" - {incidence_filename}")
 
 if __name__ == "__main__":
     generate_trajectories()

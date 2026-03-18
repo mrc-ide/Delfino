@@ -4,9 +4,11 @@ print("--- 🏛️  DELFINO ---")
 
 CONFIG = {
     "total_patients": 7143,    
-    # "total_patients": 1000,    
+    # "total_patients": 200,    
     "num_workers": 2,         # 2 good on my Laptop
     "seed_offset": 42,
+    "strategy": "on_diagnosis", # or "always"
+    "trigger_codes": "E66,E11,E67",
     "mode": "manual"
 }
 
@@ -32,7 +34,9 @@ def run():
             "--start_id", str(sid), 
             "--end_id", str(eid),
             "--mode", CONFIG["mode"],
-            "--seed_offset", str(CONFIG["seed_offset"])
+            "--seed_offset", str(CONFIG["seed_offset"]), 
+            "--strategy", CONFIG["strategy"],
+            "--trigger_codes", CONFIG["trigger_codes"]
         ]
 
         # Launch Control - Position 0, 2, 4...
@@ -74,20 +78,31 @@ def run():
             print(f" - Created: {output_name}")
 
     # Execute the merge for both trial arms
-    for status in ["control", "treated"]:
+    # 1. Determine the specific status tag used by generate_trajectories.py
+    if CONFIG["strategy"] == "always":
+        treat_status = "treated_always"
+    else:
+        # Replicates the naming logic in the generator script
+        safe_codes = CONFIG["trigger_codes"].replace(",", "-")
+        treat_status = f"treated_{CONFIG['strategy']}_{safe_codes}"
+
+    # 2. Update the loop to use the dynamic treat_status
+    for status in ["control", treat_status]:
         merge(status, "incidence", 0, CONFIG["total_patients"])
         merge(status, "trajectories", 0, CONFIG["total_patients"])
 
-    # --- ADD THIS AT THE END OF THE run() FUNCTION ---
-    print("\n" * 2 + "📊 Generating Cumulative Incidence plots...")
+    # ---  PLOTTING  ---
+    print("\n" + "📊 Generating Cumulative Incidence plots...")
     
-    # Pass the range so the plotter finds control_0_7143_incidence.csv
     subprocess.run([
         sys.executable, "plot_results.py", 
         "--start_id", "0", 
-        "--end_id", str(CONFIG["total_patients"])
+        "--end_id", str(CONFIG["total_patients"]),
+        "--strategy", CONFIG["strategy"],
+        "--trigger_codes", CONFIG["trigger_codes"]
     ], check=True)
-    
+
+
     print(f"✅ Trial Complete. See plots for range 0-{CONFIG['total_patients']}")
 
     print("-" * 40)

@@ -4,20 +4,29 @@ import numpy as np
 import os
 import argparse
 
-def analyze_and_plot(start_id=0, end_id=7143, k=10, min_base_cases=30):
-    # 1. Load Data
-    control_file = f"control_{start_id}_{end_id}_incidence.csv"
-    treated_file = f"treated_{start_id}_{end_id}_incidence.csv"
-    labels_path = os.path.join('data', 'ukb_simulated_data', 'labels.csv')
+# def analyze_and_plot(start_id=0, end_id=7143, k=10, min_base_cases=30):
+def analyze_and_plot(start_id=0, end_id=7143, strategy='always', trigger_codes='', k=10, min_base_cases=5):
+    
+    # 1. Load Results
+    # 1. Recreate the treatment status tag for file lookups
+    if strategy == "always":
+        treat_tag = "treated_always"
+    else:
+        # Matches the dash-naming: treated_on_diagnosis_E66-E11
+        safe_codes = trigger_codes.replace(",", "-")
+        treat_tag = f"treated_{strategy}_{safe_codes}"
 
+    control_file = f"control_{start_id}_{end_id}_incidence.csv"
+    treated_file = f"{treat_tag}_{start_id}_{end_id}_incidence.csv" # Updated to use treat_tag
     if not os.path.exists(control_file) or not os.path.exists(treated_file):
         print(f"Error: Could not find {control_file} or {treated_file}")
         return
-
+    
     control = pd.read_csv(control_file)
     treated = pd.read_csv(treated_file)
 
-    # 2. Load Disease Names for titles
+    # Load ICD-10 disease code labels for plot titles
+    labels_path = os.path.join('data', 'ukb_simulated_data', 'labels.csv')
     name_map = {}
     if os.path.exists(labels_path):
         with open(labels_path, 'r') as f:
@@ -91,16 +100,26 @@ def analyze_and_plot(start_id=0, end_id=7143, k=10, min_base_cases=30):
 
     # Generate Top-K and Target plots
     top_k_subset = impact_df.sort_values('prop_red', ascending=False).head(k)
-    create_figure(top_k_subset, f'impact_top_reduction_{start_id}_{end_id}.png')
+    # create_figure(top_k_subset, f'impact_top_reduction_{start_id}_{end_id}.png')
+    create_figure(top_k_subset, f'impact_top_reduction_{treat_tag}_{start_id}_{end_id}.png')
 
     target_codes = ['E11', 'I50', 'I21', 'I63', 'N18', 'I10']
     targets_subset = impact_df[impact_df['code'].isin(target_codes)].copy()
-    create_figure(targets_subset, f'impact_clinical_targets_{start_id}_{end_id}.png')
+    # create_figure(targets_subset, f'impact_clinical_targets_{start_id}_{end_id}.png')
+    create_figure(targets_subset, f'impact_clinical_targets_{treat_tag}_{start_id}_{end_id}.png')
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--start_id', type=int, default=0)
     parser.add_argument('--end_id', type=int, default=7143)
+    parser.add_argument('--strategy', type=str, default='always')
+    parser.add_argument('--trigger_codes', type=str, default='')
     args = parser.parse_args()
 
-    analyze_and_plot(start_id=args.start_id, end_id=args.end_id)
+    # analyze_and_plot(start_id=args.start_id, end_id=args.end_id)
+    analyze_and_plot(
+        start_id=args.start_id, 
+        end_id=args.end_id, 
+        strategy=args.strategy, 
+        trigger_codes=args.trigger_codes
+    )

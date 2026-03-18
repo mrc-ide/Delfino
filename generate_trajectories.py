@@ -40,6 +40,8 @@ SEED_OFFSET = args.seed_offset
 POSITION = args.position # Map it to a global like you did for others
 STRATEGY = args.strategy
 TRIGGER_CODES = args.trigger_codes
+# standard_life_expectancy
+STANDARD_LIFE_EXPECTANCY = 86.0  ## (dummy, not one-size-fits-all)
 
 
 DAYS_PER_YEAR = 365.25
@@ -218,9 +220,13 @@ def generate_trajectories():
 
                     # Integration: QALYs and Maintenance Costs
                     current_u = 1.0
+                    current_dw_complement = 1.0 # Complement for multiplicative DW
                     for tid in current_chronic_ids:
                         current_u *= ECON_LOOKUP[tid]['Utility']
+                        current_dw_complement *= (1.0 - ECON_LOOKUP[tid]['DW'])
                     total_qalys += (current_u * dt)
+                    current_dw_combined = 1.0 - current_dw_complement
+                    total_ylds += (current_dw_combined * dt)
 
                     # Accumulate Maintenance Costs
                     # Includes annual cost of diseases + drug cost (if active)
@@ -233,24 +239,23 @@ def generate_trajectories():
                     
                     total_costs += (maint_tick * dt)
                     
-                    # 2. Check for NEW Trigger (if not already active)
-                    new_tid = next_id.item()
+                    # Check for NEW Trigger (if not already active)
+                    token_id = next_id.item()
                     if APPLY_INTERVENTION:
                         # if not drug_active and new_tid == trigger_id:
-                        if not drug_active and new_tid in trigger_id_set:
+                        if not drug_active and token_id in trigger_id_set:
                             drug_active = True
                             # Optional: Add a 'prescription cost' here
                     
                     # TRACKING: If token is a disease and not yet recorded, save the age
-                    token_id = next_id.item()
                     if token_id in TRACKED_CODES:
                          code = TRACKED_CODES[token_id]
                          if inc_record[code] == -1.0:
                              inc_record[code] = next_age.item() / DAYS_PER_YEAR
 
                     # Add new diagnosis to list for future maintenance/utility impact
-                         if token_id in ECON_LOOKUP and token_id not in current_chronic_ids:
-                             current_chronic_ids.append(token_id)
+                    if token_id in ECON_LOOKUP and token_id not in current_chronic_ids:
+                        current_chronic_ids.append(token_id)
 
                 manual_tokens.append(next_id.item())
                 manual_ages.append(next_age.item())
@@ -261,6 +266,8 @@ def generate_trajectories():
 
                 # Stop if the "winner" is Death
                 if next_id.item() == T_DEATH_ID:
+                    age_at_death = next_age.item() / DAYS_PER_YEAR
+                    total_ylls = max(0, STANDARD_LIFE_EXPECTANCY - age_at_death)
                     break
             
             # For manual, the full trajectory is now in the updated curr_x/curr_a
@@ -307,7 +314,10 @@ def generate_trajectories():
         # Append the record to the master list after each patient is done
         inc_record.update({
             "Total_Costs": total_costs,
-            "Total_QALYs": total_qalys
+            "Total_QALYs": total_qalys,
+            "Total_YLDs": total_ylds,
+            "Total_YLLs": total_ylls,
+            "Total_DALYs": total_ylds + total_ylls # Total burden
         })
         all_metrics.append(inc_record)
 
@@ -338,7 +348,9 @@ def generate_trajectories():
     df_incidence = pd.DataFrame(all_metrics)
     # Reorder columns to put PatientID and StartAge first
     # cols = ["PatientID", "SimulationStartAge"] + unique_codes
-    cols = ["PatientID", "SimulationStartAge", "Total_Costs", "Total_QALYs"] + unique_codes
+    # cols = ["PatientID", "SimulationStartAge", "Total_Costs", "Total_QALYs"] + unique_codes
+    metrics_cols = ["Total_Costs", "Total_QALYs", "Total_YLDs", "Total_YLLs", "Total_DALYs"]
+    cols = ["PatientID", "SimulationStartAge"] + metrics_cols + unique_codes
     df_incidence = df_incidence[cols]
     df_incidence.to_csv(incidence_filename, index=False)
 

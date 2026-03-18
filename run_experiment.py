@@ -4,10 +4,11 @@ print("--- 🏛️  DELFINO ---")
 
 CONFIG = {
     # "total_patients": 7143,    
-    "total_patients": 150,    
+    "total_patients": 140,    
     "num_workers": 2,         # 2 good on my Laptop
     "seed_offset": 42,
-    "strategy": "on_diagnosis", # or "always"
+    # "strategy": "on_diagnosis", # choices:  "always", on_diagnosis
+    "strategy": "always", # choices:  "always", on_diagnosis
     "trigger_codes": "E66,E11,E67",
     "mode": "manual"
 }
@@ -30,7 +31,7 @@ def run():
         eid = (i + 1) * chunk if i < CONFIG["num_workers"] - 1 else CONFIG["total_patients"]
         
         base_cmd = [
-            sys.executable, "generate_trajectories.py",
+            sys.executable, "delfino.py",
             "--start_id", str(sid), 
             "--end_id", str(eid),
             "--mode", CONFIG["mode"],
@@ -96,6 +97,16 @@ def run():
     
     subprocess.run([
         sys.executable, "plot_results.py", 
+        "--start_id", "0", 
+        "--end_id", str(CONFIG["total_patients"]),
+        "--strategy", CONFIG["strategy"],
+        "--trigger_codes", CONFIG["trigger_codes"]
+    ], check=True)
+
+    # ---  COMPARISON / ECONOMICS  ---
+    print("\n📊 Calculating Cost-Effectiveness (ICER)...")
+    subprocess.run([
+        sys.executable, "compare_results.py", 
         "--start_id", "0", 
         "--end_id", str(CONFIG["total_patients"]),
         "--strategy", CONFIG["strategy"],

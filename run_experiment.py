@@ -3,8 +3,8 @@ import subprocess, pandas as pd, sys, os, glob, time
 print("--- 🏛️  DELFINO ---")
 
 CONFIG = {
-    "total_patients": 7143,    
-    # "total_patients": 200,    
+    # "total_patients": 7143,    
+    "total_patients": 150,    
     "num_workers": 2,         # 2 good on my Laptop
     "seed_offset": 42,
     "strategy": "on_diagnosis", # or "always"

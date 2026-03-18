@@ -51,7 +51,7 @@ DAYS_PER_YEAR = 365.25
 # Map ICD-10 Code -> Hazard Ratio (HR)
 # e.g., {"I10": 0.5} means 50% reduction in Hypertension incidence
 affected_diseases = {
-    "I10": 0.001,  # Your test "cure" for Hypertension
+    "I10": 0.001,  # Test "cure" for Hypertension
     "E11": 0.06,   # Diabetes: 94% reduction (SURMOUNT-3)
     "I50": 0.50,   # Heart Failure: 50% reduction (SUMMIT / STEP-HFpEF)
     "I21": 0.78,   # MACE/MI: 22% reduction (SELECT / SUSTAIN-6)
@@ -74,8 +74,12 @@ def generate_trajectories():
     with open(LABELS_PATH, 'r') as f:
         labels_list = [line.strip() for line in f.readlines()]
 
-    # Load (dummy) disability weights for DALYs, utilities for QALYs, and costs (currently just dummy costs)
+    # HEOR: Load (dummy) disability weights for DALYs, utilities for QALYs, and costs (currently just dummy costs)
     econ_df = pd.read_csv('disease_params_ihme.csv').set_index('TokenID')
+    # Map for O(1) lookup: {TokenID: {'Utility': 0.95, 'Cost': 1000, 'DW': 0.05}}
+    ECON_LOOKUP = econ_df[['Utility', 'Cost', 'DW']].to_dict('index')
+    # Specific intervention cost for the trial
+    DRUG_ANNUAL_COST = 1200.0 # GLP-1 therapy cost per year (dummy)
 
     # Identify all ICD-10 codes (Letter followed by numbers)
     # Mapping: {TokenID: "Code"}
@@ -141,10 +145,12 @@ def generate_trajectories():
 
         # 1. Check if patient ALREADY meets criteria in their history
         # (Using the p2i lookup we already have)
-        trigger_id = code_to_id.get(TRIGGER_CODES)
+        # trigger_id = code_to_id.get(TRIGGER_CODES)
         
         total_costs = 0.0
         total_qalys = 0.0
+        total_ylds = 0.0  # Disability burden (YLD)
+        total_ylls = 0.0  # Mortality burden (YLL)
 
         # SEEDING FOR each digital twin
         # Seed both Numpy and Torch for reproducibility
@@ -163,12 +169,13 @@ def generate_trajectories():
         
         # Check for the drug trigger
         history_tokens = set(x[0].cpu().numpy().tolist())
-        current_chronic_ids = [int(tid) for tid in x[0].cpu().numpy() if int(tid) in econ_df.index]
+        current_chronic_ids = [int(tid) for tid in x[0].cpu().numpy() if int(tid) in ECON_LOOKUP]
         
         # Drug is active if strategy is 'always' OR any trigger ID is in history
         if APPLY_INTERVENTION:
-            drug_active = (STRATEGY == 'always') or bool(trigger_id_set & history_tokens)
-        
+            # drug_active = (STRATEGY == 'always') or bool(trigger_id_set & history_tokens)
+            drug_active = (STRATEGY == 'always') or not trigger_id_set.isdisjoint(history_tokens)
+
         # Initialize record with -1.0 (Absence)
         # SimulationStartAge is the age of the very last token in history
         start_age_y = a[0, -1].item() / DAYS_PER_YEAR
@@ -206,19 +213,31 @@ def generate_trajectories():
                     next_id = t_next[1][:, None]
                     next_age = curr_a[..., [-1]] + t_next[0][:, None]
 
-                    # ... after calculating next_id and t_wait ...
-                    dt = t_wait.min(1)[0].item() # Years passed in this step
+                    # Years passed in this step
+                    dt = t_wait.min(1)[0].item()
 
-                    # 1. Integration: QALYs and Maintenance Costs
+                    # Integration: QALYs and Maintenance Costs
                     current_u = 1.0
                     for tid in current_chronic_ids:
-                        current_u *= econ_df.loc[tid, 'Utility']
+                        current_u *= ECON_LOOKUP[tid]['Utility']
                     total_qalys += (current_u * dt)
+
+                    # Accumulate Maintenance Costs
+                    # Includes annual cost of diseases + drug cost (if active)
+                    maint_tick = 0.0
+                    if APPLY_INTERVENTION and drug_active:
+                        maint_tick += DRUG_ANNUAL_COST
+                    
+                    for tid in current_chronic_ids:
+                        maint_tick += ECON_LOOKUP[tid]['Cost']
+                    
+                    total_costs += (maint_tick * dt)
                     
                     # 2. Check for NEW Trigger (if not already active)
                     new_tid = next_id.item()
                     if APPLY_INTERVENTION:
-                        if not drug_active and new_tid == trigger_id:
+                        # if not drug_active and new_tid == trigger_id:
+                        if not drug_active and new_tid in trigger_id_set:
                             drug_active = True
                             # Optional: Add a 'prescription cost' here
                     
@@ -228,6 +247,10 @@ def generate_trajectories():
                          code = TRACKED_CODES[token_id]
                          if inc_record[code] == -1.0:
                              inc_record[code] = next_age.item() / DAYS_PER_YEAR
+
+                    # Add new diagnosis to list for future maintenance/utility impact
+                         if token_id in ECON_LOOKUP and token_id not in current_chronic_ids:
+                             current_chronic_ids.append(token_id)
 
                 manual_tokens.append(next_id.item())
                 manual_ages.append(next_age.item())
@@ -282,6 +305,10 @@ def generate_trajectories():
         trajectories[str(pid)] = "\n".join(lines)
 
         # Append the record to the master list after each patient is done
+        inc_record.update({
+            "Total_Costs": total_costs,
+            "Total_QALYs": total_qalys
+        })
         all_metrics.append(inc_record)
 
     ### === SAVE OUTPUTS
@@ -310,7 +337,8 @@ def generate_trajectories():
     incidence_filename = f"temp_{MODE}_{status}_{START_ID}_{END_ID}_incidence.csv"
     df_incidence = pd.DataFrame(all_metrics)
     # Reorder columns to put PatientID and StartAge first
-    cols = ["PatientID", "SimulationStartAge"] + unique_codes
+    # cols = ["PatientID", "SimulationStartAge"] + unique_codes
+    cols = ["PatientID", "SimulationStartAge", "Total_Costs", "Total_QALYs"] + unique_codes
     df_incidence = df_incidence[cols]
     df_incidence.to_csv(incidence_filename, index=False)
 

@@ -3,7 +3,8 @@ library(patchwork)
 
 # --- 1. CONFIGURATION ---
 FILE_CONTROL   <- "control_0_7143_incidence.csv"
-FILE_ALWAYS    <- "treated_always_0_7143_incidence.csv"
+# FILE_ALWAYS    <- "treated_always_0_7143_incidence.csv"
+FILE_TRIGGEER_OB    <- "treated_on_diagnosis_E66_0_7143_incidence.csv"
 FILE_TRIGGER   <- "treated_on_diagnosis_E66-E11-E67_0_7143_incidence.csv"
 
 TARGET_DISEASES <- c("I10", "E11", "I21", "I63", "I50", "N18")
@@ -39,8 +40,9 @@ load_and_label <- function(file, scenario_name) {
 
 df_all <- bind_rows(
   load_and_label(FILE_CONTROL, "Control (No Treatment)"),
-  load_and_label(FILE_ALWAYS,  "Everyone Treated"),
-  load_and_label(FILE_TRIGGER, "Target on Obesity/Diabetes diagnosis")
+  # load_and_label(FILE_ALWAYS,  "Everyone Treated"),
+  load_and_label(FILE_TRIGGEER_OB, "Target on Obesity diagnosis"),
+  load_and_label(FILE_TRIGGER, "Target on Obesity or Diabetes diagnosis")
 ) %>%
   mutate(Disease = factor(Code, levels = TARGET_DISEASES, labels = DISEASE_NAMES))
 
@@ -48,7 +50,7 @@ df_all <- bind_rows(
 plot_disease <- function(target_code, time_mode = "calendar") {
   
   use_col <- if(time_mode == "calendar") "YearsFromStart" else "AgeAtEvent"
-  x_label <- if(time_mode == "calendar") "Years Since Trial Start" else "Age (Years)"
+  x_label <- if(time_mode == "calendar") "Years Since Policy Started" else "Age (Years)"
   
   plot_data <- df_all %>%
     filter(Code == target_code) %>%
@@ -61,6 +63,20 @@ plot_disease <- function(target_code, time_mode = "calendar") {
     ) %>%
     ungroup()
   
+  # Find the furthest time point across all scenarios for this disease
+  max_time <- max(plot_data[[use_col]], na.rm = TRUE)
+  
+  # For each scenario, add a "dummy" row at max_time with the last known incidence
+  plot_data <- plot_data %>%
+    group_by(Scenario) %>%
+    group_modify(~ {
+      last_row <- slice_tail(.x, n = 1)
+      dummy_row <- last_row
+      dummy_row[[use_col]] <- max_time
+      bind_rows(.x, dummy_row)
+    }) %>%
+    ungroup()
+  
   if(nrow(plot_data) == 0) {
     message(paste("Warning: No events found for", target_code, "in", time_mode, "mode."))
     return(NULL)
@@ -71,10 +87,12 @@ plot_disease <- function(target_code, time_mode = "calendar") {
   
   ggplot(plot_data, aes(x = .data[[use_col]], y = Incidence, color = Scenario)) +
     geom_step(linewidth = 1.8) + 
+    scale_x_continuous(expand = c(0, 0)) +
     scale_color_manual(values = c(
       "Control (No Treatment)" = "black", 
-      "Everyone Treated" = "#E69F00", 
-      "Target on Obesity/Diabetes diagnosis" = "#56B4E9"
+      # "Everyone Treated" = "#E69F00", 
+      "Target on Obesity diagnosis" = "lightblue",
+      "Target on Obesity or Diabetes diagnosis" = "blue"
     )) +
     labs(
       title = paste0(disease_name, " (", target_code, ")"),
@@ -95,19 +113,72 @@ plot_disease <- function(target_code, time_mode = "calendar") {
     )
 }
 
-# --- 4. GENERATE AND SAVE ---
-for(i in seq_along(TARGET_DISEASES)) {
-  code <- TARGET_DISEASES[i]
-  
-  # A. Calendar Plots
-  p_cal <- plot_disease(code, time_mode = "calendar")
-  if(!is.null(p_cal)) {
-    ggsave(paste0("Slide_Calendar_", code, ".png"), p_cal, width = 11, height = 8, dpi = 300)
-  }
-  
-  # B. Age Plots
-  p_age <- plot_disease(code, time_mode = "age")
-  if(!is.null(p_age)) {
-    ggsave(paste0("Slide_Age_", code, ".png"), p_age, width = 11, height = 8, dpi = 300)
-  }
+# Collect plots into lists
+calendar_plots <- list()
+age_plots <- list()
+
+for(code in TARGET_DISEASES) {
+  calendar_plots[[code]] <- plot_disease(code, time_mode = "calendar")
+  age_plots[[code]] <- plot_disease(code, time_mode = "age")
 }
+
+# Filter out any NULLs (diseases with no events)
+calendar_plots <- Filter(Negate(is.null), calendar_plots)
+age_plots <- Filter(Negate(is.null), age_plots)
+
+
+# 1. Calendar Grid
+combined_calendar <- wrap_plots(calendar_plots, ncol = 3, nrow = 2) + 
+  plot_layout(guides = "collect") & 
+  theme(
+    legend.position = "bottom",
+    # 1. MAKE LEGEND BIGGER
+    legend.text = element_text(size = 32, face = "bold"),
+    legend.key.size = unit(1.5, "cm"), # Makes the colored lines in the legend longer/thicker
+    
+    # 2. PUT MORE SPACE BETWEEN PLOTS
+    # margin(top, right, bottom, left)
+    plot.margin = margin(20, 20, 20, 20) 
+  )
+
+ggsave("Grid_Calendar_Full.png", combined_calendar, width = 25, height = 15, dpi = 300)
+
+# 2. Age Grid
+combined_age <- wrap_plots(age_plots, ncol = 3, nrow = 2) + 
+  plot_layout(guides = "collect") & 
+  theme(
+    legend.position = "bottom",
+    # 1. MAKE LEGEND BIGGER
+    legend.text = element_text(size = 22, face = "bold"),
+    legend.key.size = unit(1.5, "cm"),
+    
+    # 2. PUT MORE SPACE BETWEEN PLOTS
+    plot.margin = margin(20, 20, 20, 20)
+  )
+
+ggsave("Grid_Age_Full.png", combined_age, width = 20, height = 12, dpi = 300)
+
+# --- 4. GENERATE AND SAVE ---
+
+# combined_calendar <- wrap_plots(calendar_plots, ncol = 3, nrow = 2) + 
+#   plot_layout(guides = "collect") & 
+#   theme(legend.position = "bottom")
+# 
+# ggsave("Grid_Calendar_Full.png", combined_calendar, width = 16, height = 10, dpi = 300)
+# 
+# 
+# for(i in seq_along(TARGET_DISEASES)) {
+#   code <- TARGET_DISEASES[i]
+#   
+#   # A. Calendar Plots
+#   p_cal <- plot_disease(code, time_mode = "calendar")
+#   if(!is.null(p_cal)) {
+#     ggsave(paste0("Slide_Calendar_", code, ".png"), p_cal, width = 11, height = 8, dpi = 300)
+#   }
+#   
+#   # B. Age Plots
+#   p_age <- plot_disease(code, time_mode = "age")
+#   if(!is.null(p_age)) {
+#     ggsave(paste0("Slide_Age_", code, ".png"), p_age, width = 11, height = 8, dpi = 300)
+#   }
+# }

@@ -175,8 +175,7 @@ def generate_trajectories():
         
         # Drug is active if strategy is 'always' OR any trigger ID is in history
         if APPLY_INTERVENTION:
-            # drug_active = (STRATEGY == 'always') or bool(trigger_id_set & history_tokens)
-            drug_active = (STRATEGY == 'always') or not trigger_id_set.isdisjoint(history_tokens)
+            drug_active = (STRATEGY == 'always') or not trigger_id_set.isdisjoint(history_tokens) # i.e. any overlap between trigger_id_set and history_tokens (forgive the double negative as it's more computationally efficient)
 
         # Initialize record with -1.0 (Absence)
         # SimulationStartAge is the age of the very last token in history

@@ -29,7 +29,7 @@ parser.add_argument('--trigger_codes', type=str, default='E66', help="ICD code t
 
 args = parser.parse_args()
 
-# extract CL arguments and put them here so you don't have to change rest of your code.
+# extract CL arguments and put them here
 START_ID = args.start_id
 END_ID = args.end_id # max of 7143
 MAX_NEW_TOKENS = args.max_new_tokens
@@ -38,10 +38,9 @@ APPLY_INTERVENTION = args.apply_intervention == 'True'
 # APPLY_INTERVENTION = False 
 DEVICE = args.device
 SEED_OFFSET = args.seed_offset
-POSITION = args.position # Map it to a global like you did for others
+POSITION = args.position 
 STRATEGY = args.strategy
 TRIGGER_CODES = args.trigger_codes
-# standard_life_expectancy
 STANDARD_LIFE_EXPECTANCY = 86.0  ## (dummy, not one-size-fits-all)
 
 
@@ -62,14 +61,11 @@ affected_diseases = {
     "N18": 0.76,   # Chronic Kidney Disease: 24% reduction (FLOW)
     "Death": 0.82   # 18% Mortality Reduction\n(LEADER/SELECT/FLOW)
 }
-# Special handling for Mortality: 18% reduction (LEADER/SELECT/FLOW)
-DEATH_HR = 0.82
 
 DATA_DIR = os.path.join('data', 'ukb_simulated_data')
 TRAIN_PATH = os.path.join(DATA_DIR, 'train.bin')
 LABELS_PATH = os.path.join(DATA_DIR, 'labels.csv')
 CKPT_PATH = 'out-delfino-baseline/ckpt.pt'
-# T_DEATH_ID = 1269
 
 def generate_trajectories():
 
@@ -109,7 +105,7 @@ def generate_trajectories():
     # Reverse map to find indices for the affected codes
     code_to_id = {v: k for k, v in TRACKED_CODES.items()}
     # Update the terminal ID for the simulation loop
-    T_DEATH_ID = code_to_id.get("Death", 1269)
+    T_DEATH_ID = code_to_id.get("Death")
 
     # Distinct list of unique codes for CSV columns
     unique_codes = sorted(list(set(TRACKED_CODES.values())))
@@ -130,14 +126,7 @@ def generate_trajectories():
                 tid = code_to_id[code]
                 bias = np.log(hr)
                 logit_bias_vector[tid] = bias
-                # print(f" - {code} (ID: {tid}): HR={hr} (Logit Bias: {bias:.4f})")
-            # else:
-                # print(f" - Warning: {code} not found in labels.")
-        # Explicitly apply the mortality benefit to the Death Token
-        death_bias = np.log(DEATH_HR)
-        logit_bias_vector[T_DEATH_ID] = death_bias
-        # print(f" - Death (ID: {T_DEATH_ID}): HR={DEATH_HR} (Logit Bias: {death_bias:.4f})")
-
+    
     # create containers for results
     trajectories = {}
     # Container for quantitative results (as opposed to string trajectories)

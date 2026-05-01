@@ -39,3 +39,4 @@ Thumbs.db
 !data/ukb_simulated_data/train.bin
 !data/ukb_simulated_data/test.bin
 !out-*/*.pt
+.Rproj.user

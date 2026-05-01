@@ -1,73 +1,125 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-import argparse
 import os
+import argparse
 
-def plot():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--start_age', type=float, default=40.0)
-    parser.add_argument('--horizon', type=int, default=40)
-    args = parser.parse_args()
+# def analyze_and_plot(start_id=0, end_id=7143, k=10, min_base_cases=30):
+def analyze_and_plot(start_id=0, end_id=7143, strategy='always', trigger_codes='', k=10, min_base_cases=5):
+    
+    # 1. Load Results
+    # 1. Recreate the treatment status tag for file lookups
+    if strategy == "always":
+        treat_tag = "treated_always"
+    else:
+        # Matches the dash-naming: treated_on_diagnosis_E66-E11
+        safe_codes = trigger_codes.replace(",", "-")
+        treat_tag = f"treated_{strategy}_{safe_codes}"
 
-    # 1. Load Data
-    if not os.path.exists("delfino_individual_base.csv"):
-        print("❌ Error: Result files not found. Run the simulation first.")
+    control_file = f"control_{start_id}_{end_id}_incidence.csv"
+    treated_file = f"{treat_tag}_{start_id}_{end_id}_incidence.csv" # Updated to use treat_tag
+    if not os.path.exists(control_file) or not os.path.exists(treated_file):
+        print(f"Error: Could not find {control_file} or {treated_file}")
         return
+    
+    control = pd.read_csv(control_file)
+    treated = pd.read_csv(treated_file)
+
+    # Load ICD-10 disease code labels for plot titles
+    labels_path = os.path.join('data', 'ukb_simulated_data', 'labels.csv')
+    name_map = {}
+    if os.path.exists(labels_path):
+        with open(labels_path, 'r') as f:
+            labels = [line.strip() for line in f.readlines()]
+            # Create a map where 'I10' -> 'I10 (essential (primary) hypertension)'
+            for label in labels:
+                code = label.split(' ')[0]
+                name_map[code] = label
+
+    # Identify disease columns
+    inc_cols = [c for c in control.columns if c not in ['PatientID', 'SimulationStartAge']]
+    
+    impact_list = []
+    for col in inc_cols:
+        c_count = (control[col] > 0).sum()
+        t_count = (treated[col] > 0).sum()
         
-    base = pd.read_csv("delfino_individual_base.csv")
-    glp = pd.read_csv("delfino_individual_glp1.csv")
-    params_df = pd.read_csv("dummy_disease_params.csv")
-    name_map = dict(zip(params_df['Code'], params_df['Name']))
+        if c_count >= min_base_cases:
+            prop_red = (c_count - t_count) / c_count
+            impact_list.append({
+                'code': col, 
+                'control_n': c_count,
+                'treated_n': t_count,
+                'prop_red': prop_red
+            })
+    
+    impact_df = pd.DataFrame(impact_list)
+    
+    def create_figure(subset, filename):
+        if subset.empty:
+            return
 
-    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(14, 12))
+        n = len(subset)
+        cols = 2
+        rows = (n + 1) // cols
+        fig, axes = plt.subplots(rows, cols, figsize=(16, 5 * rows))
+        axes = axes.flatten()
 
-    # --- 1. Cumulative Incidence Curves ---
-    inc_cols = [c for c in base.columns if c.startswith("inc_") and c != "inc_death"]
-    top_5 = sorted(inc_cols, key=lambda x: (base[x] > 0).sum(), reverse=True)[:5]
-    
-    ages = np.arange(args.start_age, args.start_age + args.horizon + 1)
+        for i, (idx, row) in enumerate(subset.iterrows()):
+            ax = axes[i]
+            code = row['code']
+            # Fetch full name (e.g., "I10 (essential (primary) hypertension)")
+            display_name = name_map.get(code, code)
 
-    for i, d in enumerate(top_5):
-        code = d[4:]
-        name = name_map.get(code, code)
-        # Calculate cumulative cases at each age
-        b_val = [(base[d] <= age).where(base[d] > 0).sum() for age in ages]
-        g_val = [(glp[d] <= age).where(glp[d] > 0).sum() if d in glp.columns else 0 for age in ages]
-        
-        ax1.plot(ages, b_val, '--', color=f"C{i}", alpha=0.5, label=f"{name} (Base)")
-        ax1.plot(ages, g_val, '-', color=f"C{i}", linewidth=2, label=f"{name} (GLP-1)")
+            c_events = control[control[code] > 0]
+            c_years = sorted(c_events[code] - c_events['SimulationStartAge'])
+            
+            t_events = treated[treated[code] > 0]
+            t_years = sorted(t_events[code] - t_events['SimulationStartAge'])
 
-    ax1.set_title(f"Cumulative Disease Incidence (N={len(base)}, T={args.horizon})", fontsize=14)
-    ax1.set_xlabel("Patient Age")
-    ax1.set_ylabel("Total Number of Cases")
-    ax1.legend(bbox_to_anchor=(1.05, 1), loc='upper left', fontsize=9)
-    ax1.grid(True, alpha=0.3)
+            ax.step([0] + c_years, np.arange(0, len(c_years) + 1), 
+                    label='Control', color='#636363', linewidth=2)
+            ax.step([0] + t_years, np.arange(0, len(t_years) + 1), 
+                    label='Treated (GLP-1)', color='#2c7fb8', linewidth=2.5)
+            
+            # Updated Title: Removed 'ICD-10:' and used display_name
+            ax.set_title(f"{display_name}\n({row['prop_red']:.1%} Reduction | N_ctrl={row['control_n']})", 
+                         fontsize=12, fontweight='bold')
+            ax.set_xlabel("Years of Follow-up")
+            ax.set_ylabel("Cumulative New Cases")
+            ax.legend()
+            ax.grid(True, linestyle='--', alpha=0.5)
 
-    # --- 2. QALY Bar Chart ---
-    x_pos = np.array([0, 1])
-    width = 0.35
-    
-    base_means = [base['QALYs_Add'].mean(), base['QALYs_Mult'].mean()]
-    glp_means = [glp['QALYs_Add'].mean(), glp['QALYs_Mult'].mean()]
-    
-    ax2.bar(x_pos - width/2, base_means, width, label='Baseline', color='gray', alpha=0.5)
-    ax2.bar(x_pos + width/2, glp_means, width, label='GLP-1 Intervention', color='seagreen')
-    
-    ax2.set_ylabel('Mean QALYs per Patient')
-    ax2.set_title('Quality-Adjusted Life Years by Accounting Method', fontsize=14)
-    ax2.set_xticks(x_pos)
-    ax2.set_xticklabels(['Additive (DW Sum)', 'Multiplicative (Utility)'])
-    ax2.legend()
-    
-    # FIX: Ensure y-axis starts at zero for absolute perspective
-    ax2.set_ylim(bottom=0) 
-    # Add a bit of headroom for labels
-    ax2.set_ylim(top=max(base_means + glp_means) * 1.2)
-    
-    plt.tight_layout()
-    plt.savefig("delfino_comprehensive_results.png")
-    print("📈 Comprehensive plots saved to 'delfino_comprehensive_results.png'")
+        for j in range(i + 1, len(axes)):
+            axes[j].axis('off')
+
+        plt.tight_layout()
+        plt.savefig(filename, dpi=300)
+        print(f"Generated Plot: {filename}")
+        plt.close()
+
+    # Generate Top-K and Target plots
+    top_k_subset = impact_df.sort_values('prop_red', ascending=False).head(k)
+    # create_figure(top_k_subset, f'impact_top_reduction_{start_id}_{end_id}.png')
+    create_figure(top_k_subset, f'impact_top_reduction_{treat_tag}_{start_id}_{end_id}.png')
+
+    target_codes = ['E11', 'I50', 'I21', 'I63', 'N18', 'I10']
+    targets_subset = impact_df[impact_df['code'].isin(target_codes)].copy()
+    # create_figure(targets_subset, f'impact_clinical_targets_{start_id}_{end_id}.png')
+    create_figure(targets_subset, f'impact_clinical_targets_{treat_tag}_{start_id}_{end_id}.png')
 
 if __name__ == "__main__":
-    plot()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--start_id', type=int, default=0)
+    parser.add_argument('--end_id', type=int, default=7143)
+    parser.add_argument('--strategy', type=str, default='always')
+    parser.add_argument('--trigger_codes', type=str, default='')
+    args = parser.parse_args()
+
+    # analyze_and_plot(start_id=args.start_id, end_id=args.end_id)
+    analyze_and_plot(
+        start_id=args.start_id, 
+        end_id=args.end_id, 
+        strategy=args.strategy, 
+        trigger_codes=args.trigger_codes
+    )

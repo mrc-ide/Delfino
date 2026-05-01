@@ -1,16 +1,17 @@
 import subprocess, pandas as pd, sys, os, glob, time
 
-print("--- 🏛️ DELFINO MASTER v2.7 (Performance Benchmarking) ---")
+print("--- 🏛️  DELFINO ---")
 
 CONFIG = {
-    "total_patients": 1000,    
-    "num_workers": 2,         # Try 4, 8, or 16 to find your Blackwell sweet spot
-    "time_horizon": 40,
-    "start_age": 40.0,
-    "logit_bias": 0.0,
-    "pin_identity": "true",
-    "remind_bmi": "true",
-    "seed_offset": 42
+    "total_patients": 7143,    
+    # "total_patients": 1040,    
+    "num_workers": 2,         # 2 good on my Laptop
+    "seed_offset": 42,
+    "strategy": "on_diagnosis", # choices:  "always", on_diagnosis
+    # "strategy": "always", # choices:  "always", on_diagnosis
+    "trigger_codes": "E66,E11,E67",
+    # "trigger_codes": "E66",
+    "mode": "manual"
 }
 
 def run():
@@ -32,21 +33,24 @@ def run():
         
         base_cmd = [
             sys.executable, "delfino.py",
-            "--start_id", str(sid), "--end_id", str(eid),
-            "--time_horizon", str(CONFIG["time_horizon"]),
-            "--start_age", str(CONFIG["start_age"]),
-            "--logit_bias", str(CONFIG["logit_bias"]),
-            "--pin_identity", CONFIG["pin_identity"],
-            "--remind_bmi", CONFIG["remind_bmi"],
-            "--position", str(current_pos)
+            "--start_id", str(sid), 
+            "--end_id", str(eid),
+            "--mode", CONFIG["mode"],
+            "--seed_offset", str(CONFIG["seed_offset"]), 
+            "--strategy", CONFIG["strategy"],
+            "--trigger_codes", CONFIG["trigger_codes"]
         ]
 
-        procs.append(subprocess.Popen(base_cmd))
-        current_pos += 1
-        procs.append(subprocess.Popen(base_cmd + ["--apply_intervention", "--position", str(current_pos)]))
+        # Launch Control - Position 0, 2, 4...
+        procs.append(subprocess.Popen(base_cmd + ["--apply_intervention", "False", "--position", str(current_pos)]))
         current_pos += 1
 
-    print(f"⏳ Monitoring {len(procs)} parallel streams...\n" + "\n" * (CONFIG["num_workers"] * 2))
+        # Launch Treated - Position 1, 3, 5...
+        procs.append(subprocess.Popen(base_cmd + ["--apply_intervention", "True", "--position", str(current_pos)]))
+        current_pos += 1
+
+
+    print(f"⏳ Monitoring {len(procs)} parallel streams..." + "" * (CONFIG["num_workers"] * 2))
     for p in procs: p.wait()
 
     end_time = time.time()
@@ -54,20 +58,64 @@ def run():
     # Throughput calculation
     throughput = (CONFIG["total_patients"] * 2) / total_duration
 
-    print("\n" * 2 + "📦 Merging and analyzing...")
+    # Merge 
+    print("\n" * 2 + f"📦 Merging chunks for patients {0} to {CONFIG['total_patients']}...")
     
-    def merge(prefix, out):
-        files = glob.glob(f"temp_{prefix}_*.csv")
+    def merge(status, file_type, total_sid, total_eid):
+        # Pattern to find all the temporary chunk files
+        pattern = f"temp_{CONFIG['mode']}_{status}_*_{file_type}.csv"
+        files = glob.glob(pattern)
+        
         if files:
-            pd.concat([pd.read_csv(f) for f in files]).sort_values(by="ID").to_csv(out, index=False)
-            for f in files: os.remove(f)
+            # Sort by PatientID to maintain Digital Twin alignment
+            df = pd.concat([pd.read_csv(f) for f in files]).sort_values(by="PatientID")
+            
+            # NEW NAMING CONVENTION: {status}_{start}_{end}_{type}.csv
+            output_name = f"{status}_{total_sid}_{total_eid}_{file_type}.csv"
+            df.to_csv(output_name, index=False)
+            
+            # Cleanup
+            for f in files: 
+                os.remove(f)
+            print(f" - Created: {output_name}")
 
-    merge("base", "delfino_individual_base.csv")
-    merge("glp1", "delfino_individual_glp1.csv")
+    # Execute the merge for both trial arms
+    # 1. Determine the specific status tag used by generate_trajectories.py
+    if CONFIG["strategy"] == "always":
+        treat_status = "treated_always"
+    else:
+        # Replicates the naming logic in the generator script
+        safe_codes = CONFIG["trigger_codes"].replace(",", "-")
+        treat_status = f"treated_{CONFIG['strategy']}_{safe_codes}"
 
-    # Call modular Post-Processors
-    subprocess.run([sys.executable, "compare_results.py"], check=True)
-    subprocess.run([sys.executable, "plot_results.py", "--start_age", str(CONFIG["start_age"]), "--horizon", str(CONFIG["time_horizon"])], check=True)
+    # 2. Update the loop to use the dynamic treat_status
+    for status in ["control", treat_status]:
+        merge(status, "incidence", 0, CONFIG["total_patients"])
+        merge(status, "trajectories", 0, CONFIG["total_patients"])
+
+    # ---  PLOTTING  ---
+    print("\n" + "📊 Generating Cumulative Incidence plots...")
+    
+    subprocess.run([
+        sys.executable, "plot_results.py", 
+        "--start_id", "0", 
+        "--end_id", str(CONFIG["total_patients"]),
+        "--strategy", CONFIG["strategy"],
+        "--trigger_codes", CONFIG["trigger_codes"]
+    ], check=True)
+
+    # ---  COMPARISON / ECONOMICS  ---
+    print("\n📊 Calculating Cost-Effectiveness (ICER)...")
+    subprocess.run([
+        sys.executable, "compare_results.py", 
+        "--start_id", "0", 
+        "--end_id", str(CONFIG["total_patients"]),
+        "--strategy", CONFIG["strategy"],
+        "--trigger_codes", CONFIG["trigger_codes"]
+    ], check=True)
+
+
+    print(f"✅ Trial Complete. See plots for range 0-{CONFIG['total_patients']}")
 
     print("-" * 40)
     print(f"🏁 PERFORMANCE SUMMARY:")

@@ -1,6 +1,7 @@
 import os
 import torch
 import argparse
+import re
 import numpy as np
 import pandas as pd
 from tqdm import tqdm
@@ -53,12 +54,13 @@ DAYS_PER_YEAR = 365.25
 # Map ICD-10 Code -> Hazard Ratio (HR)
 # e.g., {"I10": 0.5} means 50% reduction in Hypertension incidence
 affected_diseases = {
-    "I10": 0.001,  # Test "cure" for Hypertension
+    #"I10": 0.001,  # Test "cure" for Hypertension
     "E11": 0.06,   # Diabetes: 94% reduction (SURMOUNT-3)
     "I50": 0.50,   # Heart Failure: 50% reduction (SUMMIT / STEP-HFpEF)
     "I21": 0.78,   # MACE/MI: 22% reduction (SELECT / SUSTAIN-6)
     "I63": 0.78,   # Stroke: 22% reduction (SELECT / SUSTAIN-6)
     "N18": 0.76,   # Chronic Kidney Disease: 24% reduction (FLOW)
+    "Death": 0.82   # 18% Mortality Reduction\n(LEADER/SELECT/FLOW)
 }
 # Special handling for Mortality: 18% reduction (LEADER/SELECT/FLOW)
 DEATH_HR = 0.82
@@ -67,7 +69,7 @@ DATA_DIR = os.path.join('data', 'ukb_simulated_data')
 TRAIN_PATH = os.path.join(DATA_DIR, 'train.bin')
 LABELS_PATH = os.path.join(DATA_DIR, 'labels.csv')
 CKPT_PATH = 'out-delfino-baseline/ckpt.pt'
-T_DEATH_ID = 1269
+# T_DEATH_ID = 1269
 
 def generate_trajectories():
 
@@ -84,17 +86,30 @@ def generate_trajectories():
     DRUG_ANNUAL_COST = 1200.0 # GLP-1 therapy cost per year (dummy)
 
     # Identify all ICD-10 codes (Letter followed by numbers)
+
+    # Matches a Letter followed by exactly two digits (e.g., I50, D33, C97)
+    icd_pattern = re.compile(r'^[A-Z][0-9]{2}')
+    
     # Mapping: {TokenID: "Code"}
     TRACKED_CODES = {}
     for i, label in enumerate(labels_list):
-        # Match codes like I50, E11, but skip 'Padding' or 'No event'
-        if len(label) >= 3 and label[0].isalpha() and label[1].isdigit():
-            # Extract just the code part (e.g., "I50" from "I50 (heart failure)")
-            code = label.split(' ')[0]
+        clean_label = label.strip()
+        
+        # Case 1: The terminal token "Death"
+        if clean_label == "Death":
+            TRACKED_CODES[i] = "Death"
+            continue
+            
+        # Case 2: ICD-10 codes (handles "I50 (heart failure)", "D33 Benign...", etc.)
+        if icd_pattern.match(clean_label):
+            # Extract just the 3-character code (e.g., "I21")
+            code = clean_label[:3]
             TRACKED_CODES[i] = code
-
+    
     # Reverse map to find indices for the affected codes
     code_to_id = {v: k for k, v in TRACKED_CODES.items()}
+    # Update the terminal ID for the simulation loop
+    T_DEATH_ID = code_to_id.get("Death", 1269)
 
     # Distinct list of unique codes for CSV columns
     unique_codes = sorted(list(set(TRACKED_CODES.values())))
@@ -183,6 +198,7 @@ def generate_trajectories():
         inc_record = {
             "PatientID": pid, 
             "SimulationStartAge": start_age_y,
+            "Death": -1.0,  # Add Death initialization
             **{code: -1.0 for code in unique_codes}
         }
 
@@ -266,6 +282,7 @@ def generate_trajectories():
                 # Stop if the "winner" is Death
                 if next_id.item() == T_DEATH_ID:
                     age_at_death = next_age.item() / DAYS_PER_YEAR
+                    inc_record["Death"] = age_at_death # Capture age of death
                     total_ylls = max(0, STANDARD_LIFE_EXPECTANCY - age_at_death)
                     break
             
@@ -349,7 +366,7 @@ def generate_trajectories():
     # cols = ["PatientID", "SimulationStartAge"] + unique_codes
     # cols = ["PatientID", "SimulationStartAge", "Total_Costs", "Total_QALYs"] + unique_codes
     metrics_cols = ["Total_Costs", "Total_QALYs", "Total_YLDs", "Total_YLLs", "Total_DALYs"]
-    cols = ["PatientID", "SimulationStartAge"] + metrics_cols + unique_codes
+    cols = ["PatientID", "SimulationStartAge", "Death"] + metrics_cols + unique_codes
     df_incidence = df_incidence[cols]
     df_incidence.to_csv(incidence_filename, index=False)
 

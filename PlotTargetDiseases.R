@@ -7,14 +7,17 @@ FILE_CONTROL   <- "control_0_7143_incidence.csv"
 FILE_TRIGGEER_OB    <- "treated_on_diagnosis_E66_0_7143_incidence.csv"
 FILE_TRIGGER   <- "treated_on_diagnosis_E66-E11-E67_0_7143_incidence.csv"
 
-TARGET_DISEASES <- c("I10", "E11", "I21", "I63", "I50", "N18")
-DISEASE_NAMES   <- c("Hypertension", "Type 2 Diabetes", "Heart Attack", 
+# TARGET_DISEASES <- c("E11", "I21", "I63", "I50", "N18", "Death")
+# DISEASE_NAMES   <- c("Type 2 Diabetes", "Heart Attack", 
+#                      "Stroke", "Heart Failure", "Kidney Disease", "Death")
+TARGET_DISEASES <- c("E11", "I21", "I63", "I50", "N18")
+DISEASE_NAMES   <- c("Type 2 Diabetes", "Heart Attack", 
                      "Stroke", "Heart Failure", "Kidney Disease")
 
 # Mapping from delfino.py affected_diseases
 # Efficacy = (1 - HR) * 100
 EFFICACY_MAP <- c(
-  "I10" = "99.9% Risk Reduction\n(Test Cure)",
+  # "I10" = "99.9% Risk Reduction\n(Test Cure)",
   "E11" = "94% Risk Reduction\n(SURMOUNT-3)",
   "I50" = "50% Risk Reduction\n(SUMMIT / STEP-HFpEF)",
   "I21" = "22% Risk Reduction\n(SELECT / SUSTAIN-6)",
@@ -39,7 +42,7 @@ load_and_label <- function(file, scenario_name) {
 }
 
 df_all <- bind_rows(
-  load_and_label(FILE_CONTROL, "Control (No Treatment)"),
+  load_and_label(FILE_CONTROL, "Status Quo"),
   # load_and_label(FILE_ALWAYS,  "Everyone Treated"),
   load_and_label(FILE_TRIGGEER_OB, "Target on Obesity diagnosis"),
   load_and_label(FILE_TRIGGER, "Target on Obesity or Diabetes diagnosis")
@@ -83,20 +86,22 @@ plot_disease <- function(target_code, time_mode = "calendar") {
   }
   
   disease_name <- DISEASE_NAMES[which(TARGET_DISEASES == target_code)]
-  eff_text <- EFFICACY_MAP[target_code]
+  if (disease_name == "Death") Plot_Title = "Death" else Plot_Title = paste0(disease_name, " (", target_code, ")")
+  
+  # eff_text <- EFFICACY_MAP[target_code]
   
   ggplot(plot_data, aes(x = .data[[use_col]], y = Incidence, color = Scenario)) +
     geom_step(linewidth = 1.8) + 
     scale_x_continuous(expand = c(0, 0)) +
     scale_color_manual(values = c(
-      "Control (No Treatment)" = "black", 
+      "Status Quo" = "black", 
       # "Everyone Treated" = "#E69F00", 
       "Target on Obesity diagnosis" = "lightblue",
       "Target on Obesity or Diabetes diagnosis" = "blue"
     )) +
     labs(
-      title = paste0(disease_name, " (", target_code, ")"),
-      subtitle = paste0("Assumed Efficacy: ", eff_text),
+      title = Plot_Title,
+      # subtitle = paste0("Assumed Efficacy: ", eff_text),
       x = x_label,
       y = "Cumulative Incidence (%)"
     ) +
@@ -127,8 +132,13 @@ calendar_plots <- Filter(Negate(is.null), calendar_plots)
 age_plots <- Filter(Negate(is.null), age_plots)
 
 
+layout_design <- "
+  112233
+  #4455#
+"
 # 1. Calendar Grid
-combined_calendar <- wrap_plots(calendar_plots, ncol = 3, nrow = 2) + 
+# combined_calendar <- wrap_plots(calendar_plots, ncol = 3, nrow = 2) + 
+combined_calendar <- wrap_plots(calendar_plots, design = layout_design) + 
   plot_layout(guides = "collect") & 
   theme(
     legend.position = "bottom",
@@ -157,28 +167,3 @@ combined_age <- wrap_plots(age_plots, ncol = 3, nrow = 2) +
   )
 
 ggsave("Grid_Age_Full.png", combined_age, width = 20, height = 12, dpi = 300)
-
-# --- 4. GENERATE AND SAVE ---
-
-# combined_calendar <- wrap_plots(calendar_plots, ncol = 3, nrow = 2) + 
-#   plot_layout(guides = "collect") & 
-#   theme(legend.position = "bottom")
-# 
-# ggsave("Grid_Calendar_Full.png", combined_calendar, width = 16, height = 10, dpi = 300)
-# 
-# 
-# for(i in seq_along(TARGET_DISEASES)) {
-#   code <- TARGET_DISEASES[i]
-#   
-#   # A. Calendar Plots
-#   p_cal <- plot_disease(code, time_mode = "calendar")
-#   if(!is.null(p_cal)) {
-#     ggsave(paste0("Slide_Calendar_", code, ".png"), p_cal, width = 11, height = 8, dpi = 300)
-#   }
-#   
-#   # B. Age Plots
-#   p_age <- plot_disease(code, time_mode = "age")
-#   if(!is.null(p_age)) {
-#     ggsave(paste0("Slide_Age_", code, ".png"), p_age, width = 11, height = 8, dpi = 300)
-#   }
-# }

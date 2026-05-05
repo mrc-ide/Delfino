@@ -74,6 +74,17 @@ def generate_trajectories():
     with open(LABELS_PATH, 'r') as f:
         labels_list = [line.strip() for line in f.readlines()]
 
+    # # --- DIAGNOSTIC PRINT START ---
+    # print("\n--- 🔍 LABELS LIST DIAGNOSTIC ---")
+    # for idx, label in enumerate(labels_list):
+    #     print(f"Index {idx:4}: {label}")
+    # print("--- END OF LABELS LIST ---\n")
+
+    # # Quick sanity check for the Death token
+    # death_indices = [i for i, x in enumerate(labels_list) if "death" in x.lower()]
+    # print(f"Found 'Death' related labels at indices: {death_indices}")
+    # # --- DIAGNOSTIC PRINT END ---
+
     # HEOR: Load (dummy) disability weights for DALYs, utilities for QALYs, and costs (currently just dummy costs)
     econ_df = pd.read_csv('disease_params_ihme.csv').set_index('TokenID')
     # Map for O(1) lookup: {TokenID: {'Utility': 0.95, 'Cost': 1000, 'DW': 0.05}}
@@ -102,6 +113,14 @@ def generate_trajectories():
             code = clean_label[:3]
             TRACKED_CODES[i] = code
     
+    # --- 🎯 TRACKED_CODES DICTIONARY PRINT ---
+    print("\n--- TRACKED_CODES Contents ---")
+    # Sorting by TokenID (the key) to make the list readable
+    for tid in sorted(TRACKED_CODES.keys()):
+        print(f"TokenID: {tid:4} | Code: {TRACKED_CODES[tid]}")
+    print(f"Total tracked items: {len(TRACKED_CODES)}")
+    print("-------------------------------\n")
+
     # Reverse map to find indices for the affected codes
     code_to_id = {v: k for k, v in TRACKED_CODES.items()}
     # Update the terminal ID for the simulation loop

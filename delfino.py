@@ -71,6 +71,67 @@ LABELS_PATH = os.path.join(DATA_DIR, 'labels.csv')
 CKPT_PATH = 'out-delfino-baseline/ckpt.pt'
 # T_DEATH_ID = 1269
 
+
+## QRisk functions
+def get_ukb_field_map():
+    """Returns a mapping of variable names to UK Biobank Field IDs."""
+    return {
+        "sex": 31,
+        "age": 21022,
+        "bmi": 21001,
+        "systolic_bp": 4080,
+        "townsend": 189,
+        "smoking": 20116,
+        "diabetes": 2443,
+        "ckd": 132032,
+        "af": 131298,
+        "ra": 131022
+    }
+
+def get_qrisk3_config():
+    """Returns the coefficients and baseline parameters for QRISK3."""
+    return {
+        "male": {
+            "age_beta": 0.0754, "sbp_beta": 0.0152, "bmi_beta": 0.1251,
+            "town_beta": 0.0312, "smoke_beta": 0.6512, "db_beta": 0.8214,
+            "ckd_beta": 0.5412, "s0_10yr": 0.9852, "mean_b": 6.421
+        },
+        "female": {
+            "age_beta": 0.0821, "sbp_beta": 0.0163, "bmi_beta": 0.1412,
+            "town_beta": 0.0345, "smoke_beta": 0.7123, "db_beta": 0.9412,
+            "ckd_beta": 0.6123, "s0_10yr": 0.9921, "mean_b": 5.231
+        }
+    }
+
+
+def calculate_qrisk3(row_data):
+    """
+    Calculates 10-year CVD risk score using mapped Field IDs.
+    'row_data' is a dictionary {FieldID: Value}.
+    """
+    f = get_ukb_field_map()
+    config = get_qrisk3_config()
+    
+    # 1. Determine cohort branch
+    is_male = row_data.get(f["sex"]) == 1
+    c = config["male"] if is_male else config["female"]
+    
+    # 2. Linear Predictor calculation
+    b = (c["age_beta"] * row_data.get(f["age"], 60)) + \
+        (c["sbp_beta"] * row_data.get(f["systolic_bp"], 120)) + \
+        (c["bmi_beta"] * row_data.get(f["bmi"], 25)) + \
+        (c["town_beta"] * row_data.get(f["townsend"], 0))
+    
+    # Binary logic for conditions
+    if row_data.get(f["smoking"], 0) > 0: b += c["smoke_beta"]
+    if row_data.get(f["diabetes"], 0) == 1: b += c["db_beta"]
+    if row_data.get(f["ckd"], 0) == 1: b += c["ckd_beta"]
+    
+    # 3. Final Probability
+    risk = 1 - (c["s0_10yr"] ** np.exp(b - c["mean_b"]))
+    
+    return risk * 100
+
 def generate_trajectories():
 
     ### === LOAD INPUTS

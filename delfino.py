@@ -125,9 +125,25 @@ def generate_trajectories():
     code_to_id = {v: k for k, v in TRACKED_CODES.items()}
     # Update the terminal ID for the simulation loop
     T_DEATH_ID = code_to_id.get("Death")
+    # --- 🔍 code_to_id DICTIONARY CHECK ---
+    print("\n" + "="*40)
+    print("CHECKING code_to_id MAPPING (Reverse Lookup)")
+    print("="*40)
 
+    # Sort by the Code (key) alphabetically to make it easy to find specific diseases
+    # for code, tid in sorted(code_to_id.items()):
+    for code, tid in code_to_id.items():
+        print(f"Code: {code:8}  ==>  TokenID: {tid}")
+
+    print(f"\nTotal mappings found: {len(code_to_id)}")
+    print("="*40 + "\n")
+    print(f"T_DEATH_ID = {T_DEATH_ID}")
+    
     # Distinct list of unique codes for CSV columns
     unique_codes = sorted(list(set(TRACKED_CODES.values())))
+    # for i, code in enumerate(unique_codes):
+    #     if (i < 30):
+    #         print(f"UniqueCode Index {i} = {code}")
 
     # Vocabulary size is len(labels_list)
     logit_bias_vector = torch.zeros(len(labels_list), device=DEVICE)
@@ -145,6 +161,9 @@ def generate_trajectories():
                 tid = code_to_id[code]
                 bias = np.log(hr)
                 logit_bias_vector[tid] = bias
+                print(f"tid = {tid}, code = {code}, hr = {hr}, bias = {bias}")
+    
+                
     
     # create containers for results
     trajectories = {}

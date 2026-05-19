@@ -303,6 +303,8 @@ def generate_trajectories():
         total_qalys = 0.0
         total_ylds = 0.0  # Disability burden (YLD)
         total_ylls = 0.0  # Mortality burden (YLL)
+        total_simulated_years = 0.0
+        total_healthy_years = 0.0
 
         # SEEDING FOR each digital twin
         # Seed both Numpy and Torch for reproducibility
@@ -371,6 +373,18 @@ def generate_trajectories():
 
                     # Years passed in this step
                     dt = t_wait.min(1)[0].item()
+
+                     # for Healthy Life expectancy Sullivan method
+                    total_simulated_years += dt # for Sullivan
+                    # Assume healthy until proven otherwise
+                    is_healthy = True
+                    for tid in current_chronic_ids:
+                        if ECON_LOOKUP[tid]['DW'] > 0.0:
+                            is_healthy = False
+                            break # No need to check others if already disabled
+                            
+                    if is_healthy:
+                        total_healthy_years += dt
 
                     # Integration: QALYs and Maintenance Costs
                     current_u = 1.0
@@ -472,7 +486,9 @@ def generate_trajectories():
             "Total_QALYs": total_qalys,
             "Total_YLDs": total_ylds,
             "Total_YLLs": total_ylls,
-            "Total_DALYs": total_ylds + total_ylls # Total burden
+            "Total_DALYs": total_ylds + total_ylls, # Total burden
+            "Total_Simulated_Years": total_simulated_years,
+            "Total_Healthy_Years": total_healthy_years
         })
         all_metrics.append(inc_record)
 
@@ -502,7 +518,7 @@ def generate_trajectories():
     incidence_filename = f"temp_{MODE}_{status}_{START_ID}_{END_ID}_incidence.csv"
     df_incidence = pd.DataFrame(all_metrics)
     # Reorder columns to put PatientID and StartAge first
-    metrics_cols = ["Total_Costs", "Total_QALYs", "Total_YLDs", "Total_YLLs", "Total_DALYs"]
+    metrics_cols = ["Total_Costs", "Total_QALYs", "Total_YLDs", "Total_YLLs", "Total_DALYs", "Total_Simulated_Years", "Total_Healthy_Years"]
     cols = ["PatientID", "SimulationStartAge", "Death"] + metrics_cols + unique_codes
     df_incidence = df_incidence[cols]
     df_incidence.to_csv(incidence_filename, index=False)

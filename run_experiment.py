@@ -4,7 +4,7 @@ print("--- 🏛️  DELFINO ---")
 
 CONFIG = {
     "total_patients": 7143,    
-    # "total_patients": 1040,    
+    # "total_patients": 200,    
     "num_workers": 2,         # 2 good on my Laptop
     "seed_offset": 42,
     "strategy": "on_diagnosis", # choices:  "always", on_diagnosis

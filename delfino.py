@@ -29,21 +29,21 @@ parser.add_argument('--trigger_codes', type=str, default='E66', help="ICD code t
 
 args = parser.parse_args()
 
-# extract CL arguments and put them here so you don't have to change rest of your code.
+# extract CL arguments and put them here
 START_ID = args.start_id
 END_ID = args.end_id # max of 7143
 MAX_NEW_TOKENS = args.max_new_tokens
 MODE = args.mode
-APPLY_INTERVENTION = args.apply_intervention == 'True'
+APPLY_INTERVENTION = args.apply_intervention == 'True' # keep as is because args.apply_intervention is a string, not boolean
 # APPLY_INTERVENTION = False 
 DEVICE = args.device
 SEED_OFFSET = args.seed_offset
-POSITION = args.position # Map it to a global like you did for others
+POSITION = args.position 
 STRATEGY = args.strategy
 TRIGGER_CODES = args.trigger_codes
-# standard_life_expectancy
 STANDARD_LIFE_EXPECTANCY = 86.0  ## (dummy, not one-size-fits-all)
 
+DIAGNOSTIC_PRINTING_TO_CONSOLE = False
 
 DAYS_PER_YEAR = 365.25
 
@@ -61,15 +61,13 @@ affected_diseases = {
     "I63": 0.78,   # Stroke: 22% reduction (SELECT / SUSTAIN-6)
     "N18": 0.76,   # Chronic Kidney Disease: 24% reduction (FLOW)
     "Death": 0.82   # 18% Mortality Reduction\n(LEADER/SELECT/FLOW)
+    # "Death": 0.05   # 18% Mortality Reduction\n(LEADER/SELECT/FLOW) (dummy test value)
 }
-# Special handling for Mortality: 18% reduction (LEADER/SELECT/FLOW)
-DEATH_HR = 0.82
 
 DATA_DIR = os.path.join('data', 'ukb_simulated_data')
 TRAIN_PATH = os.path.join(DATA_DIR, 'train.bin')
 LABELS_PATH = os.path.join(DATA_DIR, 'labels.csv')
 CKPT_PATH = 'out-delfino-baseline/ckpt.pt'
-# T_DEATH_ID = 1269
 
 
 ## QRisk functions
@@ -139,6 +137,18 @@ def generate_trajectories():
     with open(LABELS_PATH, 'r') as f:
         labels_list = [line.strip() for line in f.readlines()]
 
+    if (DIAGNOSTIC_PRINTING_TO_CONSOLE):
+        # --- DIAGNOSTIC PRINT START ---
+        print("\n--- 🔍 LABELS LIST DIAGNOSTIC ---")
+        for idx, label in enumerate(labels_list):
+            print(f"Index {idx:4}: {label}")
+        print("--- END OF LABELS LIST ---\n")
+
+        # Quick sanity check for the Death token
+        death_indices = [i for i, x in enumerate(labels_list) if "death" in x.lower()]
+        print(f"Found 'Death' related labels at indices: {death_indices}")
+        # --- DIAGNOSTIC PRINT END ---
+
     # HEOR: Load (dummy) disability weights for DALYs, utilities for QALYs, and costs (currently just dummy costs)
     econ_df = pd.read_csv('disease_params_ihme.csv').set_index('TokenID')
     # Map for O(1) lookup: {TokenID: {'Utility': 0.95, 'Cost': 1000, 'DW': 0.05}}
@@ -167,13 +177,39 @@ def generate_trajectories():
             code = clean_label[:3]
             TRACKED_CODES[i] = code
     
+    if (DIAGNOSTIC_PRINTING_TO_CONSOLE):
+        # --- 🎯 TRACKED_CODES DICTIONARY PRINT ---
+        print("\n--- TRACKED_CODES Contents ---")
+        # Sorting by TokenID (the key) to make the list readable
+        for tid in sorted(TRACKED_CODES.keys()):
+            print(f"TokenID: {tid:4} | Code: {TRACKED_CODES[tid]}")
+        print(f"Total tracked items: {len(TRACKED_CODES)}")
+        print("-------------------------------\n")
+
     # Reverse map to find indices for the affected codes
     code_to_id = {v: k for k, v in TRACKED_CODES.items()}
     # Update the terminal ID for the simulation loop
-    T_DEATH_ID = code_to_id.get("Death", 1269)
+    T_DEATH_ID = code_to_id.get("Death")
+    # --- 🔍 code_to_id DICTIONARY CHECK ---
+    if (DIAGNOSTIC_PRINTING_TO_CONSOLE):
+        print("\n" + "="*40)
+        print("CHECKING code_to_id MAPPING (Reverse Lookup)")
+        print("="*40)
 
+        # Sort by the Code (key) alphabetically to make it easy to find specific diseases
+        # for code, tid in sorted(code_to_id.items()):
+        for code, tid in code_to_id.items():
+            print(f"Code: {code:8}  ==>  TokenID: {tid}")
+
+        print(f"\nTotal mappings found: {len(code_to_id)}")
+        print("="*40 + "\n")
+        print(f"T_DEATH_ID = {T_DEATH_ID}")
+    
     # Distinct list of unique codes for CSV columns
     unique_codes = sorted(list(set(TRACKED_CODES.values())))
+    # for i, code in enumerate(unique_codes):
+    #     if (i < 30):
+    #         print(f"UniqueCode Index {i} = {code}")
 
     # Vocabulary size is len(labels_list)
     logit_bias_vector = torch.zeros(len(labels_list), device=DEVICE)
@@ -191,14 +227,12 @@ def generate_trajectories():
                 tid = code_to_id[code]
                 bias = np.log(hr)
                 logit_bias_vector[tid] = bias
-                # print(f" - {code} (ID: {tid}): HR={hr} (Logit Bias: {bias:.4f})")
-            # else:
-                # print(f" - Warning: {code} not found in labels.")
-        # Explicitly apply the mortality benefit to the Death Token
-        death_bias = np.log(DEATH_HR)
-        logit_bias_vector[T_DEATH_ID] = death_bias
-        # print(f" - Death (ID: {T_DEATH_ID}): HR={DEATH_HR} (Logit Bias: {death_bias:.4f})")
+                # print(f"tid = {tid}, code = {code}, hr = {hr}, bias = {bias}")
 
+    if (DIAGNOSTIC_PRINTING_TO_CONSOLE):
+        for i, code in enumerate(logit_bias_vector):
+            print(f"logit_bias_vector Index {i} = {logit_bias_vector[i]}")             
+    
     # create containers for results
     trajectories = {}
     # Container for quantitative results (as opposed to string trajectories)
@@ -217,6 +251,8 @@ def generate_trajectories():
     p2i = get_p2i(train_data)
 
     # print(f"Running generation in {MODE} mode...")
+
+    PRINTED_ALREADY = False
 
     ### === Begin person loop
     for pid in tqdm(range(START_ID, END_ID), position=POSITION, leave=True, desc=f"Chunk {POSITION}"):
@@ -281,6 +317,10 @@ def generate_trajectories():
                         # Adding the vector (mostly zeros) to the logits
                         if drug_active:
                             logits += logit_bias_vector
+                            # if (PRINTED_ALREADY == False):
+                            #     for i, code in enumerate(logit_bias_vector):
+                            #         print(f"Index {i}, logit = {logits[0, i]}, bias = {logit_bias_vector[i]}")          
+                            #     PRINTED_ALREADY = True
                     # ------------------------------------
 
                     # Competing Risks Race: Sample wait times from exponential distribution
@@ -368,7 +408,7 @@ def generate_trajectories():
             # Divider between History and Generated Future
             if i == input_len:
                 lines.append("=====================")
-                lines.append(f"{MODE.capitalize()} Generated trajectory:")
+                lines.append(f"Generated trajectory:")
             
             tid = int(gen_tokens[i])
             age_y = gen_ages[i] / DAYS_PER_YEAR
@@ -410,7 +450,7 @@ def generate_trajectories():
             safe_codes = TRIGGER_CODES.replace(",", "-")
             status = f"treated_{STRATEGY}_{safe_codes}"
 
-    # Results will save as:
+    # Results will save as, e.g.:
     # - control_0_200_incidence.csv
     # - treated_always_0_200_incidence.csv
     # - treated_on_diagnosis_E66-E11_0_200_incidence.csv
@@ -424,8 +464,6 @@ def generate_trajectories():
     incidence_filename = f"temp_{MODE}_{status}_{START_ID}_{END_ID}_incidence.csv"
     df_incidence = pd.DataFrame(all_metrics)
     # Reorder columns to put PatientID and StartAge first
-    # cols = ["PatientID", "SimulationStartAge"] + unique_codes
-    # cols = ["PatientID", "SimulationStartAge", "Total_Costs", "Total_QALYs"] + unique_codes
     metrics_cols = ["Total_Costs", "Total_QALYs", "Total_YLDs", "Total_YLLs", "Total_DALYs"]
     cols = ["PatientID", "SimulationStartAge", "Death"] + metrics_cols + unique_codes
     df_incidence = df_incidence[cols]

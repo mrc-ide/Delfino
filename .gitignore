@@ -40,3 +40,4 @@ Thumbs.db
 !data/ukb_simulated_data/test.bin
 !out-*/*.pt
 .Rproj.user
+.positai

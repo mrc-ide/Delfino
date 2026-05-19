@@ -59,7 +59,8 @@ affected_diseases = {
     "I21": 0.78,   # MACE/MI: 22% reduction (SELECT / SUSTAIN-6)
     "I63": 0.78,   # Stroke: 22% reduction (SELECT / SUSTAIN-6)
     "N18": 0.76,   # Chronic Kidney Disease: 24% reduction (FLOW)
-    "Death": 0.82   # 18% Mortality Reduction\n(LEADER/SELECT/FLOW)
+    # "Death": 0.82   # 18% Mortality Reduction\n(LEADER/SELECT/FLOW)
+    "Death": 0.05   # 18% Mortality Reduction\n(LEADER/SELECT/FLOW)
 }
 
 DATA_DIR = os.path.join('data', 'ukb_simulated_data')
@@ -116,8 +117,8 @@ def generate_trajectories():
     # --- 🎯 TRACKED_CODES DICTIONARY PRINT ---
     print("\n--- TRACKED_CODES Contents ---")
     # Sorting by TokenID (the key) to make the list readable
-    for tid in sorted(TRACKED_CODES.keys()):
-        print(f"TokenID: {tid:4} | Code: {TRACKED_CODES[tid]}")
+    # for tid in sorted(TRACKED_CODES.keys()):
+    #     print(f"TokenID: {tid:4} | Code: {TRACKED_CODES[tid]}")
     print(f"Total tracked items: {len(TRACKED_CODES)}")
     print("-------------------------------\n")
 
@@ -132,8 +133,8 @@ def generate_trajectories():
 
     # Sort by the Code (key) alphabetically to make it easy to find specific diseases
     # for code, tid in sorted(code_to_id.items()):
-    for code, tid in code_to_id.items():
-        print(f"Code: {code:8}  ==>  TokenID: {tid}")
+    # for code, tid in code_to_id.items():
+    #     print(f"Code: {code:8}  ==>  TokenID: {tid}")
 
     print(f"\nTotal mappings found: {len(code_to_id)}")
     print("="*40 + "\n")
@@ -161,9 +162,10 @@ def generate_trajectories():
                 tid = code_to_id[code]
                 bias = np.log(hr)
                 logit_bias_vector[tid] = bias
-                print(f"tid = {tid}, code = {code}, hr = {hr}, bias = {bias}")
-    
-                
+                # print(f"tid = {tid}, code = {code}, hr = {hr}, bias = {bias}")
+
+    # for i, code in enumerate(logit_bias_vector):
+    #     print(f"logit_bias_vector Index {i} = {logit_bias_vector[i]}")             
     
     # create containers for results
     trajectories = {}
@@ -183,6 +185,8 @@ def generate_trajectories():
     p2i = get_p2i(train_data)
 
     # print(f"Running generation in {MODE} mode...")
+
+    PRINTED_ALREADY = False
 
     ### === Begin person loop
     for pid in tqdm(range(START_ID, END_ID), position=POSITION, leave=True, desc=f"Chunk {POSITION}"):
@@ -247,6 +251,10 @@ def generate_trajectories():
                         # Adding the vector (mostly zeros) to the logits
                         if drug_active:
                             logits += logit_bias_vector
+                            # if (PRINTED_ALREADY == False):
+                            #     for i, code in enumerate(logit_bias_vector):
+                            #         print(f"Index {i}, logit = {logits[0, i]}, bias = {logit_bias_vector[i]}")          
+                            #     PRINTED_ALREADY = True
                     # ------------------------------------
 
                     # Competing Risks Race: Sample wait times from exponential distribution
@@ -334,7 +342,7 @@ def generate_trajectories():
             # Divider between History and Generated Future
             if i == input_len:
                 lines.append("=====================")
-                lines.append(f"{MODE.capitalize()} Generated trajectory:")
+                lines.append(f"Generated trajectory:")
             
             tid = int(gen_tokens[i])
             age_y = gen_ages[i] / DAYS_PER_YEAR

@@ -3,16 +3,16 @@ library(patchwork)
 
 # --- 1. CONFIGURATION ---
 FILE_CONTROL   <- "control_0_7143_incidence.csv"
-# FILE_ALWAYS    <- "treated_always_0_7143_incidence.csv"
+FILE_ALWAYS    <- "treated_always_0_7143_incidence.csv"
 FILE_TRIGGEER_OB    <- "treated_on_diagnosis_E66_0_7143_incidence.csv"
 FILE_TRIGGER   <- "treated_on_diagnosis_E66-E11-E67_0_7143_incidence.csv"
 
-# TARGET_DISEASES <- c("E11", "I21", "I63", "I50", "N18", "Death")
+TARGET_DISEASES <- c("E11", "I21", "I63", "I50", "N18", "Death")
+DISEASE_NAMES   <- c("Type 2 Diabetes", "Heart Attack",
+                     "Stroke", "Heart Failure", "Kidney Disease", "Death")
+# TARGET_DISEASES <- c("E11", "I21", "I63", "I50", "N18")
 # DISEASE_NAMES   <- c("Type 2 Diabetes", "Heart Attack", 
-#                      "Stroke", "Heart Failure", "Kidney Disease", "Death")
-TARGET_DISEASES <- c("E11", "I21", "I63", "I50", "N18")
-DISEASE_NAMES   <- c("Type 2 Diabetes", "Heart Attack", 
-                     "Stroke", "Heart Failure", "Kidney Disease")
+#                      "Stroke", "Heart Failure", "Kidney Disease")
 
 # Mapping from delfino.py affected_diseases
 # Efficacy = (1 - HR) * 100
@@ -43,7 +43,7 @@ load_and_label <- function(file, scenario_name) {
 
 df_all <- bind_rows(
   load_and_label(FILE_CONTROL, "Status Quo"),
-  # load_and_label(FILE_ALWAYS,  "Everyone Treated"),
+  load_and_label(FILE_ALWAYS,  "Everyone Treated"),
   load_and_label(FILE_TRIGGEER_OB, "Target on Obesity diagnosis"),
   load_and_label(FILE_TRIGGER, "Target on Obesity or Diabetes diagnosis")
 ) %>%
@@ -95,7 +95,7 @@ plot_disease <- function(target_code, time_mode = "calendar") {
     scale_x_continuous(expand = c(0, 0)) +
     scale_color_manual(values = c(
       "Status Quo" = "black", 
-      # "Everyone Treated" = "#E69F00", 
+      "Everyone Treated" = "#E69F00",
       "Target on Obesity diagnosis" = "lightblue",
       "Target on Obesity or Diabetes diagnosis" = "blue"
     )) +
@@ -137,8 +137,8 @@ layout_design <- "
   #4455#
 "
 # 1. Calendar Grid
-# combined_calendar <- wrap_plots(calendar_plots, ncol = 3, nrow = 2) + 
-combined_calendar <- wrap_plots(calendar_plots, design = layout_design) + 
+combined_calendar <- wrap_plots(calendar_plots, ncol = 3, nrow = 2) +
+# combined_calendar <- wrap_plots(calendar_plots, design = layout_design) + 
   plot_layout(guides = "collect") & 
   theme(
     legend.position = "bottom",
@@ -154,7 +154,7 @@ combined_calendar <- wrap_plots(calendar_plots, design = layout_design) +
 ggsave("Grid_Calendar_Full.png", combined_calendar, width = 25, height = 15, dpi = 300)
 
 # 2. Age Grid
-combined_age <- wrap_plots(age_plots, ncol = 3, nrow = 2) + 
+combined_age <- wrap_plots(age_plots, ncol = 3, nrow = 3) + 
   plot_layout(guides = "collect") & 
   theme(
     legend.position = "bottom",

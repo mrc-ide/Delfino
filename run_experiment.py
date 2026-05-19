@@ -3,12 +3,12 @@ import subprocess, pandas as pd, sys, os, glob, time
 print("--- 🏛️  DELFINO ---")
 
 CONFIG = {
-    # "total_patients": 7143,    
-    "total_patients": 200,    
+    "total_patients": 7143,    
+    # "total_patients": 200,    
     "num_workers": 2,         # 2 good on my Laptop
     "seed_offset": 42,
-    "strategy": "on_diagnosis", # choices:  "always", on_diagnosis
-    # "strategy": "always", # choices:  "always", on_diagnosis
+    # "strategy": "on_diagnosis", # choices:  "always", on_diagnosis
+    "strategy": "always", # choices:  "always", on_diagnosis
     "trigger_codes": "E66,E11,E67",
     # "trigger_codes": "E66",
     "mode": "manual"

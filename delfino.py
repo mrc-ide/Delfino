@@ -71,61 +71,99 @@ CKPT_PATH = 'out-delfino-baseline/ckpt.pt'
 
 
 ## QRisk functions
-def get_ukb_field_map():
-    """Returns a mapping of variable names to UK Biobank Field IDs."""
+def get_wsic_field_map():
+    """
+    Returns a mapping of human-readable keys to WSIC database/dataframe column strings.
+    This acts as the structural equivalent to get_ukb_field_map().
+    """
     return {
-        "sex": 31,
-        "age": 21022,
-        "bmi": 21001,
-        "systolic_bp": 4080,
-        "townsend": 189,
-        "smoking": 20116,
-        "diabetes": 2443,
-        "ckd": 132032,
-        "af": 131298,
-        "ra": 131022
+        "sex": "SEX",
+        "age": "AGE",
+        "bmi_group": "BMI_CAT",
+        "smoking_group": "SMOKING_STATUS",
+        "diabetes_flag": "DIABETES",
+        "ckd_flag": "CKD",
+        "sbp_value": "SBP",
+        "deprivation": "TOWNSEND"
     }
 
-def get_qrisk3_config():
-    """Returns the coefficients and baseline parameters for QRISK3."""
+def get_qrisk3_wsic_config():
+    """
+    Returns the hazard ratio coefficients (beta) and baseline parameters 
+    for QRISK3, aligned directly with WSIC string/boolean parameters.
+    """
     return {
-        "male": {
-            "age_beta": 0.0754, "sbp_beta": 0.0152, "bmi_beta": 0.1251,
-            "town_beta": 0.0312, "smoke_beta": 0.6512, "db_beta": 0.8214,
-            "ckd_beta": 0.5412, "s0_10yr": 0.9852, "mean_b": 6.421
+        "Male": {
+            "age_beta": 0.0754, 
+            "sbp_beta": 0.0152, 
+            "bmi_beta": 0.1251,
+            "town_beta": 0.0312, 
+            "smoke_beta": 0.6512, 
+            "db_beta": 0.8214,
+            "ckd_beta": 0.5412, 
+            "s0_10yr": 0.9852, 
+            "mean_b": 6.421
         },
-        "female": {
-            "age_beta": 0.0821, "sbp_beta": 0.0163, "bmi_beta": 0.1412,
-            "town_beta": 0.0345, "smoke_beta": 0.7123, "db_beta": 0.9412,
-            "ckd_beta": 0.6123, "s0_10yr": 0.9921, "mean_b": 5.231
+        "Female": {
+            "age_beta": 0.0821, 
+            "sbp_beta": 0.0163, 
+            "bmi_beta": 0.1412,
+            "town_beta": 0.0345, 
+            "smoke_beta": 0.7123, 
+            "db_beta": 0.9412,
+            "ckd_beta": 0.6123, 
+            "s0_10yr": 0.9921, 
+            "mean_b": 5.231
         }
     }
 
-
-def calculate_qrisk3(row_data):
+def calculate_qrisk3_from_wsic(patient_profile):
     """
-    Calculates 10-year CVD risk score using mapped Field IDs.
-    'row_data' is a dictionary {FieldID: Value}.
+    Calculates the 10-year CVD risk score using an explicit WSIC field map.
     """
-    f = get_ukb_field_map()
-    config = get_qrisk3_config()
+    # Grab the layout references and coefficients
+    f = get_wsic_field_map()
+    config = get_qrisk3_wsic_config()
     
-    # 1. Determine cohort branch
-    is_male = row_data.get(f["sex"]) == 1
-    c = config["male"] if is_male else config["female"]
+    # 1. Branch selection by mapped Sex key
+    sex_str = patient_profile.get(f["sex"], "Male")
+    c = config.get(sex_str, config["Male"])
     
-    # 2. Linear Predictor calculation
-    b = (c["age_beta"] * row_data.get(f["age"], 60)) + \
-        (c["sbp_beta"] * row_data.get(f["systolic_bp"], 120)) + \
-        (c["bmi_beta"] * row_data.get(f["bmi"], 25)) + \
-        (c["town_beta"] * row_data.get(f["townsend"], 0))
+    # 2. Extract continuous fields using mapping keys
+    age = float(patient_profile.get(f["age"], 60.0))
+    sbp = float(patient_profile.get(f["sbp_value"], 120.0))
+    townsend = float(patient_profile.get(f["deprivation"], 0.0)) 
     
-    # Binary logic for conditions
-    if row_data.get(f["smoking"], 0) > 0: b += c["smoke_beta"]
-    if row_data.get(f["diabetes"], 0) == 1: b += c["db_beta"]
-    if row_data.get(f["ckd"], 0) == 1: b += c["ckd_beta"]
+    # 3. Categorical midpoint resolution
+    bmi_map = {
+        "Healthy or Underweight": 21.5,
+        "Overweight": 27.5,
+        "Obese": 34.5,
+        "Severely Obese": 42.5
+    }
+    bmi_str = patient_profile.get(f["bmi_group"], "Healthy or Underweight")
+    bmi_val = bmi_map.get(bmi_str, 25.0)
     
-    # 3. Final Probability
+    # 4. Construct the Linear Predictor (B)
+    b = (c["age_beta"] * age) + \
+        (c["sbp_beta"] * sbp) + \
+        (c["bmi_beta"] * bmi_val) + \
+        (c["town_beta"] * townsend)
+    
+    # 5. Apply Hazard Modifiers
+    smoke_str = patient_profile.get(f["smoking_group"], "Non-smoker")
+    if smoke_str == "Smoker":
+        b += c["smoke_beta"]
+    elif smoke_str == "Ex-smoker":
+        b += (c["smoke_beta"] * 0.5)
+        
+    if patient_profile.get(f["diabetes_flag"], False): 
+        b += c["db_beta"]
+        
+    if patient_profile.get(f["ckd_flag"], False): 
+        b += c["ckd_beta"]
+    
+    # 6. Cumulative Probability Formula
     risk = 1 - (c["s0_10yr"] ** np.exp(b - c["mean_b"]))
     
     return risk * 100

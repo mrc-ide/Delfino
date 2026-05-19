@@ -15,6 +15,13 @@
 # Ignore all temporary worker chunks
 temp_*_*.csv
 
+# Ignore all R/Rstudio project files
+.Rhistory
+*.Rproj
+
+# pdfs
+*.pdf
+
 # Ignore all "decoded" or "readable" data artifacts
 data/ukb_simulated_data/decoded_*.csv
 data/ukb_simulated_data/human_readable_*.csv

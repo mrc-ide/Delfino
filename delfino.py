@@ -373,18 +373,19 @@ def generate_trajectories():
 
                     # Years passed in this step
                     dt = t_wait.min(1)[0].item()
+                    dt_years = dt / DAYS_PER_YEAR  # Convert to years for all economic/health metrics
 
-                     # for Healthy Life expectancy Sullivan method
-                    total_simulated_years += dt # for Sullivan
+                     # for Healthy Life Expectancy (HLE) / Sullivan method
+                    total_simulated_years += dt_years # for Sullivan
                     # Assume healthy until proven otherwise
                     is_healthy = True
                     for tid in current_chronic_ids:
-                        if ECON_LOOKUP[tid]['DW'] > 0.0:
+                        if ECON_LOOKUP[tid]['DW'] > 0.0: # Note that this (bafflingly) doesn't distinguish between e.g. excema and ebola.
                             is_healthy = False
                             break # No need to check others if already disabled
                             
                     if is_healthy:
-                        total_healthy_years += dt
+                        total_healthy_years += dt_years
 
                     # Integration: QALYs and Maintenance Costs
                     current_u = 1.0
@@ -392,9 +393,9 @@ def generate_trajectories():
                     for tid in current_chronic_ids:
                         current_u *= ECON_LOOKUP[tid]['Utility']
                         current_dw_complement *= (1.0 - ECON_LOOKUP[tid]['DW'])
-                    total_qalys += (current_u * dt)
+                    total_qalys += (current_u * dt_years)
                     current_dw_combined = 1.0 - current_dw_complement
-                    total_ylds += (current_dw_combined * dt)
+                    total_ylds += (current_dw_combined * dt_years)
 
                     # Accumulate Maintenance Costs
                     # Includes annual cost of diseases + drug cost (if active)
@@ -405,7 +406,7 @@ def generate_trajectories():
                     for tid in current_chronic_ids:
                         maint_tick += ECON_LOOKUP[tid]['Cost']
                     
-                    total_costs += (maint_tick * dt)
+                    total_costs += (maint_tick * dt_years)
                     
                     # Check for NEW Trigger (if not already active)
                     token_id = next_id.item()

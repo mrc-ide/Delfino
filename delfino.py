@@ -293,7 +293,7 @@ def generate_trajectories():
     PRINTED_ALREADY = False
 
     ### === Begin person loop
-    for pid in tqdm(range(START_ID, END_ID), position=POSITION, leave=True, desc=f"Chunk {POSITION}"):
+    for person_id in tqdm(range(START_ID, END_ID), position=POSITION, leave=True, desc=f"Chunk {POSITION}"):
 
         # 1. Check if patient ALREADY meets criteria in their history
         # (Using the p2i lookup we already have)
@@ -309,16 +309,16 @@ def generate_trajectories():
         # SEEDING FOR each digital twin
         # Seed both Numpy and Torch for reproducibility
         # Adding a large constant (SEED_OFFSET) prevents potential overlap with other seeds
-        torch.manual_seed(pid + SEED_OFFSET)
-        np.random.seed(pid + SEED_OFFSET)
+        torch.manual_seed(person_id + SEED_OFFSET)
+        np.random.seed(person_id + SEED_OFFSET)
         if torch.cuda.is_available():
-            torch.cuda.manual_seed_all(pid + SEED_OFFSET)
+            torch.cuda.manual_seed_all(person_id + SEED_OFFSET)
         
         # skip if specific person id is out of range of data.
-        if pid >= len(p2i): continue
+        if person_id >= len(p2i): continue
             
         # Get person's input context using delphi batching logic (includes +1 shift)
-        x, a, _, _ = get_batch(ix=[pid], data=train_data, p2i=p2i, select='left', 
+        x, a, _, _ = get_batch(ix=[person_id], data=train_data, p2i=p2i, select='left', 
                               block_size=128, device=DEVICE, padding='random', no_event_token_rate=5)
         
         # Check for the drug trigger
@@ -333,7 +333,7 @@ def generate_trajectories():
         # SimulationStartAge is the age of the very last token in history
         start_age_y = a[0, -1].item() / DAYS_PER_YEAR
         inc_record = {
-            "PatientID": pid, 
+            "PatientID": person_id, 
             "SimulationStartAge": start_age_y,
             "Death": -1.0,  # Add Death initialization
             **{code: -1.0 for code in unique_codes}
@@ -479,7 +479,7 @@ def generate_trajectories():
                 break
                 
         # add this person's lines to trajectories
-        trajectories[str(pid)] = "\n".join(lines)
+        trajectories[str(person_id)] = "\n".join(lines)
 
         # Append the record to the master list after each patient is done
         inc_record.update({

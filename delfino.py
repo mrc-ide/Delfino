@@ -219,8 +219,8 @@ def generate_trajectories():
         # --- 🎯 TRACKED_CODES DICTIONARY PRINT ---
         print("\n--- TRACKED_CODES Contents ---")
         # Sorting by TokenID (the key) to make the list readable
-        for tid in sorted(TRACKED_CODES.keys()):
-            print(f"TokenID: {tid:4} | Code: {TRACKED_CODES[tid]}")
+        for token_id in sorted(TRACKED_CODES.keys()):
+            print(f"TokenID: {token_id:4} | Code: {TRACKED_CODES[token_id]}")
         print(f"Total tracked items: {len(TRACKED_CODES)}")
         print("-------------------------------\n")
 
@@ -235,9 +235,9 @@ def generate_trajectories():
         print("="*40)
 
         # Sort by the Code (key) alphabetically to make it easy to find specific diseases
-        # for code, tid in sorted(code_to_id.items()):
-        for code, tid in code_to_id.items():
-            print(f"Code: {code:8}  ==>  TokenID: {tid}")
+        # for code, token_id in sorted(code_to_id.items()):
+        for code, token_id in code_to_id.items():
+            print(f"Code: {code:8}  ==>  TokenID: {token_id}")
 
         print(f"\nTotal mappings found: {len(code_to_id)}")
         print("="*40 + "\n")
@@ -262,10 +262,10 @@ def generate_trajectories():
         
         for code, hr in affected_diseases.items():
             if code in code_to_id:
-                tid = code_to_id[code]
+                token_id = code_to_id[code]
                 bias = np.log(hr)
-                logit_bias_vector[tid] = bias
-                # print(f"tid = {tid}, code = {code}, hr = {hr}, bias = {bias}")
+                logit_bias_vector[token_id] = bias
+                # print(f"token_id = {token_id}, code = {code}, hr = {hr}, bias = {bias}")
 
     if (DIAGNOSTIC_PRINTING_TO_CONSOLE):
         for i, code in enumerate(logit_bias_vector):
@@ -323,7 +323,7 @@ def generate_trajectories():
         
         # Check for the drug trigger
         history_tokens = set(x[0].cpu().numpy().tolist())
-        current_chronic_ids = [int(tid) for tid in x[0].cpu().numpy() if int(tid) in ECON_LOOKUP]
+        current_chronic_ids = [int(token_id) for token_id in x[0].cpu().numpy() if int(token_id) in ECON_LOOKUP]
         
         # Drug is active if strategy is 'always' OR any trigger ID is in history
         if APPLY_INTERVENTION:
@@ -379,8 +379,8 @@ def generate_trajectories():
                     total_simulated_years += dt_years # for Sullivan
                     # Assume healthy until proven otherwise
                     is_healthy = True
-                    for tid in current_chronic_ids:
-                        if ECON_LOOKUP[tid]['DW'] > 0.0: # Note that this (bafflingly) doesn't distinguish between e.g. excema and ebola.
+                    for token_id in current_chronic_ids:
+                        if ECON_LOOKUP[token_id]['DW'] > 0.0: # Note that this (bafflingly) doesn't distinguish between e.g. excema and ebola.
                             is_healthy = False
                             break # No need to check others if already disabled
                             
@@ -390,9 +390,9 @@ def generate_trajectories():
                     # Integration: QALYs and Maintenance Costs
                     current_u = 1.0
                     current_dw_complement = 1.0 # Complement for multiplicative DW
-                    for tid in current_chronic_ids:
-                        current_u *= ECON_LOOKUP[tid]['Utility']
-                        current_dw_complement *= (1.0 - ECON_LOOKUP[tid]['DW'])
+                    for token_id in current_chronic_ids:
+                        current_u *= ECON_LOOKUP[token_id]['Utility']
+                        current_dw_complement *= (1.0 - ECON_LOOKUP[token_id]['DW'])
                     total_qalys += (current_u * dt_years)
                     current_dw_combined = 1.0 - current_dw_complement
                     total_ylds += (current_dw_combined * dt_years)
@@ -403,8 +403,8 @@ def generate_trajectories():
                     if APPLY_INTERVENTION and drug_active:
                         maint_tick += DRUG_ANNUAL_COST
                     
-                    for tid in current_chronic_ids:
-                        maint_tick += ECON_LOOKUP[tid]['Cost']
+                    for token_id in current_chronic_ids:
+                        maint_tick += ECON_LOOKUP[token_id]['Cost']
                     
                     total_costs += (maint_tick * dt_years)
                     
@@ -463,19 +463,19 @@ def generate_trajectories():
                 lines.append("=====================")
                 lines.append(f"Generated trajectory:")
             
-            tid = int(gen_tokens[i])
+            token_id = int(gen_tokens[i])
             age_y = gen_ages[i] / DAYS_PER_YEAR
 
             # SKIP PADDING: Fixes the "weirdness" at the start of trajectories
-            if tid == 0: 
+            if token_id == 0: 
                 continue 
             
             # Map ID 1:1 to labels.csv index
-            event_name = labels_list[tid] if tid < len(labels_list) else f"Unknown({tid})"
+            event_name = labels_list[token_id] if token_id < len(labels_list) else f"Unknown({token_id})"
             lines.append(f"{age_y:2.1f}: {event_name}")
             
             # Stop display if terminal token is reached
-            if i >= input_len and tid == T_DEATH_ID:
+            if i >= input_len and token_id == T_DEATH_ID:
                 break
                 
         # add this person's lines to trajectories
